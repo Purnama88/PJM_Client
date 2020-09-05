@@ -90,7 +90,6 @@ public class ItemInvoiceSalesDraftTablePanel extends TablePanel{
                         
                         iteminvoicesalesdrafttablemodel.setItemInvoiceSalesDraftList(list);
                         
-                        iteminvoicesalesdrafttablemodel.addRow(iteminvoicesalesdrafttablemodel.createEmptyItemInvoiceSalesDraft(invoiceid));
                     }
                     catch(IOException e){
 

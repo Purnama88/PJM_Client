@@ -31,6 +31,8 @@ public class ExternalItemInvoiceDraft {
     
     protected double discount;
     
+    protected String box;
+    
     @JsonIgnore
     public double getSubtotal() {
         return getQuantity() * getPrice();

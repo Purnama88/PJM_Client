@@ -6,6 +6,7 @@
 package com.purnama.pjm_client.tablemodel;
 
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
+import com.purnama.pjm_client.gui.library.MyButton;
 import com.purnama.pjm_client.model.transactional.draft.InvoiceSalesDraft;
 import com.purnama.pjm_client.model.transactional.draft.ItemInvoiceSalesDraft;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -33,7 +34,9 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         GlobalFields.PROPERTIES.getProperty("TABLE_PRICE"),
         GlobalFields.PROPERTIES.getProperty("TABLE_PERCENTAGE"),
         GlobalFields.PROPERTIES.getProperty("TABLE_DISCOUNT"),
-        GlobalFields.PROPERTIES.getProperty("TABLE_TOTAL")
+        GlobalFields.PROPERTIES.getProperty("TABLE_TOTAL"),
+        GlobalFields.PROPERTIES.getProperty("TABLE_BOX"),
+        GlobalFields.PROPERTIES.getProperty("TABLE_ACTION")
     };
     
     public ItemInvoiceSalesDraftTableModel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
@@ -58,12 +61,6 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         ItemInvoiceSalesDraft iteminvoicesalesdraft = iteminvoicesalesdraftlist.get(rowIndex);
-
-//        String description = "";
-//        
-//        if(iteminvoicesalesdraft.getItem() != null){
-//            description = iteminvoicesalesdraft.getItem().getCode() + " - " + iteminvoicesalesdraft.getItem().getName();
-//        }
         
         Object[] values = new Object[]{
             String.valueOf(rowIndex + 1), 
@@ -73,6 +70,8 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
             iteminvoicesalesdraft.getFormattedDiscount_percentage(),
             iteminvoicesalesdraft.getFormattedDiscount(),
             iteminvoicesalesdraft.getFormattedTotal(),
+            iteminvoicesalesdraft.getBox(),
+            new MyButton("Edit")
         };
         return values[columnIndex];
     }
@@ -125,6 +124,11 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
             fireTableCellUpdated(row, 6);
             discountsubtotalpanel.setDiscount(discountsubtotalpanel.getDiscount() + iisd.getDiscount());
         }
+        else if(col == 7){
+            String box = String.valueOf(value);
+            iisd.setBox(box);
+            fireTableCellUpdated(row, 7);
+        }
         
         if(row+1 == getRowCount()){
             iteminvoicesalesdraftlist.add(
@@ -134,8 +138,8 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
     
     @Override
     public boolean isCellEditable(int row, int col){
-        if(!getItemInvoiceSalesDraftList().get(row).getDescription().isEmpty()){
-            return col == 1 || col == 2 || col == 3 || col == 4 || col == 5 || col == 6;
+        if(!iteminvoicesalesdraftlist.get(row).getDescription().isEmpty()){
+            return col == 1 || col == 2 || col == 3 || col == 4 || col == 5 || col == 7;
         }
         else{
             return col == 1;
@@ -143,6 +147,7 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
     }
     
     public List<ItemInvoiceSalesDraft> getItemInvoiceSalesDraftList(){
+        iteminvoicesalesdraftlist.remove(iteminvoicesalesdraftlist.size()-1);
         return iteminvoicesalesdraftlist;
     }
     
@@ -152,6 +157,7 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
     
     public void setItemInvoiceSalesDraftList(List<ItemInvoiceSalesDraft> iteminvoicesalesdraftlist){
         this.iteminvoicesalesdraftlist = iteminvoicesalesdraftlist;
+        addRow(createEmptyItemInvoiceSalesDraft(invoiceid));
         fireTableDataChanged();
     }
     
@@ -190,6 +196,7 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         newiis.setPrice(0);
         newiis.setDiscount(0);
         newiis.setInvoicesalesdraft(invoicesalesdraft);
+        newiis.setBox("");
         
         return newiis;
     }
