@@ -7,6 +7,7 @@ package com.purnama.pjm_client.gui.main;
 
 import com.purnama.pjm_client.gui.inner.home.BrandHome;
 import com.purnama.pjm_client.gui.inner.home.CurrencyHome;
+import com.purnama.pjm_client.gui.inner.home.InvoicePurchaseDraftHome;
 import com.purnama.pjm_client.gui.inner.home.InvoiceSalesDraftHome;
 import com.purnama.pjm_client.gui.inner.home.ItemGroupHome;
 import com.purnama.pjm_client.gui.inner.home.ItemHome;
@@ -15,6 +16,8 @@ import com.purnama.pjm_client.gui.inner.home.ModelHome;
 import com.purnama.pjm_client.gui.inner.home.NumberingHome;
 import com.purnama.pjm_client.gui.inner.home.PartnerGroupHome;
 import com.purnama.pjm_client.gui.inner.home.PartnerHome;
+import com.purnama.pjm_client.gui.inner.home.ReturnPurchaseDraftHome;
+import com.purnama.pjm_client.gui.inner.home.ReturnSalesDraftHome;
 import com.purnama.pjm_client.gui.inner.home.RoleHome;
 import com.purnama.pjm_client.gui.inner.home.UserHome;
 import com.purnama.pjm_client.gui.inner.home.WarehouseHome;
@@ -91,6 +94,12 @@ public class MainNavigation extends MyPanel{
         
         DefaultMutableTreeNode invoicesalesdraft = new DefaultMutableTreeNode(GlobalFields.
                 PROPERTIES.getProperty("MENU_INVOICESALESDRAFT"));
+        DefaultMutableTreeNode invoicepurchasedraft = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_INVOICEPURCHASEDRAFT"));
+        DefaultMutableTreeNode returnsalesdraft = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_RETURNSALESDRAFT"));
+        DefaultMutableTreeNode returnpurchasedraft = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_RETURNPURCHASEDRAFT"));
         
         DefaultMutableTreeNode sales = new DefaultMutableTreeNode("Sales");
         DefaultMutableTreeNode purchase = new DefaultMutableTreeNode("Purchase");
@@ -123,6 +132,9 @@ public class MainNavigation extends MyPanel{
         group.add(partnergroup);
         
         draft.add(invoicesalesdraft);
+        draft.add(invoicepurchasedraft);
+        draft.add(returnsalesdraft);
+        draft.add(returnpurchasedraft);
         
         menu.add(sales);
         menu.add(purchase);
@@ -188,6 +200,15 @@ public class MainNavigation extends MyPanel{
                         }
                         else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_INVOICESALESDRAFT"))){
                             maintabbedpane.addTab(new InvoiceSalesDraftHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_INVOICEPURCHASEDRAFT"))){
+                            maintabbedpane.addTab(new InvoicePurchaseDraftHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_RETURNSALESDRAFT"))){
+                            maintabbedpane.addTab(new ReturnSalesDraftHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_RETURNPURCHASEDRAFT"))){
+                            maintabbedpane.addTab(new ReturnPurchaseDraftHome());
                         }
                     }
                 }

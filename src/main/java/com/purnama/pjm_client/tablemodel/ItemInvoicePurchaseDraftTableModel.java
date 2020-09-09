@@ -6,8 +6,8 @@
 package com.purnama.pjm_client.tablemodel;
 
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
-import com.purnama.pjm_client.model.transactional.draft.InvoiceSalesDraft;
-import com.purnama.pjm_client.model.transactional.draft.ItemInvoiceSalesDraft;
+import com.purnama.pjm_client.model.transactional.draft.InvoicePurchaseDraft;
+import com.purnama.pjm_client.model.transactional.draft.ItemInvoicePurchaseDraft;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.purnama.pjm_client.util.GlobalFunctions;
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author p_cor
  */
-public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
+public class ItemInvoicePurchaseDraftTableModel extends AbstractTableModel{
     private final int invoiceid;
     
     private final DiscountSubtotalPanel discountsubtotalpanel;
     
-    private List<ItemInvoiceSalesDraft> iteminvoicesalesdraftlist = new ArrayList<>();
-    private final ArrayList<ItemInvoiceSalesDraft> deletediteminvoicesalesdraftlist;
+    private List<ItemInvoicePurchaseDraft> iteminvoicepurchasedraftlist = new ArrayList<>();
+    private final ArrayList<ItemInvoicePurchaseDraft> deletediteminvoicepurchasedraftlist;
     
     String[] columnNames = new String[]{
         GlobalFields.PROPERTIES.getProperty("TABLE_NO"), 
@@ -38,18 +38,18 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         GlobalFields.PROPERTIES.getProperty("TABLE_ACTION")
     };
     
-    public ItemInvoiceSalesDraftTableModel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
+    public ItemInvoicePurchaseDraftTableModel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
         super();
         
         this.invoiceid = invoiceid;
         this.discountsubtotalpanel = discountsubtotalpanel;
         
-        deletediteminvoicesalesdraftlist = new ArrayList<>();
+        deletediteminvoicepurchasedraftlist = new ArrayList<>();
     }
 
     @Override
     public int getRowCount() {
-        return iteminvoicesalesdraftlist.size();
+        return iteminvoicepurchasedraftlist.size();
     }
 
     @Override
@@ -59,17 +59,17 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        ItemInvoiceSalesDraft iteminvoicesalesdraft = iteminvoicesalesdraftlist.get(rowIndex);
+        ItemInvoicePurchaseDraft iteminvoicepurchasedraft = iteminvoicepurchasedraftlist.get(rowIndex);
         
         Object[] values = new Object[]{
             String.valueOf(rowIndex + 1), 
-            iteminvoicesalesdraft.getDescription(),
-            iteminvoicesalesdraft.getFormattedQuantity(),
-            iteminvoicesalesdraft.getFormattedPrice(),
-            iteminvoicesalesdraft.getFormattedDiscount_percentage(),
-            iteminvoicesalesdraft.getFormattedDiscount(),
-            iteminvoicesalesdraft.getFormattedTotal(),
-            iteminvoicesalesdraft.getBox(),
+            iteminvoicepurchasedraft.getDescription(),
+            iteminvoicepurchasedraft.getFormattedQuantity(),
+            iteminvoicepurchasedraft.getFormattedPrice(),
+            iteminvoicepurchasedraft.getFormattedDiscount_percentage(),
+            iteminvoicepurchasedraft.getFormattedDiscount(),
+            iteminvoicepurchasedraft.getFormattedTotal(),
+            iteminvoicepurchasedraft.getBox(),
             ""
         };
         return values[columnIndex];
@@ -88,7 +88,7 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
     
     @Override
     public void setValueAt(Object value, int row, int col){
-        ItemInvoiceSalesDraft iisd = iteminvoicesalesdraftlist.get(row);
+        ItemInvoicePurchaseDraft iisd = iteminvoicepurchasedraftlist.get(row);
         
         if(col == 1){
             String description = String.valueOf(value);
@@ -130,14 +130,14 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         }
         
         if(row+1 == getRowCount()){
-            iteminvoicesalesdraftlist.add(
-                    createEmptyItemInvoiceSalesDraft(invoiceid));
+            iteminvoicepurchasedraftlist.add(
+                    createEmptyItemInvoicePurchaseDraft(invoiceid));
         }
     }
     
     @Override
     public boolean isCellEditable(int row, int col){
-        if(!iteminvoicesalesdraftlist.get(row).getDescription().isEmpty()){
+        if(!iteminvoicepurchasedraftlist.get(row).getDescription().isEmpty()){
             return col == 1 || col == 2 || col == 3 || col == 4 || col == 5 || col == 7;
         }
         else{
@@ -145,56 +145,56 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         }
     }
     
-    public List<ItemInvoiceSalesDraft> getItemInvoiceSalesDraftList(){
-        iteminvoicesalesdraftlist.remove(iteminvoicesalesdraftlist.size()-1);
-        return iteminvoicesalesdraftlist;
+    public List<ItemInvoicePurchaseDraft> getItemInvoicePurchaseDraftList(){
+        iteminvoicepurchasedraftlist.remove(iteminvoicepurchasedraftlist.size()-1);
+        return iteminvoicepurchasedraftlist;
     }
     
-    public List<ItemInvoiceSalesDraft> getDeletedItemInvoiceSalesDraftList(){
-        return deletediteminvoicesalesdraftlist;
+    public List<ItemInvoicePurchaseDraft> getDeletedItemInvoicePurchaseDraftList(){
+        return deletediteminvoicepurchasedraftlist;
     }
     
-    public void setItemInvoiceSalesDraftList(List<ItemInvoiceSalesDraft> iteminvoicesalesdraftlist){
-        this.iteminvoicesalesdraftlist = iteminvoicesalesdraftlist;
-        addRow(createEmptyItemInvoiceSalesDraft(invoiceid));
+    public void setItemInvoicePurchaseDraftList(List<ItemInvoicePurchaseDraft> iteminvoicepurchasedraftlist){
+        this.iteminvoicepurchasedraftlist = iteminvoicepurchasedraftlist;
+        addRow(createEmptyItemInvoicePurchaseDraft(invoiceid));
         fireTableDataChanged();
     }
     
-    public ItemInvoiceSalesDraft getItemInvoiceSalesDraft(int index){
-        return iteminvoicesalesdraftlist.get(index);
+    public ItemInvoicePurchaseDraft getItemInvoicePurchaseDraft(int index){
+        return iteminvoicepurchasedraftlist.get(index);
     }
     
-    public void addRow(ItemInvoiceSalesDraft iteminvoicesalesdraft) {
-        iteminvoicesalesdraftlist.add(iteminvoicesalesdraft);
+    public void addRow(ItemInvoicePurchaseDraft iteminvoicepurchasedraft) {
+        iteminvoicepurchasedraftlist.add(iteminvoicepurchasedraft);
     }
     
     public void deleteRow(int rownum){
           
-        ItemInvoiceSalesDraft iisd = iteminvoicesalesdraftlist.get(rownum);
+        ItemInvoicePurchaseDraft iisd = iteminvoicepurchasedraftlist.get(rownum);
         
-        deletediteminvoicesalesdraftlist.add(iisd);
+        deletediteminvoicepurchasedraftlist.add(iisd);
         
-        iteminvoicesalesdraftlist.remove(rownum);
+        iteminvoicepurchasedraftlist.remove(rownum);
         fireTableRowsDeleted(rownum, rownum);
         
         discountsubtotalpanel.setSubtotal(discountsubtotalpanel.getSubtotal() - iisd.getSubtotal());
         discountsubtotalpanel.setDiscount(discountsubtotalpanel.getDiscount() - iisd.getDiscount());
         
         if(getRowCount() == 0){
-            addRow(createEmptyItemInvoiceSalesDraft(invoiceid));
+            addRow(createEmptyItemInvoicePurchaseDraft(invoiceid));
         }
     }
     
-    public ItemInvoiceSalesDraft createEmptyItemInvoiceSalesDraft(int invoiceid){
-        InvoiceSalesDraft invoicesalesdraft = new InvoiceSalesDraft();
-        invoicesalesdraft.setId(invoiceid);
+    public ItemInvoicePurchaseDraft createEmptyItemInvoicePurchaseDraft(int invoiceid){
+        InvoicePurchaseDraft invoicepurchasedraft = new InvoicePurchaseDraft();
+        invoicepurchasedraft.setId(invoiceid);
         
-        ItemInvoiceSalesDraft newiis = new ItemInvoiceSalesDraft();
+        ItemInvoicePurchaseDraft newiis = new ItemInvoicePurchaseDraft();
         newiis.setDescription("");
         newiis.setQuantity(1);
         newiis.setPrice(0);
         newiis.setDiscount(0);
-        newiis.setInvoicesalesdraft(invoicesalesdraft);
+        newiis.setInvoicepurchasedraft(invoicepurchasedraft);
         newiis.setBox("");
         
         return newiis;

@@ -6,12 +6,12 @@
 package com.purnama.pjm_client.gui.inner.home;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.purnama.pjm_client.gui.inner.detail.InvoiceSalesDraftDetail;
+import com.purnama.pjm_client.gui.inner.detail.ReturnPurchaseDraftDetail;
 import com.purnama.pjm_client.gui.main.MainTabbedPane;
-import com.purnama.pjm_client.model.transactional.draft.InvoiceSalesDraft;
-import com.purnama.pjm_client.model.pagination.InvoiceSalesDraftPagination;
+import com.purnama.pjm_client.model.transactional.draft.ReturnPurchaseDraft;
+import com.purnama.pjm_client.model.pagination.ReturnPurchaseDraftPagination;
 import com.purnama.pjm_client.rest.RestClient;
-import com.purnama.pjm_client.tablemodel.InvoiceSalesDraftTableModel;
+import com.purnama.pjm_client.tablemodel.ReturnPurchaseDraftTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
@@ -26,14 +26,14 @@ import javax.swing.table.TableRowSorter;
  *
  * @author p_cor
  */
-public class InvoiceSalesDraftHome extends HomePanel{
+public class ReturnPurchaseDraftHome extends HomePanel{
     
-    private final InvoiceSalesDraftTableModel invoicesalesdrafttablemodel;
+    private final ReturnPurchaseDraftTableModel returnpurchasedrafttablemodel;
     
-    public InvoiceSalesDraftHome() {
-        super(GlobalFields.PROPERTIES.getProperty("PANEL_INVOICESALESDRAFT_HOME"));
+    public ReturnPurchaseDraftHome() {
+        super(GlobalFields.PROPERTIES.getProperty("PANEL_RETURNPURCHASEDRAFT_HOME"));
          
-        invoicesalesdrafttablemodel = new InvoiceSalesDraftTableModel();
+        returnpurchasedrafttablemodel = new ReturnPurchaseDraftTableModel();
         
         sorter = new TableRowSorter<>(table.getModel());
         
@@ -41,7 +41,7 @@ public class InvoiceSalesDraftHome extends HomePanel{
     }
     
     private void init(){
-        table.setModel(invoicesalesdrafttablemodel);
+        table.setModel(returnpurchasedrafttablemodel);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class InvoiceSalesDraftHome extends HomePanel{
                 
                 publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
                 
-                response = RestClient.get("invoicesalesdrafts?itemperpage=" + itemperpage + "&page=" + page +
+                response = RestClient.get("returnpurchasedrafts?itemperpage=" + itemperpage + "&page=" + page +
                         "&keyword=" + keyword);
                 
                 return true;
@@ -90,17 +90,17 @@ public class InvoiceSalesDraftHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    InvoiceSalesDraftPagination invoicesalesdraft_pagination;
+                    ReturnPurchaseDraftPagination returnpurchasedraft_pagination;
                     
                     try{
-                        invoicesalesdraft_pagination = mapper.readValue(output, InvoiceSalesDraftPagination.class);
+                        returnpurchasedraft_pagination = mapper.readValue(output, ReturnPurchaseDraftPagination.class);
                         
-                        totalpages = invoicesalesdraft_pagination.getTotalpages();
+                        totalpages = returnpurchasedraft_pagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        invoicesalesdrafttablemodel.setInvoiceSalesDraftList(invoicesalesdraft_pagination.getInvoicesalesdrafts());
+                        returnpurchasedrafttablemodel.setReturnPurchaseDraftList(returnpurchasedraft_pagination.getReturnpurchasedrafts());
                     }
                     catch(IOException e){
                         System.out.println(e);
@@ -124,7 +124,7 @@ public class InvoiceSalesDraftHome extends HomePanel{
                 
                 publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
                 
-                response = RestClient.post("invoicesalesdrafts", "");
+                response = RestClient.post("returnpurchasedrafts", "");
                 
                 return true;
             }
@@ -177,7 +177,7 @@ public class InvoiceSalesDraftHome extends HomePanel{
         MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
                 getAncestorOfClass(JTabbedPane.class, this);
         
-        tabbedPane.insertTab(this.getIndex()+1, new InvoiceSalesDraftDetail(id));
+        tabbedPane.insertTab(this.getIndex()+1, new ReturnPurchaseDraftDetail(id));
     }
     
     @Override
@@ -185,10 +185,10 @@ public class InvoiceSalesDraftHome extends HomePanel{
         MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
                 getAncestorOfClass(JTabbedPane.class, this);
         
-        InvoiceSalesDraft invoicesalesdraft = invoicesalesdrafttablemodel.getInvoiceSalesDraft(table.
+        ReturnPurchaseDraft returnpurchasedraft = returnpurchasedrafttablemodel.getReturnPurchaseDraft(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new InvoiceSalesDraftDetail(invoicesalesdraft.getId()));
+        tabbedPane.insertTab(this.getIndex()+1, new ReturnPurchaseDraftDetail(returnpurchasedraft.getId()));
     }
 
     @Override
@@ -196,10 +196,10 @@ public class InvoiceSalesDraftHome extends HomePanel{
         MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
                 getAncestorOfClass(JTabbedPane.class, this);
         
-        InvoiceSalesDraft invoicesalesdraft = invoicesalesdrafttablemodel.getInvoiceSalesDraft(table.
+        ReturnPurchaseDraft returnpurchasedraft = returnpurchasedrafttablemodel.getReturnPurchaseDraft(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new InvoiceSalesDraftDetail(invoicesalesdraft.getId()));
+        tabbedPane.insertTab(this.getIndex()+1, new ReturnPurchaseDraftDetail(returnpurchasedraft.getId()));
     }
     
 }

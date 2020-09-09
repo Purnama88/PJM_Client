@@ -6,8 +6,8 @@
 package com.purnama.pjm_client.tablemodel;
 
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
-import com.purnama.pjm_client.model.transactional.draft.InvoiceSalesDraft;
-import com.purnama.pjm_client.model.transactional.draft.ItemInvoiceSalesDraft;
+import com.purnama.pjm_client.model.transactional.draft.ReturnSalesDraft;
+import com.purnama.pjm_client.model.transactional.draft.ItemReturnSalesDraft;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.purnama.pjm_client.util.GlobalFunctions;
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author p_cor
  */
-public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
+public class ItemReturnSalesDraftTableModel extends AbstractTableModel{
     private final int invoiceid;
     
     private final DiscountSubtotalPanel discountsubtotalpanel;
     
-    private List<ItemInvoiceSalesDraft> iteminvoicesalesdraftlist = new ArrayList<>();
-    private final ArrayList<ItemInvoiceSalesDraft> deletediteminvoicesalesdraftlist;
+    private List<ItemReturnSalesDraft> itemreturnsalesdraftlist = new ArrayList<>();
+    private final ArrayList<ItemReturnSalesDraft> deleteditemreturnsalesdraftlist;
     
     String[] columnNames = new String[]{
         GlobalFields.PROPERTIES.getProperty("TABLE_NO"), 
@@ -38,18 +38,18 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         GlobalFields.PROPERTIES.getProperty("TABLE_ACTION")
     };
     
-    public ItemInvoiceSalesDraftTableModel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
+    public ItemReturnSalesDraftTableModel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
         super();
         
         this.invoiceid = invoiceid;
         this.discountsubtotalpanel = discountsubtotalpanel;
         
-        deletediteminvoicesalesdraftlist = new ArrayList<>();
+        deleteditemreturnsalesdraftlist = new ArrayList<>();
     }
 
     @Override
     public int getRowCount() {
-        return iteminvoicesalesdraftlist.size();
+        return itemreturnsalesdraftlist.size();
     }
 
     @Override
@@ -59,17 +59,17 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        ItemInvoiceSalesDraft iteminvoicesalesdraft = iteminvoicesalesdraftlist.get(rowIndex);
+        ItemReturnSalesDraft itemreturnsalesdraft = itemreturnsalesdraftlist.get(rowIndex);
         
         Object[] values = new Object[]{
             String.valueOf(rowIndex + 1), 
-            iteminvoicesalesdraft.getDescription(),
-            iteminvoicesalesdraft.getFormattedQuantity(),
-            iteminvoicesalesdraft.getFormattedPrice(),
-            iteminvoicesalesdraft.getFormattedDiscount_percentage(),
-            iteminvoicesalesdraft.getFormattedDiscount(),
-            iteminvoicesalesdraft.getFormattedTotal(),
-            iteminvoicesalesdraft.getBox(),
+            itemreturnsalesdraft.getDescription(),
+            itemreturnsalesdraft.getFormattedQuantity(),
+            itemreturnsalesdraft.getFormattedPrice(),
+            itemreturnsalesdraft.getFormattedDiscount_percentage(),
+            itemreturnsalesdraft.getFormattedDiscount(),
+            itemreturnsalesdraft.getFormattedTotal(),
+            itemreturnsalesdraft.getBox(),
             ""
         };
         return values[columnIndex];
@@ -88,7 +88,7 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
     
     @Override
     public void setValueAt(Object value, int row, int col){
-        ItemInvoiceSalesDraft iisd = iteminvoicesalesdraftlist.get(row);
+        ItemReturnSalesDraft iisd = itemreturnsalesdraftlist.get(row);
         
         if(col == 1){
             String description = String.valueOf(value);
@@ -130,14 +130,14 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         }
         
         if(row+1 == getRowCount()){
-            iteminvoicesalesdraftlist.add(
-                    createEmptyItemInvoiceSalesDraft(invoiceid));
+            itemreturnsalesdraftlist.add(
+                    createEmptyItemReturnSalesDraft(invoiceid));
         }
     }
     
     @Override
     public boolean isCellEditable(int row, int col){
-        if(!iteminvoicesalesdraftlist.get(row).getDescription().isEmpty()){
+        if(!itemreturnsalesdraftlist.get(row).getDescription().isEmpty()){
             return col == 1 || col == 2 || col == 3 || col == 4 || col == 5 || col == 7;
         }
         else{
@@ -145,56 +145,56 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         }
     }
     
-    public List<ItemInvoiceSalesDraft> getItemInvoiceSalesDraftList(){
-        iteminvoicesalesdraftlist.remove(iteminvoicesalesdraftlist.size()-1);
-        return iteminvoicesalesdraftlist;
+    public List<ItemReturnSalesDraft> getItemReturnSalesDraftList(){
+        itemreturnsalesdraftlist.remove(itemreturnsalesdraftlist.size()-1);
+        return itemreturnsalesdraftlist;
     }
     
-    public List<ItemInvoiceSalesDraft> getDeletedItemInvoiceSalesDraftList(){
-        return deletediteminvoicesalesdraftlist;
+    public List<ItemReturnSalesDraft> getDeletedItemReturnSalesDraftList(){
+        return deleteditemreturnsalesdraftlist;
     }
     
-    public void setItemInvoiceSalesDraftList(List<ItemInvoiceSalesDraft> iteminvoicesalesdraftlist){
-        this.iteminvoicesalesdraftlist = iteminvoicesalesdraftlist;
-        addRow(createEmptyItemInvoiceSalesDraft(invoiceid));
+    public void setItemReturnSalesDraftList(List<ItemReturnSalesDraft> itemreturnsalesdraftlist){
+        this.itemreturnsalesdraftlist = itemreturnsalesdraftlist;
+        addRow(createEmptyItemReturnSalesDraft(invoiceid));
         fireTableDataChanged();
     }
     
-    public ItemInvoiceSalesDraft getItemInvoiceSalesDraft(int index){
-        return iteminvoicesalesdraftlist.get(index);
+    public ItemReturnSalesDraft getItemReturnSalesDraft(int index){
+        return itemreturnsalesdraftlist.get(index);
     }
     
-    public void addRow(ItemInvoiceSalesDraft iteminvoicesalesdraft) {
-        iteminvoicesalesdraftlist.add(iteminvoicesalesdraft);
+    public void addRow(ItemReturnSalesDraft itemreturnsalesdraft) {
+        itemreturnsalesdraftlist.add(itemreturnsalesdraft);
     }
     
     public void deleteRow(int rownum){
           
-        ItemInvoiceSalesDraft iisd = iteminvoicesalesdraftlist.get(rownum);
+        ItemReturnSalesDraft iisd = itemreturnsalesdraftlist.get(rownum);
         
-        deletediteminvoicesalesdraftlist.add(iisd);
+        deleteditemreturnsalesdraftlist.add(iisd);
         
-        iteminvoicesalesdraftlist.remove(rownum);
+        itemreturnsalesdraftlist.remove(rownum);
         fireTableRowsDeleted(rownum, rownum);
         
         discountsubtotalpanel.setSubtotal(discountsubtotalpanel.getSubtotal() - iisd.getSubtotal());
         discountsubtotalpanel.setDiscount(discountsubtotalpanel.getDiscount() - iisd.getDiscount());
         
         if(getRowCount() == 0){
-            addRow(createEmptyItemInvoiceSalesDraft(invoiceid));
+            addRow(createEmptyItemReturnSalesDraft(invoiceid));
         }
     }
     
-    public ItemInvoiceSalesDraft createEmptyItemInvoiceSalesDraft(int invoiceid){
-        InvoiceSalesDraft invoicesalesdraft = new InvoiceSalesDraft();
-        invoicesalesdraft.setId(invoiceid);
+    public ItemReturnSalesDraft createEmptyItemReturnSalesDraft(int invoiceid){
+        ReturnSalesDraft returnsalesdraft = new ReturnSalesDraft();
+        returnsalesdraft.setId(invoiceid);
         
-        ItemInvoiceSalesDraft newiis = new ItemInvoiceSalesDraft();
+        ItemReturnSalesDraft newiis = new ItemReturnSalesDraft();
         newiis.setDescription("");
         newiis.setQuantity(1);
         newiis.setPrice(0);
         newiis.setDiscount(0);
-        newiis.setInvoicesalesdraft(invoicesalesdraft);
+        newiis.setReturnsalesdraft(returnsalesdraft);
         newiis.setBox("");
         
         return newiis;
