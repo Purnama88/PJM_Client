@@ -69,11 +69,9 @@ public abstract class InvoiceDraftDetailPanel extends MainPanel implements Docum
         middledetailpanel = new MyPanel(new GridLayout(3, 1));
         rightdetailpanel = new MyPanel(new GridLayout(3, 1));
         
-        warehousepanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_WAREHOUSE"),
-            "", false, this);
+        warehousepanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_WAREHOUSE"), "");
         
-        idpanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_ID"),
-            "", false, this);
+        idpanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_ID"), "");
         
         datepanel = new DatePanel(new Date(), GlobalFields.PROPERTIES.getProperty("LABEL_DATE"));
         
@@ -109,6 +107,9 @@ public abstract class InvoiceDraftDetailPanel extends MainPanel implements Docum
     }
     
     private void init(){
+        idpanel.setTextFieldEnabled(false);
+        warehousepanel.setTextFieldEnabled(false);
+        
         detailpanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
         detailpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         

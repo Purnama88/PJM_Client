@@ -6,21 +6,19 @@
 package com.purnama.pjm_client.gui.inner.detail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.purnama.pjm_client.gui.inner.detail.table.ItemInvoiceSalesDraftTablePanel;
-import com.purnama.pjm_client.gui.inner.detail.util.CurrencyComboBoxPanel;
-import com.purnama.pjm_client.gui.inner.detail.util.DatePanel;
-import com.purnama.pjm_client.gui.inner.detail.util.LabelDecimalTextFieldPanel;
+import com.purnama.pjm_client.gui.inner.detail.table.ItemDeliveryDraftTablePanel;
+import com.purnama.pjm_client.gui.inner.detail.util.DestinationPanel;
+import com.purnama.pjm_client.gui.inner.detail.util.LabelTextFieldPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.NumberingComboBoxPanel;
-import com.purnama.pjm_client.gui.inner.detail.util.PartnerComboBoxPanel;
-import com.purnama.pjm_client.gui.inner.home.InvoiceSalesDraftHome;
+import com.purnama.pjm_client.gui.inner.home.DeliveryDraftHome;
 import com.purnama.pjm_client.gui.main.MainTabbedPane;
-import com.purnama.pjm_client.model.transactional.draft.InvoiceSalesDraft;
+import com.purnama.pjm_client.model.transactional.draft.DeliveryDraft;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -30,56 +28,55 @@ import javax.swing.SwingWorker;
  *
  * @author p_cor
  */
-public class InvoiceSalesDraftDetail extends InvoiceDraftDetailPanel{
-
-    private final PartnerComboBoxPanel partnerpanel;
-    
-    private final CurrencyComboBoxPanel currencypanel;
+public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
     
     private final NumberingComboBoxPanel numberingpanel;
     
-    private final DatePanel duedatepanel;
+    private final LabelTextFieldPanel cartypepanel, carnumberpanel;
     
-    private final LabelDecimalTextFieldPanel ratepanel;
+    private final DestinationPanel destinationpanel;
     
-    private final ItemInvoiceSalesDraftTablePanel iteminvoicesalesdrafttablepanel;
+    private final ItemDeliveryDraftTablePanel itemdeliverydrafttablepanel;
     
-    private InvoiceSalesDraft invoicesalesdraft;
+    private DeliveryDraft deliverydraft;
     
-    private final int invoiceid;
+    private final int deliveryid;
     
-    public InvoiceSalesDraftDetail(int invoiceid){
-        super(GlobalFields.PROPERTIES.getProperty("PANEL_INVOICESALESDRAFT_DETAIL"));
+    public DeliveryDraftDetail(int deliveryid){
+        super(GlobalFields.PROPERTIES.getProperty("PANEL_DELIVERYDRAFT_DETAIL"));
         
-        this.invoiceid = invoiceid;
+        this.deliveryid = deliveryid;
         
-        partnerpanel = new PartnerComboBoxPanel(PartnerComboBoxPanel.CUSTOMER);
-        numberingpanel = new NumberingComboBoxPanel(2);
-        currencypanel = new CurrencyComboBoxPanel();
-        ratepanel = new LabelDecimalTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_RATE"), 1);
-        duedatepanel = new DatePanel(new Date(), GlobalFields.PROPERTIES.getProperty("LABEL_DUEDATE"));
+        itemdeliverydrafttablepanel = new ItemDeliveryDraftTablePanel(deliveryid);
         
-        iteminvoicesalesdrafttablepanel = new ItemInvoiceSalesDraftTablePanel(invoiceid, discountsubtotalpanel);
+        destinationpanel = new DestinationPanel("");
+        
+        numberingpanel = new NumberingComboBoxPanel(6);
+        cartypepanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_CARTYPE") ,"");
+        carnumberpanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_CARNUMBER"), "");
         
         init();
     }
     
     private void init(){
+        
         leftdetailpanel.add(numberingpanel);
         
-        middledetailpanel.add(duedatepanel);
-        middledetailpanel.add(partnerpanel);
+        middledetailpanel.add(cartypepanel);
+        middledetailpanel.add(carnumberpanel);
         
-        rightdetailpanel.add(currencypanel);
-        rightdetailpanel.add(ratepanel);
+        rightdetailpanel.setLayout(new GridLayout(1,1));
+        rightdetailpanel.add(destinationpanel);
+        
+        rightsummarypanel.removeAll();
         
         tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("LABEL_CONTENT"), 
-                iteminvoicesalesdrafttablepanel);
+                itemdeliverydrafttablepanel);
         
         savebutton.addActionListener((ActionEvent e) -> {
             save();
-            iteminvoicesalesdrafttablepanel.submitItemInvoiceSalesDraftList();
-            iteminvoicesalesdrafttablepanel.submitDeletedItemInvoiceSalesDraftList();
+            itemdeliverydrafttablepanel.submitItemDeliveryDraftList();
+            itemdeliverydrafttablepanel.submitDeletedItemDeliveryDraftList();
             JOptionPane.showMessageDialog(GlobalFields.MAINFRAME, 
                     GlobalFields.PROPERTIES.getProperty("NOTIFICATION_SAVED"),
                 "", JOptionPane.INFORMATION_MESSAGE);
@@ -87,7 +84,7 @@ public class InvoiceSalesDraftDetail extends InvoiceDraftDetailPanel{
         
         load();
     }
-    
+
     @Override
     protected void load() {
         SwingWorker<Boolean, String> worker = new SwingWorker<Boolean, String>() {
@@ -101,7 +98,7 @@ public class InvoiceSalesDraftDetail extends InvoiceDraftDetailPanel{
                 
                 publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
                 
-                response = RestClient.get("invoicesalesdrafts/" + invoiceid);
+                response = RestClient.get("deliverydrafts/" + deliveryid);
                 
                 return true;
             }
@@ -130,24 +127,16 @@ public class InvoiceSalesDraftDetail extends InvoiceDraftDetailPanel{
                     ObjectMapper mapper = new ObjectMapper();
 
                     try{
-                        invoicesalesdraft = mapper.readValue(output, InvoiceSalesDraft.class);
+                        deliverydraft = mapper.readValue(output, DeliveryDraft.class);
                         
-                        notepanel.setNote(invoicesalesdraft.getNote());
-                        datepanel.setDate(invoicesalesdraft.getTransactiondate());
-                        warehousepanel.setTextFieldValue(invoicesalesdraft.getWarehouse().getCode());
-                        idpanel.setTextFieldValue(invoicesalesdraft.getDraftid());
-                        partnerpanel.setComboBoxValue(invoicesalesdraft.getPartner());
-                        duedatepanel.setDate(invoicesalesdraft.getDuedate());
-                        numberingpanel.setComboBoxValue(invoicesalesdraft.getNumbering());
-                        currencypanel.setComboBoxValue(invoicesalesdraft.getCurrency());
-                        ratepanel.setTextFieldValue(invoicesalesdraft.getRate());
-                        
-                        expensespanel.setRounding(invoicesalesdraft.getRounding());
-                        expensespanel.setFreight(invoicesalesdraft.getFreight());
-                        expensespanel.setTax(invoicesalesdraft.getTax());
-                        
-                        discountsubtotalpanel.setSubtotal(invoicesalesdraft.getSubtotal());
-                        discountsubtotalpanel.setDiscount(invoicesalesdraft.getDiscount());
+                        notepanel.setNote(deliverydraft.getNote());
+                        datepanel.setDate(deliverydraft.getInvoicedate());
+                        warehousepanel.setTextFieldValue(deliverydraft.getWarehouse().getCode());
+                        idpanel.setTextFieldValue(deliverydraft.getDraftid());
+                        destinationpanel.setDestination(deliverydraft.getDestination());
+                        notepanel.setNote(deliverydraft.getNote());
+                        cartypepanel.setTextFieldValue(deliverydraft.getVehicletype());
+                        carnumberpanel.setTextFieldValue(deliverydraft.getVehiclecode());
                     }
                     catch(IOException e){
 
@@ -164,7 +153,7 @@ public class InvoiceSalesDraftDetail extends InvoiceDraftDetailPanel{
         MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
                 getAncestorOfClass(MainTabbedPane.class, this);
         
-        tabbedPane.changeTabPanel(getIndex(), new InvoiceSalesDraftHome());
+        tabbedPane.changeTabPanel(getIndex(), new DeliveryDraftHome());
     }
 
     @Override
@@ -179,21 +168,14 @@ public class InvoiceSalesDraftDetail extends InvoiceDraftDetailPanel{
                 
                 publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
 
-                invoicesalesdraft.setCurrency(currencypanel.getComboBoxValue());
-                invoicesalesdraft.setInvoicedate(datepanel.getDate());
-                invoicesalesdraft.setDiscount(discountsubtotalpanel.getDiscount());
-                invoicesalesdraft.setDuedate(duedatepanel.getDate());
-                invoicesalesdraft.setFreight(expensespanel.getFreight());
-                invoicesalesdraft.setNote(notepanel.getNote());
-                invoicesalesdraft.setNumbering(numberingpanel.getComboBoxValue());
-                invoicesalesdraft.setPartner(partnerpanel.getComboBoxValue());
-                invoicesalesdraft.setRate(ratepanel.getTextFieldValue());
-                invoicesalesdraft.setRounding(expensespanel.getRounding());
-                invoicesalesdraft.setStatus(true);
-                invoicesalesdraft.setSubtotal(discountsubtotalpanel.getSubtotal());
-                invoicesalesdraft.setTax(expensespanel.getTax());
+                deliverydraft.setInvoicedate(datepanel.getDate());
+                deliverydraft.setNote(notepanel.getNote());
+                deliverydraft.setNumbering(numberingpanel.getComboBoxValue());
+                deliverydraft.setDestination(destinationpanel.getDestination());
+                deliverydraft.setVehiclecode(carnumberpanel.getTextFieldValue());
+                deliverydraft.setVehicletype(cartypepanel.getTextFieldValue());
 
-                response = RestClient.put("invoicesalesdrafts", invoicesalesdraft);
+                response = RestClient.put("deliverydrafts", deliverydraft);
 
                 return true;
             }
@@ -223,19 +205,15 @@ public class InvoiceSalesDraftDetail extends InvoiceDraftDetailPanel{
         };
         saveworker.execute();
     }
-    
+
     @Override
     protected void close() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public void refresh(){
-        
+    public void refresh() {
         numberingpanel.refresh();
-        partnerpanel.refresh();
-        currencypanel.refresh();
-        
         load();
     }
 }

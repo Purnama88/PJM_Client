@@ -38,7 +38,7 @@ public class InternalInvoiceDraft extends Nontransactional{
     protected Date invoicedate;
     
     @JsonIgnore
-    public String getFormattedTransactionDate(){
+    public String getFormattedTransactiondate(){
         
         DateFormat dateformat = new SimpleDateFormat ("dd MMM YYYY HH:mm:ss");
         dateformat.setTimeZone(TimeZone.getTimeZone("UCT+7"));
@@ -46,7 +46,7 @@ public class InternalInvoiceDraft extends Nontransactional{
     }
     
     @JsonIgnore
-    public String getFormattedInvoiceDate(){
+    public String getFormattedInvoicedate(){
         
         DateFormat dateformat = new SimpleDateFormat ("dd MMM YYYY HH:mm:ss");
         dateformat.setTimeZone(TimeZone.getTimeZone("UCT+7"));

@@ -5,7 +5,7 @@
  */
 package com.purnama.pjm_client.model.transactional.draft;
 
-import com.purnama.pjm_client.model.InternalInvoiceDraft;
+import com.purnama.pjm_client.model.InternalItemInvoiceDraft;
 import lombok.Data;
 
 /**
@@ -13,12 +13,12 @@ import lombok.Data;
  * @author p_cor
  */
 @Data
-public class DeliveryDraft extends InternalInvoiceDraft{
+public class ItemDeliveryDraft extends InternalItemInvoiceDraft{
     
-    private String destination;
+    private String quantity;
     
-    private String vehicletype;
+    private String remark;
     
-    private String vehiclecode;
+    private DeliveryDraft deliverydraft;
     
 }

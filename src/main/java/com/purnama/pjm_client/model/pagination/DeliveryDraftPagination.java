@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.purnama.pjm_client.model;
+package com.purnama.pjm_client.model.pagination;
 
+import com.purnama.pjm_client.model.transactional.draft.DeliveryDraft;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -12,8 +14,8 @@ import lombok.Data;
  * @author p_cor
  */
 @Data
-public class InternalItemInvoiceDraft {
-    protected int id;
+public class DeliveryDraftPagination extends Pagination{
     
-    protected String description;
+    private List<DeliveryDraft> deliverydrafts;
 }
+

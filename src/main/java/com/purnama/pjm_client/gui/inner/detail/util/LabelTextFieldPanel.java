@@ -21,27 +21,12 @@ public class LabelTextFieldPanel extends JPanel{
     private final MyTextField textfield, textfield2;
     private final MyLabel label;
     
-    public LabelTextFieldPanel(String labelvalue, String tfvalue, boolean editabled, DocumentListener dl){
+    public LabelTextFieldPanel(String labelvalue, String tfvalue){
         super(new FlowLayout(FlowLayout.LEFT));
         
         textfield = new MyTextField(tfvalue, 200);
         textfield2 = new MyTextField("", 98);
         label = new MyLabel(labelvalue, 100);
-        
-        setTextFieldEnabled(editabled);
-        setDocumentListener(dl);
-        
-        init();
-    }
-    
-    public LabelTextFieldPanel(String labelvalue, String tfvalue, boolean editabled){
-        super(new FlowLayout(FlowLayout.LEFT));
-        
-        textfield = new MyTextField(tfvalue, 200);
-        textfield2 = new MyTextField("", 98);
-        label = new MyLabel(labelvalue, 100);
-        
-        setTextFieldEnabled(editabled);
         
         init();
     }

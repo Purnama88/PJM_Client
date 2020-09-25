@@ -9,9 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.PercentageTableCellEditor;
-import com.purnama.pjm_client.model.transactional.draft.ItemReturnSalesDraft;
+import com.purnama.pjm_client.model.transactional.draft.ItemExpensesDraft;
 import com.purnama.pjm_client.rest.RestClient;
-import com.purnama.pjm_client.tablemodel.ItemReturnSalesDraftTableModel;
+import com.purnama.pjm_client.tablemodel.ItemExpensesDraftTableModel;
 import com.sun.jersey.api.client.ClientResponse;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -23,23 +23,23 @@ import javax.swing.table.TableColumn;
  *
  * @author p_cor
  */
-public class ItemReturnSalesDraftTablePanel extends TablePanel{
+public class ItemExpensesDraftTablePanel extends TablePanel{
     
-    private final ItemReturnSalesDraftTableModel itemreturnsalesdrafttablemodel;
+    private final ItemExpensesDraftTableModel itemexpensesdrafttablemodel;
     
     private final PercentageTableCellEditor percentagecelleditor;
     
     private final int invoiceid;
     
-    public ItemReturnSalesDraftTablePanel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
+    public ItemExpensesDraftTablePanel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
         
         this.invoiceid = invoiceid;
         
-        itemreturnsalesdrafttablemodel = new ItemReturnSalesDraftTableModel(invoiceid, discountsubtotalpanel);
+        itemexpensesdrafttablemodel = new ItemExpensesDraftTableModel(invoiceid, discountsubtotalpanel);
         
         percentagecelleditor = new PercentageTableCellEditor();
         
-        table.setModel(itemreturnsalesdrafttablemodel);
+        table.setModel(itemexpensesdrafttablemodel);
         
         init();
     }
@@ -54,7 +54,7 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
         table.getColumnModel().getColumn(1).setPreferredWidth(300);
         
         menuitemdelete.addActionListener((ActionEvent e) -> {
-            itemreturnsalesdrafttablemodel.deleteRow(table.getSelectedRow());
+            itemexpensesdrafttablemodel.deleteRow(table.getSelectedRow());
         });
     }
     
@@ -67,7 +67,7 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground(){
                 
-                response = RestClient.get("itemreturnsalesdrafts?returnid="+invoiceid);
+                response = RestClient.get("itemexpensesdrafts?expensesid="+invoiceid);
                 
                 return true;
             }
@@ -86,9 +86,9 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
                     try{
                         ArrayList list = mapper.readValue(output,
                                 TypeFactory.defaultInstance().constructCollectionType(ArrayList.class,
-                                        ItemReturnSalesDraft.class));
+                                        ItemExpensesDraft.class));
                         
-                        itemreturnsalesdrafttablemodel.setItemReturnSalesDraftList(list);
+                        itemexpensesdrafttablemodel.setItemExpensesDraftList(list);
                         
                     }
                     catch(IOException e){
@@ -101,7 +101,7 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
         worker.execute();
     }
     
-    public void submitItemReturnSalesDraftList(){
+    public void submitItemExpensesDraftList(){
         SwingWorker<Boolean, String> worker = new SwingWorker<Boolean, String>() {
             
             ClientResponse response;
@@ -109,8 +109,8 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground() {
                 
-                response = RestClient.put("itemreturnsalesdrafts", 
-                        itemreturnsalesdrafttablemodel.getItemReturnSalesDraftList());
+                response = RestClient.put("itemexpensesdrafts", 
+                        itemexpensesdrafttablemodel.getItemExpensesDraftList());
                 
                 return true;
             }
@@ -130,9 +130,9 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
                     try{
                         ArrayList list = mapper.readValue(output,
                                 TypeFactory.defaultInstance().constructCollectionType(ArrayList.class,
-                                        ItemReturnSalesDraft.class));
+                                        ItemExpensesDraft.class));
                         
-                        itemreturnsalesdrafttablemodel.setItemReturnSalesDraftList(list);
+                        itemexpensesdrafttablemodel.setItemExpensesDraftList(list);
                     }
                     catch(IOException e){
 
@@ -144,7 +144,7 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
         worker.execute();
     }
     
-    public void submitDeletedItemReturnSalesDraftList(){
+    public void submitDeletedItemExpensesDraftList(){
         SwingWorker<Boolean, String> worker = new SwingWorker<Boolean, String>() {
             
             ClientResponse response;
@@ -152,8 +152,8 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground(){
                 
-                response = RestClient.delete("itemreturnsalesdrafts",
-                        itemreturnsalesdrafttablemodel.getDeletedItemReturnSalesDraftList());
+                response = RestClient.delete("itemexpensesdrafts",
+                        itemexpensesdrafttablemodel.getDeletedItemExpensesDraftList());
                 
                 return true;
             }
