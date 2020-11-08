@@ -29,9 +29,11 @@ public class Item extends Nontransactional{
     
     private Label label;
     
+    private double wholesaleprices;
+    
     Set<ItemGroup> itemgroups = new HashSet<>();
     
-    Set<ItemGroup> models = new HashSet<>();
+    Set<Model> models = new HashSet<>();
     
     @JsonIgnore
     public String getFormattedCost(){

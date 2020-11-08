@@ -9,9 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.home.HomePanel;
 import com.purnama.pjm_client.gui.inner.home.NumberingHome;
-import com.purnama.pjm_client.gui.library.MyScrollPane;
-import com.purnama.pjm_client.gui.library.MyTable;
-import com.purnama.pjm_client.gui.main.MainPanel;
 import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Menu;
 import com.purnama.pjm_client.model.pagination.NumberingPagination;
@@ -56,6 +53,7 @@ public class NumberingDetail extends DetailPanel{
         
         detailpanel.add(namepanel);
         detailpanel.add(notepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("PANEL_NUMBERING"), numberingtable);
@@ -112,6 +110,7 @@ public class NumberingDetail extends DetailPanel{
                         idpanel.setContentValue(String.valueOf(menu.getId()));
                         namepanel.setContentValue(menu.getName());
                         notepanel.setContentValue(menu.getNote());
+                        datecreatedpanel.setContentValue(menu.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(menu.getFormattedLastmodified());
                     }
                     catch(IOException e){

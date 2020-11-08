@@ -30,7 +30,7 @@ public abstract class DetailPanel extends MainPanel{
     
     protected final MyPanel detailpanel;
     
-    protected final SelectableLabelContentPanel idpanel, statuspanel, lastmodifiedpanel, notepanel;
+    protected final SelectableLabelContentPanel idpanel, statuspanel, lastmodifiedpanel, datecreatedpanel, notepanel;
     
     public DetailPanel(String name) {
         super(name);
@@ -50,6 +50,9 @@ public abstract class DetailPanel extends MainPanel{
                 "");
         
         lastmodifiedpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_LASTMODIFIED"),
+                "");
+        
+        datecreatedpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_CREATED"),
                 "");
         
         notepanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_NOTE"),

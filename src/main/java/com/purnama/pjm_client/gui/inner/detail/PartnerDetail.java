@@ -93,6 +93,7 @@ public class PartnerDetail extends DetailPanel{
         detailpanel.add(customerpanel);
         detailpanel.add(supplierpanel);
         detailpanel.add(nontradepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         load();
@@ -162,6 +163,7 @@ public class PartnerDetail extends DetailPanel{
                         supplierpanel.setContentValue(partner.isSupplier());
                         nontradepanel.setContentValue(partner.isNontrade());
                         statuspanel.setContentValue(partner.isStatus());
+                        datecreatedpanel.setContentValue(partner.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(partner.getFormattedLastmodified());
                     }
                     catch(IOException e){

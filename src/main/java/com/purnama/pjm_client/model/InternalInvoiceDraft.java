@@ -32,18 +32,7 @@ public class InternalInvoiceDraft extends Nontransactional{
     protected Warehouse warehouse;
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    protected Date transactiondate;
-    
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     protected Date invoicedate;
-    
-    @JsonIgnore
-    public String getFormattedTransactiondate(){
-        
-        DateFormat dateformat = new SimpleDateFormat ("dd MMM YYYY HH:mm:ss");
-        dateformat.setTimeZone(TimeZone.getTimeZone("UCT+7"));
-        return dateformat.format(getTransactiondate());
-    }
     
     @JsonIgnore
     public String getFormattedInvoicedate(){

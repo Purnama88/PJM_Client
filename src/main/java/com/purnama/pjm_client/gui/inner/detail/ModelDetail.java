@@ -57,6 +57,7 @@ public class ModelDetail extends DetailPanel{
         detailpanel.add(descriptionpanel);
         detailpanel.add(statuspanel);
         detailpanel.add(notepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         load();
@@ -115,6 +116,7 @@ public class ModelDetail extends DetailPanel{
                         descriptionpanel.setContentValue(model.getDescription());
                         notepanel.setContentValue(model.getNote());
                         statuspanel.setContentValue(model.isStatus());
+                        datecreatedpanel.setContentValue(model.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(model.getFormattedLastmodified());
                     }
                     catch(IOException e){

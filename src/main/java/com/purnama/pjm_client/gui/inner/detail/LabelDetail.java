@@ -54,6 +54,7 @@ public class LabelDetail extends DetailPanel{
         detailpanel.add(descriptionpanel);
         detailpanel.add(statuspanel);
         detailpanel.add(notepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         load();
@@ -111,6 +112,7 @@ public class LabelDetail extends DetailPanel{
                         descriptionpanel.setContentValue(label.getDescription());
                         notepanel.setContentValue(label.getNote());
                         statuspanel.setContentValue(label.isStatus());
+                        datecreatedpanel.setContentValue(label.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(label.getFormattedLastmodified());
                     }
                     catch(IOException e){

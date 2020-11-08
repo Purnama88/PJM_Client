@@ -57,6 +57,7 @@ public class CurrencyDetail extends DetailPanel{
         detailpanel.add(defaultpanel);
         detailpanel.add(statuspanel);
         detailpanel.add(notepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         load();
@@ -115,6 +116,7 @@ public class CurrencyDetail extends DetailPanel{
                         notepanel.setContentValue(currency.getNote());
                         defaultpanel.setContentValue(currency.isDefaultcurrency());
                         statuspanel.setContentValue(currency.isStatus());
+                        datecreatedpanel.setContentValue(currency.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(currency.getFormattedLastmodified());
                     }
                     catch(IOException e){

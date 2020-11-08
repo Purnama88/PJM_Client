@@ -60,6 +60,7 @@ public class UserDetail extends DetailPanel{
         detailpanel.add(warehousepanel);
         detailpanel.add(statuspanel);
         detailpanel.add(notepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         load();
@@ -119,6 +120,7 @@ public class UserDetail extends DetailPanel{
                         warehousepanel.setContentValue(user.getWarehouses().toString());
                         notepanel.setContentValue(user.getNote());
                         statuspanel.setContentValue(user.isStatus());
+                        datecreatedpanel.setContentValue(user.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(user.getFormattedLastmodified());
                     }
                     catch(IOException e){

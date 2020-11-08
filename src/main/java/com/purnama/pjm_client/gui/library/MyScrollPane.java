@@ -5,6 +5,8 @@
  */
 package com.purnama.pjm_client.gui.library;
 
+import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.JScrollPane;
 
 /**
@@ -13,7 +15,15 @@ import javax.swing.JScrollPane;
  */
 public class MyScrollPane extends JScrollPane{
     
+    public MyScrollPane(Component view){
+        super(view);
+        
+        init();
+    }
+    
     public MyScrollPane(){
+        super();
+        
         init();
     }
     

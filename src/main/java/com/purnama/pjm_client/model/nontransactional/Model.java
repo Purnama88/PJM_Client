@@ -23,4 +23,8 @@ public class Model extends Nontransactional{
     
     private Brand brand;
     
+    @Override
+    public String toString(){
+        return name;
+    }
 }

@@ -54,6 +54,7 @@ public class WarehouseDetail extends DetailPanel{
         detailpanel.add(descriptionpanel);
         detailpanel.add(statuspanel);
         detailpanel.add(notepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         load();
@@ -111,6 +112,7 @@ public class WarehouseDetail extends DetailPanel{
                         descriptionpanel.setContentValue(warehouse.getAddress());
                         notepanel.setContentValue(warehouse.getNote());
                         statuspanel.setContentValue(warehouse.isStatus());
+                        datecreatedpanel.setContentValue(warehouse.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(warehouse.getFormattedLastmodified());
                     }
                     catch(IOException e){

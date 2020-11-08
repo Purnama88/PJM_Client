@@ -133,7 +133,7 @@ public class ExpensesDraftDetail extends InvoiceDraftDetailPanel{
                         expensesdraft = mapper.readValue(output, ExpensesDraft.class);
                         
                         notepanel.setNote(expensesdraft.getNote());
-                        datepanel.setDate(expensesdraft.getTransactiondate());
+                        datepanel.setDate(expensesdraft.getInvoicedate());
                         warehousepanel.setTextFieldValue(expensesdraft.getWarehouse().getCode());
                         idpanel.setTextFieldValue(expensesdraft.getDraftid());
                         partnerpanel.setComboBoxValue(expensesdraft.getPartner());

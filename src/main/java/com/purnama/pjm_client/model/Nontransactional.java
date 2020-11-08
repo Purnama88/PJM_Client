@@ -28,6 +28,9 @@ public class Nontransactional implements Serializable{
     protected String note;
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    protected Date createddate;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     protected Date lastmodified;
     
     @JsonIgnore
@@ -36,5 +39,13 @@ public class Nontransactional implements Serializable{
         DateFormat dateformat = new SimpleDateFormat ("dd MMM YYYY HH:mm:ss");
         dateformat.setTimeZone(TimeZone.getTimeZone("UCT+7"));
         return dateformat.format(getLastmodified());
+    }
+    
+    @JsonIgnore
+    public String getFormattedCreateddate(){
+        
+        DateFormat dateformat = new SimpleDateFormat ("dd MMM YYYY HH:mm:ss");
+        dateformat.setTimeZone(TimeZone.getTimeZone("UCT+7"));
+        return dateformat.format(getCreateddate());
     }
 }

@@ -54,6 +54,7 @@ public class BrandDetail extends DetailPanel{
         detailpanel.add(descriptionpanel);
         detailpanel.add(statuspanel);
         detailpanel.add(notepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         load();
@@ -111,6 +112,7 @@ public class BrandDetail extends DetailPanel{
                         descriptionpanel.setContentValue(brand.getDescription());
                         notepanel.setContentValue(brand.getNote());
                         statuspanel.setContentValue(brand.isStatus());
+                        datecreatedpanel.setContentValue(brand.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(brand.getFormattedLastmodified());
                     }
                     catch(IOException e){

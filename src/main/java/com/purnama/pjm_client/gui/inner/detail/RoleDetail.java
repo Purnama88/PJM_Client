@@ -48,6 +48,7 @@ public class RoleDetail extends DetailPanel{
         detailpanel.add(namepanel);
         detailpanel.add(statuspanel);
         detailpanel.add(notepanel);
+        detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
         
         load();
@@ -103,6 +104,7 @@ public class RoleDetail extends DetailPanel{
                         namepanel.setContentValue(role.getName());
                         notepanel.setContentValue(role.getNote());
                         statuspanel.setContentValue(role.isStatus());
+                        datecreatedpanel.setContentValue(role.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(role.getFormattedLastmodified());
                     }
                     catch(IOException e){

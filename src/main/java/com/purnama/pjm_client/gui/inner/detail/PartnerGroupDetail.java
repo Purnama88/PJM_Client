@@ -10,7 +10,7 @@ import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.form.PartnerGroupEdit;
 import com.purnama.pjm_client.gui.inner.home.PartnerGroupHome;
 import com.purnama.pjm_client.gui.main.MainTabbedPane;
-import com.purnama.pjm_client.model.nontransactional.Brand;
+import com.purnama.pjm_client.model.nontransactional.PartnerGroup;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
@@ -26,7 +26,7 @@ import javax.swing.SwingWorker;
  */
 public class PartnerGroupDetail extends DetailPanel{
     
-    private Brand brand;
+    private PartnerGroup partnergroup;
     
     private final SelectableLabelContentPanel codepanel, namepanel, descriptionpanel;
     
@@ -103,15 +103,15 @@ public class PartnerGroupDetail extends DetailPanel{
                     ObjectMapper mapper = new ObjectMapper();
 
                     try{
-                        brand = mapper.readValue(output, Brand.class);
+                        partnergroup = mapper.readValue(output, PartnerGroup.class);
                         
-                        idpanel.setContentValue(String.valueOf(brand.getId()));
-                        codepanel.setContentValue(brand.getCode());
-                        namepanel.setContentValue(brand.getName());
-                        descriptionpanel.setContentValue(brand.getDescription());
-                        notepanel.setContentValue(brand.getNote());
-                        statuspanel.setContentValue(brand.isStatus());
-                        lastmodifiedpanel.setContentValue(brand.getFormattedLastmodified());
+                        idpanel.setContentValue(String.valueOf(partnergroup.getId()));
+                        codepanel.setContentValue(partnergroup.getCode());
+                        namepanel.setContentValue(partnergroup.getName());
+                        descriptionpanel.setContentValue(partnergroup.getDescription());
+                        notepanel.setContentValue(partnergroup.getNote());
+                        statuspanel.setContentValue(partnergroup.isStatus());
+                        lastmodifiedpanel.setContentValue(partnergroup.getFormattedLastmodified());
                     }
                     catch(IOException e){
 
@@ -136,7 +136,7 @@ public class PartnerGroupDetail extends DetailPanel{
         MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
                 getAncestorOfClass(JTabbedPane.class, this);
         
-        tabbedPane.insertTab(this.getIndex()+1, new PartnerGroupEdit(brand.getId()));
+        tabbedPane.insertTab(this.getIndex()+1, new PartnerGroupEdit(partnergroup.getId()));
     }
     
 }
