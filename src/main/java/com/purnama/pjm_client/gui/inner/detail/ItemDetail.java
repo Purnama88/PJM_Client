@@ -138,6 +138,8 @@ public class ItemDetail extends DetailPanel{
                         statuspanel.setContentValue(item.isStatus());
                         datecreatedpanel.setContentValue(item.getFormattedCreateddate());
                         lastmodifiedpanel.setContentValue(item.getFormattedLastmodified());
+                        
+                        pricepanel.load(item);
                     }
                     catch(IOException e){
 

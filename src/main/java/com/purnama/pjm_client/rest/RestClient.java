@@ -228,6 +228,8 @@ public class RestClient {
             ObjectMapper mapper = new ObjectMapper();
             String input = mapper.writeValueAsString(object);
             
+            System.out.println(input);
+            
             Client client = Client.create();
             client.setConnectTimeout(GlobalFields.TIMEOUT);
             client.setReadTimeout(GlobalFields.TIMEOUT);

@@ -29,7 +29,13 @@ public class Item extends Nontransactional{
     
     private Label label;
     
-    private double wholesaleprices;
+    private double sellprice;
+    
+    private double buyprice;
+    
+    private boolean bulksellprice;
+    
+    private boolean bulkbuyprice;
     
     Set<ItemGroup> itemgroups = new HashSet<>();
     
