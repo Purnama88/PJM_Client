@@ -16,6 +16,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,5 +156,13 @@ public class LabelComboBoxPanel extends JPanel{
     
     public void refresh(){
         load();
+    }
+    
+    public void setItemListener(ItemListener itemlistener){
+        combobox.addItemListener(itemlistener);
+    }
+    
+    public void setActionListener(ActionListener actionlistener){
+        combobox.addActionListener(actionlistener);
     }
 }

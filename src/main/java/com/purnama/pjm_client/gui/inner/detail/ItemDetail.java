@@ -56,7 +56,7 @@ public class ItemDetail extends DetailPanel{
         labelpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_LABEL"),
                 "");
         
-        itemgrouppanel = new ItemGroupPanel();
+        itemgrouppanel = new ItemGroupPanel(id);
         modelpanel = new ModelPanel();
         pricepanel = new PricePanel();
         

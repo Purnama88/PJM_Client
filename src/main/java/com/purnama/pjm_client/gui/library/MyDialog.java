@@ -75,4 +75,5 @@ public class MyDialog extends JDialog{
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
+    
 }

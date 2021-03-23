@@ -6,8 +6,6 @@
 package com.purnama.pjm_client.model.nontransactional;
 
 import com.purnama.pjm_client.model.Nontransactional;
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Data;
 
 /**
@@ -54,8 +52,6 @@ public class Partner extends Nontransactional{
     private boolean supplier;
     
     private boolean nontrade;
-    
-    Set<PartnerGroup> partnergroups = new HashSet<>();
     
     @Override
     public String toString(){

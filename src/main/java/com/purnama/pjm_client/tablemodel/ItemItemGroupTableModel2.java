@@ -5,7 +5,7 @@
  */
 package com.purnama.pjm_client.tablemodel;
 
-import com.purnama.pjm_client.model.nontransactional.Item;
+import com.purnama.pjm_client.model.combine.ItemItemGroup;
 import com.purnama.pjm_client.util.GlobalFields;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,23 +15,22 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author p_cor
  */
-public class ItemTableModel extends AbstractTableModel{
-    private List<Item> itemlist = new ArrayList<>();
+public class ItemItemGroupTableModel2 extends AbstractTableModel{
+    private List<ItemItemGroup> itemitemgrouplist = new ArrayList<>();
     
     String[] columnNames = new String[]{
         GlobalFields.PROPERTIES.getProperty("TABLE_CODE"),
         GlobalFields.PROPERTIES.getProperty("TABLE_NAME"), 
-        GlobalFields.PROPERTIES.getProperty("TABLE_LABEL"),
         GlobalFields.PROPERTIES.getProperty("TABLE_STATUS")
     };
     
-    public ItemTableModel(){
+    public ItemItemGroupTableModel2(){
         super();
     }
 
     @Override
     public int getRowCount() {
-        return itemlist.size();
+        return itemitemgrouplist.size();
     }
 
     @Override
@@ -41,13 +40,12 @@ public class ItemTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Item item = itemlist.get(rowIndex);
+        ItemItemGroup itemitemgroup = itemitemgrouplist.get(rowIndex);
         
         Object[] values = new Object[]{
-            item.getCode(), 
-            item.getName(),
-            item.getLabel().toString(),
-            item.isStatus()
+            itemitemgroup.getItemgroup().getCode(), 
+            itemitemgroup.getItemgroup().getName(),
+            itemitemgroup.getItemgroup().isStatus()
         };
         return values[columnIndex];
     }
@@ -63,21 +61,16 @@ public class ItemTableModel extends AbstractTableModel{
         return getValueAt(0, c).getClass();  
     }
     
-    public List<Item> getItemList(){
-        return itemlist;
+    public List<ItemItemGroup> getItemItemGroupList(){
+        return itemitemgrouplist;
     }
     
-    public void setItemList(List<Item> itemlist){
-        this.itemlist = itemlist;
+    public void setItemItemGroupList(List<ItemItemGroup> itemitemgrouplist){
+        this.itemitemgrouplist = itemitemgrouplist;
         fireTableDataChanged();
     }
     
-    public Item getItem(int index){
-        return itemlist.get(index);
-    }
-    
-    public void addRow(Item item) {
-        itemlist.add(item);
-        fireTableDataChanged();
+    public ItemItemGroup getItemItemGroup(int index){
+        return itemitemgrouplist.get(index);
     }
 }

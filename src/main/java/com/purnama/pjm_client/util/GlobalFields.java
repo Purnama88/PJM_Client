@@ -34,6 +34,7 @@ public class GlobalFields {
     public static int TIMEOUT = 5000; //miliseconds
     
     public static int ITEM_PER_PAGE = 20;
+    public static int MINIMAL_CHARACTER_ON_SEARCH = 5;
     
     public static String TOKEN;
     public static User USER;
@@ -45,7 +46,6 @@ public class GlobalFields {
     
     public static NumberFormat NUMBERFORMAT = DecimalFormat.getNumberInstance();
     public  DateFormat DATEFORMAT = new SimpleDateFormat ("dd MMM YYYY");
-    
     
     public static int DECIMALPLACES = 2;
 }

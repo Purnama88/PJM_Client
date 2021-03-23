@@ -10,13 +10,11 @@ import com.purnama.pjm_client.gui.inner.detail.util.ItemSearchPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.form.ItemGroupEdit;
 import com.purnama.pjm_client.gui.inner.home.ItemGroupHome;
-import com.purnama.pjm_client.gui.library.MyPanel;
 import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.ItemGroup;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
-import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JTabbedPane;
@@ -35,7 +33,7 @@ public class ItemGroupDetail extends DetailPanel{
     
     private final int id;
     
-    private final ItemSelectPanel itemselectpanel;
+    private final ItemSearchPanel itemsearchpanel;
     
     public ItemGroupDetail(int id) {
         super(GlobalFields.PROPERTIES.getProperty("PANEL_ITEMGROUP_DETAIL"));
@@ -49,7 +47,7 @@ public class ItemGroupDetail extends DetailPanel{
         descriptionpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_DESCRIPTION"),
                 "");
         
-        itemselectpanel = new ItemSelectPanel();
+        itemsearchpanel = new ItemSearchPanel(id);
         
         init();
     }
@@ -63,7 +61,7 @@ public class ItemGroupDetail extends DetailPanel{
         detailpanel.add(notepanel);
         detailpanel.add(lastmodifiedpanel);
         
-        tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("PANEL_ITEM"), itemselectpanel);
+        tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("PANEL_ITEM"), itemsearchpanel);
         
         load();
     }
@@ -149,23 +147,4 @@ public class ItemGroupDetail extends DetailPanel{
         tabbedPane.insertTab(this.getIndex()+1, new ItemGroupEdit(itemgroup.getId()));
     }
     
-}
-
-class ItemSelectPanel extends MyPanel{
-    
-    private final ItemSearchPanel itemsearchpanel;
-    
-    public ItemSelectPanel(){
-        super(new BorderLayout());
-        
-        itemsearchpanel = new ItemSearchPanel();
-        
-        init();
-    }
-    
-    private void init(){
-        
-        add(itemsearchpanel, BorderLayout.CENTER);
-        
-    }
 }

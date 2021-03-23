@@ -8,8 +8,6 @@ package com.purnama.pjm_client.model.nontransactional;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.purnama.pjm_client.model.Nontransactional;
 import com.purnama.pjm_client.util.GlobalFields;
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Data;
 
 /**
@@ -36,10 +34,6 @@ public class Item extends Nontransactional{
     private boolean bulksellprice;
     
     private boolean bulkbuyprice;
-    
-    Set<ItemGroup> itemgroups = new HashSet<>();
-    
-    Set<Model> models = new HashSet<>();
     
     @JsonIgnore
     public String getFormattedCost(){

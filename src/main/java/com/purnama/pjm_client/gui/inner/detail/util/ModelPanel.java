@@ -17,6 +17,7 @@ import com.purnama.pjm_client.rest.RestClient;
 import com.sun.jersey.api.client.ClientResponse;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -70,9 +71,16 @@ public class ModelPanel extends MyPanel{
     
     private void init(){
         
+        upperpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        upperpanel.setMinimumSize(new Dimension(Integer.MAX_VALUE, 75));
+        upperpanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 75));
+        upperpanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 75));
+        
         ListSelectionListener listSelectionListener = (ListSelectionEvent listSelectionEvent) -> {
             if (!listSelectionEvent.getValueIsAdjusting()) {
                 Brand brand = (Brand)brandlist.getSelectedValue();
+                modellist.removeAll();
                 modellist.load(brand.getId());
             }
         };
@@ -80,7 +88,7 @@ public class ModelPanel extends MyPanel{
         
         ListSelectionListener listSelectionListener2 = (ListSelectionEvent listSelectionEvent) -> {
             if (!listSelectionEvent.getValueIsAdjusting()) {
-                System.out.println(modellist.getSelectedValue());
+                System.out.println(modellist.getSelectedValue() + "aa");
             }
         };
         modellist.addListSelectionListener(listSelectionListener2);
@@ -99,7 +107,7 @@ public class ModelPanel extends MyPanel{
 
 class CheckListItem {
 
-    private Model model;
+    private final Model model;
     private boolean isSelected = false;
 
     public CheckListItem(Model model) {

@@ -91,7 +91,6 @@ public class ItemHome extends HomePanel{
                     upperpanel.setNotifLabel("");
                     
                     String output = response.getEntity(String.class);
-                    
                     ObjectMapper mapper = new ObjectMapper();
 
                     ItemPagination item_pagination;
