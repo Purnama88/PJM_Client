@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ItemGroupDetail;
 import com.purnama.pjm_client.gui.inner.form.ItemGroupAdd;
 import com.purnama.pjm_client.gui.inner.form.ItemGroupEdit;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.ItemGroup;
 import com.purnama.pjm_client.model.pagination.ItemGroupPagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -18,8 +17,6 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -119,32 +116,23 @@ public class ItemGroupHome extends HomePanel{
 
     @Override
     protected void add() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new ItemGroupAdd());
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ItemGroupAdd());
     }
 
     @Override
     protected void detail() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         ItemGroup itemgroup = itemgrouptablemodel.getItemGroup(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new ItemGroupDetail(itemgroup.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ItemGroupDetail(itemgroup.getId()));
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         ItemGroup itemgroup = itemgrouptablemodel.getItemGroup(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new ItemGroupEdit(itemgroup.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ItemGroupEdit(itemgroup.getId()));
     }
     
 }

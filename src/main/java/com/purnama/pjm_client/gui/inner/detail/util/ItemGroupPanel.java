@@ -7,30 +7,18 @@ package com.purnama.pjm_client.gui.inner.detail.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.purnama.pjm_client.gui.library.MyButton;
 import com.purnama.pjm_client.gui.library.MyPanel;
 import com.purnama.pjm_client.gui.library.MyScrollPane;
 import com.purnama.pjm_client.gui.library.MyTable;
 import com.purnama.pjm_client.model.combine.ItemItemGroup;
-import com.purnama.pjm_client.model.nontransactional.Item;
-import com.purnama.pjm_client.model.nontransactional.ItemGroup;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.ItemItemGroupTableModel2;
 import com.sun.jersey.api.client.ClientResponse;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.AbstractListModel;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
 
 /**

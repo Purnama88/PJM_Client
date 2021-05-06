@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.home.HomePanel;
 import com.purnama.pjm_client.gui.inner.home.NumberingHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Menu;
 import com.purnama.pjm_client.model.pagination.NumberingPagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -18,7 +17,6 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -125,10 +123,7 @@ public class NumberingDetail extends DetailPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new NumberingHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new NumberingHome());
     }
 
     @Override

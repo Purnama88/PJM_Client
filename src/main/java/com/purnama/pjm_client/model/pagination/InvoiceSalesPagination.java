@@ -16,5 +16,5 @@ import lombok.Data;
 @Data
 public class InvoiceSalesPagination extends Pagination{
     
-    private List<InvoiceSales> invoicesaless;
+    private List<InvoiceSales> invoicesales;
 }

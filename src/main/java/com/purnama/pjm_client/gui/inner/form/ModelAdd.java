@@ -11,7 +11,6 @@ import com.purnama.pjm_client.gui.inner.form.util.LabelTextAreaPanel;
 import com.purnama.pjm_client.gui.inner.form.util.LabelTextFieldErrorPanel;
 import com.purnama.pjm_client.gui.inner.detail.ModelDetail;
 import com.purnama.pjm_client.gui.inner.home.ModelHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Model;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -19,7 +18,6 @@ import com.purnama.pjm_client.util.GlobalFunctions;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -164,18 +162,12 @@ public class ModelAdd extends FormPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new ModelHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new ModelHome());
     }
 
     @Override
     protected void detail(int id) {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new ModelDetail(id));
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new ModelDetail(id));
     }
 
     @Override

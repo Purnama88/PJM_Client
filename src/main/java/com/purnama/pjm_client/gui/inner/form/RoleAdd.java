@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.form.util.LabelTextFieldErrorPanel;
 import com.purnama.pjm_client.gui.inner.detail.RoleDetail;
 import com.purnama.pjm_client.gui.inner.home.RoleHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Role;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -17,7 +16,6 @@ import com.purnama.pjm_client.util.GlobalFunctions;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -127,18 +125,12 @@ public class RoleAdd extends FormPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new RoleHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new RoleHome());
     }
 
     @Override
     protected void detail(int id) {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new RoleDetail(id));
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new RoleDetail(id));
     }
 
     @Override

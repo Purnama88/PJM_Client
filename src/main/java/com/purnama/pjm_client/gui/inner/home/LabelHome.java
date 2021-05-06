@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.LabelDetail;
 import com.purnama.pjm_client.gui.inner.form.LabelAdd;
 import com.purnama.pjm_client.gui.inner.form.LabelEdit;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Label;
 import com.purnama.pjm_client.model.pagination.LabelPagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -18,8 +17,6 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -116,32 +113,23 @@ public class LabelHome extends HomePanel{
     
     @Override
     protected void add() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new LabelAdd());
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new LabelAdd());
     }
 
     @Override
     protected void detail() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         Label label = labeltablemodel.getLabel(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new LabelDetail(label.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new LabelDetail(label.getId()));
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         Label label = labeltablemodel.getLabel(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new LabelEdit(label.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new LabelEdit(label.getId()));
     }
     
 }

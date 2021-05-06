@@ -6,18 +6,24 @@
 package com.purnama.pjm_client.gui.inner.detail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.form.PartnerEdit;
 import com.purnama.pjm_client.gui.inner.home.PartnerHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
+import com.purnama.pjm_client.gui.library.MyPanel;
+import com.purnama.pjm_client.gui.library.MyScrollPane;
+import com.purnama.pjm_client.gui.library.MyTable;
+import com.purnama.pjm_client.model.combine.PartnerPartnerGroup;
 import com.purnama.pjm_client.model.nontransactional.Partner;
 import com.purnama.pjm_client.rest.RestClient;
+import com.purnama.pjm_client.tablemodel.PartnerPartnerGroupTableModel2;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -31,6 +37,8 @@ public class PartnerDetail extends DetailPanel{
     private final SelectableLabelContentPanel codepanel, namepanel, contactnamepanel, addresspanel, 
             phonenumberpanel, phonenumber2panel, mobilenumberpanel, mobilenumber2panel,
             faxnumberpanel, faxnumber2panel, emailpanel, email2panel, customerpanel, supplierpanel, nontradepanel;
+    
+    private final PartnerGroupPanel partnergrouppanel;
     
     private final int id;
     
@@ -70,6 +78,7 @@ public class PartnerDetail extends DetailPanel{
         nontradepanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_NONTRADE"),
                 "");
         
+        partnergrouppanel = new PartnerGroupPanel(id);
         
         init();
     }
@@ -95,6 +104,8 @@ public class PartnerDetail extends DetailPanel{
         detailpanel.add(nontradepanel);
         detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
+        
+        tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("PANEL_PARTNERGROUP"), partnergrouppanel);
         
         load();
     }
@@ -178,18 +189,97 @@ public class PartnerDetail extends DetailPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new PartnerHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new PartnerHome());
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new PartnerEdit(partner.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new PartnerEdit(partner.getId()));
     }
     
+}
+
+class PartnerGroupPanel extends MyPanel{
+    
+    private final MyTable table;
+    
+    private final PartnerPartnerGroupTableModel2 partnerpartnergrouptablemodel;
+    
+    private final MyScrollPane scrollpane;
+    
+    private ArrayList<PartnerPartnerGroup> list;
+    
+    private final int partnerid;
+    
+    public PartnerGroupPanel(int partnerid){
+        super(new BorderLayout());
+        
+        table = new MyTable();
+        scrollpane = new MyScrollPane();
+        
+        partnerpartnergrouptablemodel = new PartnerPartnerGroupTableModel2();
+        
+        list = new ArrayList<>();
+        
+        this.partnerid = partnerid;
+        
+        init();
+    }
+    
+    private void init(){
+        scrollpane.getViewport().add(table);
+        scrollpane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        table.setModel(partnerpartnergrouptablemodel);
+        
+        add(scrollpane, BorderLayout.CENTER);
+        
+        load();
+    }
+    
+    public void load(){
+        
+        SwingWorker<Boolean, String> worker = new SwingWorker<Boolean, String>() {
+            
+            ClientResponse response;
+            
+            @Override
+            protected Boolean doInBackground(){
+                
+                
+                response = RestClient.get("partnerpartnergroups?partnerid=" + partnerid);
+                
+                return true;
+            }
+            
+            @Override
+            protected void process(List<String> chunks) {
+               
+            }
+            
+            @Override
+            protected void done() {
+                if(response == null){
+                }
+                else if(response.getStatus() != 200) {
+                }
+                else{
+                    String output = response.getEntity(String.class);
+                    
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    try{
+                        list = mapper.readValue(output,
+                                TypeFactory.defaultInstance().constructCollectionType(ArrayList.class,
+                                        PartnerPartnerGroup.class));
+                        partnerpartnergrouptablemodel.setPartnerPartnerGroupList(list);
+                    }
+                    catch(IOException e){
+                        System.out.println(e);
+                    }
+                }
+            }
+        };
+        worker.execute();
+    }
 }

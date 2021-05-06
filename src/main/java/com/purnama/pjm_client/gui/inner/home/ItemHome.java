@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ItemDetail;
 import com.purnama.pjm_client.gui.inner.form.ItemAdd;
 import com.purnama.pjm_client.gui.inner.form.ItemEdit;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Item;
 import com.purnama.pjm_client.model.pagination.ItemPagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -18,8 +17,6 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -116,32 +113,23 @@ public class ItemHome extends HomePanel{
 
     @Override
     protected void add() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new ItemAdd());
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ItemAdd());
     }
 
     @Override
     protected void detail() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         Item item = itemtablemodel.getItem(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new ItemDetail(item.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ItemDetail(item.getId()));
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         Item item = itemtablemodel.getItem(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new ItemEdit(item.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ItemEdit(item.getId()));
     }
     
 }

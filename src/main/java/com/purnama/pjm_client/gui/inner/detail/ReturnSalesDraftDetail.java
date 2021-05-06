@@ -13,7 +13,6 @@ import com.purnama.pjm_client.gui.inner.detail.util.LabelDecimalTextFieldPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.NumberingComboBoxPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.PartnerComboBoxPanel;
 import com.purnama.pjm_client.gui.inner.home.ReturnSalesDraftHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.transactional.draft.ReturnSalesDraft;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -161,10 +159,7 @@ public class ReturnSalesDraftDetail extends InvoiceDraftDetailPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new ReturnSalesDraftHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new ReturnSalesDraftHome());
     }
 
     @Override

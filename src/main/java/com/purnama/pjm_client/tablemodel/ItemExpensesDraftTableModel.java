@@ -34,8 +34,7 @@ public class ItemExpensesDraftTableModel extends AbstractTableModel{
         GlobalFields.PROPERTIES.getProperty("TABLE_PERCENTAGE"),
         GlobalFields.PROPERTIES.getProperty("TABLE_DISCOUNT"),
         GlobalFields.PROPERTIES.getProperty("TABLE_TOTAL"),
-        GlobalFields.PROPERTIES.getProperty("TABLE_BOX"),
-        GlobalFields.PROPERTIES.getProperty("TABLE_ACTION")
+        GlobalFields.PROPERTIES.getProperty("TABLE_BOX")
     };
     
     public ItemExpensesDraftTableModel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
@@ -70,7 +69,6 @@ public class ItemExpensesDraftTableModel extends AbstractTableModel{
             itemexpensesdraft.getFormattedDiscount(),
             itemexpensesdraft.getFormattedTotal(),
             itemexpensesdraft.getBox(),
-            ""
         };
         return values[columnIndex];
     }

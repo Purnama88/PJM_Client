@@ -10,15 +10,12 @@ import com.purnama.pjm_client.gui.inner.detail.util.ItemSearchPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.form.ItemGroupEdit;
 import com.purnama.pjm_client.gui.inner.home.ItemGroupHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.ItemGroup;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -47,7 +44,7 @@ public class ItemGroupDetail extends DetailPanel{
         descriptionpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_DESCRIPTION"),
                 "");
         
-        itemsearchpanel = new ItemSearchPanel(id);
+        itemsearchpanel = new ItemSearchPanel(id, getIndex());
         
         init();
     }
@@ -133,18 +130,12 @@ public class ItemGroupDetail extends DetailPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new ItemGroupHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new ItemGroupHome());
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new ItemGroupEdit(itemgroup.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ItemGroupEdit(itemgroup.getId()));
     }
     
 }

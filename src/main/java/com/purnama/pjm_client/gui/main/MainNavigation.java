@@ -10,7 +10,9 @@ import com.purnama.pjm_client.gui.inner.home.CurrencyHome;
 import com.purnama.pjm_client.gui.inner.home.DeliveryDraftHome;
 import com.purnama.pjm_client.gui.inner.home.ExpensesDraftHome;
 import com.purnama.pjm_client.gui.inner.home.InvoicePurchaseDraftHome;
+import com.purnama.pjm_client.gui.inner.home.InvoicePurchaseHome;
 import com.purnama.pjm_client.gui.inner.home.InvoiceSalesDraftHome;
+import com.purnama.pjm_client.gui.inner.home.InvoiceSalesHome;
 import com.purnama.pjm_client.gui.inner.home.ItemGroupHome;
 import com.purnama.pjm_client.gui.inner.home.ItemHome;
 import com.purnama.pjm_client.gui.inner.home.LabelHome;
@@ -19,7 +21,9 @@ import com.purnama.pjm_client.gui.inner.home.NumberingHome;
 import com.purnama.pjm_client.gui.inner.home.PartnerGroupHome;
 import com.purnama.pjm_client.gui.inner.home.PartnerHome;
 import com.purnama.pjm_client.gui.inner.home.ReturnPurchaseDraftHome;
+import com.purnama.pjm_client.gui.inner.home.ReturnPurchaseHome;
 import com.purnama.pjm_client.gui.inner.home.ReturnSalesDraftHome;
+import com.purnama.pjm_client.gui.inner.home.ReturnSalesHome;
 import com.purnama.pjm_client.gui.inner.home.RoleHome;
 import com.purnama.pjm_client.gui.inner.home.UserHome;
 import com.purnama.pjm_client.gui.inner.home.WarehouseHome;
@@ -107,8 +111,14 @@ public class MainNavigation extends MyPanel{
         DefaultMutableTreeNode expensesdraft = new DefaultMutableTreeNode(GlobalFields.
                 PROPERTIES.getProperty("MENU_EXPENSESDRAFT"));
         
-        DefaultMutableTreeNode sales = new DefaultMutableTreeNode("Sales");
-        DefaultMutableTreeNode purchase = new DefaultMutableTreeNode("Purchase");
+        DefaultMutableTreeNode invoicesales = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_INVOICESALES"));
+        DefaultMutableTreeNode invoicepurchase = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_INVOICEPURCHASE"));
+        DefaultMutableTreeNode returnsales = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_RETURNSALES"));
+        DefaultMutableTreeNode returnpurchase = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_RETURNPURCHASE"));
         DefaultMutableTreeNode itemmanagement = new DefaultMutableTreeNode("Item Management");
         DefaultMutableTreeNode payment = new DefaultMutableTreeNode("Payment");
         
@@ -144,8 +154,10 @@ public class MainNavigation extends MyPanel{
         draft.add(deliverydraft);
         draft.add(expensesdraft);
         
-        menu.add(sales);
-        menu.add(purchase);
+        menu.add(invoicesales);
+        menu.add(invoicepurchase);
+        menu.add(returnsales);
+        menu.add(returnpurchase);
         menu.add(itemmanagement);
         menu.add(payment);
         
@@ -223,6 +235,18 @@ public class MainNavigation extends MyPanel{
                         }
                         else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_EXPENSESDRAFT"))){
                             maintabbedpane.addTab(new ExpensesDraftHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_INVOICESALES"))){
+                            maintabbedpane.addTab(new InvoiceSalesHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_INVOICEPURCHASE"))){
+                            maintabbedpane.addTab(new InvoicePurchaseHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_RETURNSALES"))){
+                            maintabbedpane.addTab(new ReturnSalesHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_RETURNPURCHASE"))){
+                            maintabbedpane.addTab(new ReturnPurchaseHome());
                         }
                     }
                 }

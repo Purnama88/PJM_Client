@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.PartnerGroupDetail;
 import com.purnama.pjm_client.gui.inner.form.PartnerGroupAdd;
 import com.purnama.pjm_client.gui.inner.form.PartnerGroupEdit;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.PartnerGroup;
 import com.purnama.pjm_client.model.pagination.PartnerGroupPagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -18,8 +17,6 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -116,32 +113,23 @@ public class PartnerGroupHome extends HomePanel{
 
     @Override
     protected void add() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new PartnerGroupAdd());
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new PartnerGroupAdd());
     }
 
     @Override
     protected void detail() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         PartnerGroup partnergroup = partnergrouptablemodel.getPartnerGroup(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new PartnerGroupDetail(partnergroup.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new PartnerGroupDetail(partnergroup.getId()));
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         PartnerGroup partnergroup = partnergrouptablemodel.getPartnerGroup(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new PartnerGroupEdit(partnergroup.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new PartnerGroupEdit(partnergroup.getId()));
     }
     
 }

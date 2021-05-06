@@ -11,7 +11,6 @@ import com.purnama.pjm_client.gui.inner.detail.util.DestinationPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.LabelTextFieldPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.NumberingComboBoxPanel;
 import com.purnama.pjm_client.gui.inner.home.DeliveryDraftHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.transactional.draft.DeliveryDraft;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -21,7 +20,6 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -150,10 +148,7 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new DeliveryDraftHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new DeliveryDraftHome());
     }
 
     @Override

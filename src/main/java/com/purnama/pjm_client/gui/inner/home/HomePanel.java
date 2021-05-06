@@ -12,16 +12,11 @@ import com.purnama.pjm_client.gui.library.MyTable;
 import com.purnama.pjm_client.gui.main.MainPanel;
 import com.purnama.pjm_client.util.GlobalFields;
 import java.awt.Component;
-import java.awt.HeadlessException;
 import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
@@ -41,9 +36,7 @@ public abstract class HomePanel extends MainPanel{
     
     protected final MyScrollPane scrollpane;
     
-    protected final JPopupMenu popupmenu;
-    
-    protected final JMenuItem menuitemedit, menuitemdetail, menuitemcopy;
+    protected final JMenuItem menuitemedit, menuitemdetail;
     
     protected TableRowSorter<TableModel> sorter;
     
@@ -57,14 +50,10 @@ public abstract class HomePanel extends MainPanel{
         table = new MyTable();
         scrollpane = new MyScrollPane();
         
-        popupmenu = new JPopupMenu();
-        
         menuitemedit = new JMenuItem(GlobalFields.PROPERTIES.getProperty("LABEL_EDIT"),
                 new MyImageIcon().getImage("image/Edit_16.png"));
         menuitemdetail = new JMenuItem(GlobalFields.PROPERTIES.getProperty("LABEL_DETAIL"),
                 new MyImageIcon().getImage("image/Detail_16.png"));
-        menuitemcopy = new JMenuItem(GlobalFields.PROPERTIES.getProperty("LABEL_COPY"),
-                new MyImageIcon().getImage("image/Copy_16.png"));
         
         init();
     }
@@ -78,13 +67,10 @@ public abstract class HomePanel extends MainPanel{
         add(upperpanel);
         add(scrollpane);
         
-        popupmenu.add(menuitemcopy);
-        popupmenu.addSeparator();
-        popupmenu.add(menuitemdetail);
-        popupmenu.addSeparator();
-        popupmenu.add(menuitemedit);
-        
-        table.setComponentPopupMenu(popupmenu);
+        table.addMenuItemSeparator();
+        table.addMenuItem(menuitemdetail);
+        table.addMenuItemSeparator();
+        table.addMenuItem(menuitemedit);
         
         load();
         
@@ -102,20 +88,6 @@ public abstract class HomePanel extends MainPanel{
                     ListSelectionModel model = table.getSelectionModel();
                     model.setSelectionInterval(rowNumber, rowNumber);
 		}
-            }
-        });
-        
-        menuitemcopy.addActionListener((ActionEvent e) -> {
-            try{
-                StringSelection stringselection = new StringSelection(table.
-                        getValueAt(table.getSelectedRow(), table.getSelectedColumn()).toString());
-
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                clipboard.setContents(stringselection,
-                        null);
-            }
-            catch(HeadlessException exp){
-                exp.printStackTrace();
             }
         });
         

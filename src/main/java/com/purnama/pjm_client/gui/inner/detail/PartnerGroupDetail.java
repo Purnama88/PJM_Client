@@ -6,18 +6,16 @@
 package com.purnama.pjm_client.gui.inner.detail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.purnama.pjm_client.gui.inner.detail.util.PartnerSearchPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.form.PartnerGroupEdit;
 import com.purnama.pjm_client.gui.inner.home.PartnerGroupHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.PartnerGroup;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -32,6 +30,8 @@ public class PartnerGroupDetail extends DetailPanel{
     
     private final int id;
     
+    private final PartnerSearchPanel partnersearchpanel;
+    
     public PartnerGroupDetail(int id) {
         super(GlobalFields.PROPERTIES.getProperty("PANEL_PARTNERGROUP_DETAIL"));
     
@@ -44,6 +44,8 @@ public class PartnerGroupDetail extends DetailPanel{
         descriptionpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_DESCRIPTION"),
                 "");
         
+        partnersearchpanel = new PartnerSearchPanel(id, getIndex());
+        
         init();
     }
     
@@ -55,6 +57,8 @@ public class PartnerGroupDetail extends DetailPanel{
         detailpanel.add(statuspanel);
         detailpanel.add(notepanel);
         detailpanel.add(lastmodifiedpanel);
+        
+        tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("PANEL_PARTNER"), partnersearchpanel);
         
         load();
     }
@@ -125,18 +129,12 @@ public class PartnerGroupDetail extends DetailPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new PartnerGroupHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new PartnerGroupHome());
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new PartnerGroupEdit(partnergroup.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new PartnerGroupEdit(partnergroup.getId()));
     }
     
 }

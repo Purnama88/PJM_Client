@@ -7,7 +7,6 @@ package com.purnama.pjm_client.gui.inner.home;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.DeliveryDraftDetail;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.transactional.draft.DeliveryDraft;
 import com.purnama.pjm_client.model.pagination.DeliveryDraftPagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -17,8 +16,6 @@ import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -174,32 +171,23 @@ public class DeliveryDraftHome extends HomePanel{
     }
 
     protected void detail(int id){
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new DeliveryDraftDetail(id));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new DeliveryDraftDetail(id));
     }
     
     @Override
     protected void detail() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         DeliveryDraft deliverydraft = deliverydrafttablemodel.getDeliveryDraft(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new DeliveryDraftDetail(deliverydraft.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new DeliveryDraftDetail(deliverydraft.getId()));
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         DeliveryDraft deliverydraft = deliverydrafttablemodel.getDeliveryDraft(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new DeliveryDraftDetail(deliverydraft.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new DeliveryDraftDetail(deliverydraft.getId()));
     }
     
 }

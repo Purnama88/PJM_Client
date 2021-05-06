@@ -193,7 +193,7 @@ public class LoginFrame extends MyFrame implements ActionListener{
 
                     SwingUtilities.invokeLater(() -> {
                         MainFrame mainFrame = new MainFrame();
-                        GlobalFields.MAINFRAME = mainFrame;
+                        
                     });
 
                     dispose();

@@ -6,6 +6,7 @@
 package com.purnama.pjm_client.tablemodel;
 
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
+import com.purnama.pjm_client.gui.library.MyButton;
 import com.purnama.pjm_client.model.transactional.draft.InvoiceSalesDraft;
 import com.purnama.pjm_client.model.transactional.draft.ItemInvoiceSalesDraft;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -35,7 +36,7 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
         GlobalFields.PROPERTIES.getProperty("TABLE_DISCOUNT"),
         GlobalFields.PROPERTIES.getProperty("TABLE_TOTAL"),
         GlobalFields.PROPERTIES.getProperty("TABLE_BOX"),
-        GlobalFields.PROPERTIES.getProperty("TABLE_ACTION")
+        GlobalFields.PROPERTIES.getProperty("TABLE_STATUS")
     };
     
     public ItemInvoiceSalesDraftTableModel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
@@ -61,6 +62,8 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         ItemInvoiceSalesDraft iteminvoicesalesdraft = iteminvoicesalesdraftlist.get(rowIndex);
         
+        boolean status = iteminvoicesalesdraft.getItem() != null;
+        
         Object[] values = new Object[]{
             String.valueOf(rowIndex + 1), 
             iteminvoicesalesdraft.getDescription(),
@@ -70,7 +73,7 @@ public class ItemInvoiceSalesDraftTableModel extends AbstractTableModel{
             iteminvoicesalesdraft.getFormattedDiscount(),
             iteminvoicesalesdraft.getFormattedTotal(),
             iteminvoicesalesdraft.getBox(),
-            ""
+            status
         };
         return values[columnIndex];
     }

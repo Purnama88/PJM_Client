@@ -7,7 +7,6 @@ package com.purnama.pjm_client.gui.inner.home;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ReturnSalesDraftDetail;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.transactional.draft.ReturnSalesDraft;
 import com.purnama.pjm_client.model.pagination.ReturnSalesDraftPagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -17,8 +16,6 @@ import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -174,32 +171,23 @@ public class ReturnSalesDraftHome extends HomePanel{
     }
 
     protected void detail(int id){
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new ReturnSalesDraftDetail(id));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ReturnSalesDraftDetail(id));
     }
     
     @Override
     protected void detail() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         ReturnSalesDraft returnsalesdraft = returnsalesdrafttablemodel.getReturnSalesDraft(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new ReturnSalesDraftDetail(returnsalesdraft.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ReturnSalesDraftDetail(returnsalesdraft.getId()));
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         ReturnSalesDraft returnsalesdraft = returnsalesdrafttablemodel.getReturnSalesDraft(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new ReturnSalesDraftDetail(returnsalesdraft.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ReturnSalesDraftDetail(returnsalesdraft.getId()));
     }
     
 }

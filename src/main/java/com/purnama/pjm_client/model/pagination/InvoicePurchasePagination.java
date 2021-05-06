@@ -5,10 +5,16 @@
  */
 package com.purnama.pjm_client.model.pagination;
 
+import com.purnama.pjm_client.model.transactional.InvoicePurchase;
+import java.util.List;
+import lombok.Data;
+
 /**
  *
  * @author p_cor
  */
-public class InvoicePurchasePagination {
+@Data
+public class InvoicePurchasePagination extends Pagination{
     
+    private List<InvoicePurchase> invoicepurchases;
 }

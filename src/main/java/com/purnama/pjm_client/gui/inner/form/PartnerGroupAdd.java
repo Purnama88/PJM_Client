@@ -10,7 +10,6 @@ import com.purnama.pjm_client.gui.inner.form.util.LabelTextAreaPanel;
 import com.purnama.pjm_client.gui.inner.form.util.LabelTextFieldErrorPanel;
 import com.purnama.pjm_client.gui.inner.detail.PartnerGroupDetail;
 import com.purnama.pjm_client.gui.inner.home.PartnerGroupHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.PartnerGroup;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -18,7 +17,6 @@ import com.purnama.pjm_client.util.GlobalFunctions;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -151,18 +149,12 @@ public class PartnerGroupAdd extends FormPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new PartnerGroupHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new PartnerGroupHome());
     }
 
     @Override
     protected void detail(int id) {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new PartnerGroupDetail(id));
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new PartnerGroupDetail(id));
     }
 
     @Override

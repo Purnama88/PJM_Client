@@ -5,10 +5,16 @@
  */
 package com.purnama.pjm_client.model.pagination;
 
+import com.purnama.pjm_client.model.transactional.ReturnPurchase;
+import java.util.List;
+import lombok.Data;
+
 /**
  *
  * @author p_cor
  */
-public class ReturnPurchasePagination {
+@Data
+public class ReturnPurchasePagination extends Pagination{
     
+    private List<ReturnPurchase> returnpurchases;
 }

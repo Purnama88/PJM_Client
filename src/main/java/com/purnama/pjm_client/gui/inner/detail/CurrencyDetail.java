@@ -9,15 +9,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.form.CurrencyEdit;
 import com.purnama.pjm_client.gui.inner.home.CurrencyHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Currency;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -131,18 +128,12 @@ public class CurrencyDetail extends DetailPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new CurrencyHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new CurrencyHome());
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new CurrencyEdit(currency.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new CurrencyEdit(currency.getId()));
     }
     
 }

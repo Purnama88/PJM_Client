@@ -5,7 +5,8 @@
  */
 package com.purnama.pjm_client.util;
 
-import com.purnama.pjm_client.gui.library.MyFrame;
+import com.purnama.pjm_client.gui.main.MainFrame;
+import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Role;
 import com.purnama.pjm_client.model.nontransactional.User;
 import java.text.DateFormat;
@@ -23,7 +24,8 @@ public class GlobalFields {
     public static boolean SUCCESS = true;
     public static boolean FAIL = false;
     
-    public static MyFrame MAINFRAME;
+    public static MainFrame MAINFRAME;
+    public static MainTabbedPane MAINTABBEDPANE;
     
     public static Properties PROPERTIES;
     

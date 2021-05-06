@@ -8,7 +8,6 @@ package com.purnama.pjm_client.gui.inner.home;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.RoleDetail;
 import com.purnama.pjm_client.gui.inner.form.RoleAdd;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Role;
 import com.purnama.pjm_client.model.pagination.RolePagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -17,8 +16,6 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -115,21 +112,15 @@ public class RoleHome extends HomePanel{
 
     @Override
     protected void add() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new RoleAdd());
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new RoleAdd());
     }
 
     @Override
     protected void detail() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         Role role = roletablemodel.getRole(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new RoleDetail(role.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new RoleDetail(role.getId()));
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ItemReturnPurchaseDraftTableModel extends AbstractTableModel{
         GlobalFields.PROPERTIES.getProperty("TABLE_DISCOUNT"),
         GlobalFields.PROPERTIES.getProperty("TABLE_TOTAL"),
         GlobalFields.PROPERTIES.getProperty("TABLE_BOX"),
-        GlobalFields.PROPERTIES.getProperty("TABLE_ACTION")
+        GlobalFields.PROPERTIES.getProperty("TABLE_STATUS")
     };
     
     public ItemReturnPurchaseDraftTableModel(int invoiceid, DiscountSubtotalPanel discountsubtotalpanel){
@@ -61,6 +61,8 @@ public class ItemReturnPurchaseDraftTableModel extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         ItemReturnPurchaseDraft itemreturnpurchasedraft = itemreturnpurchasedraftlist.get(rowIndex);
         
+        boolean status = itemreturnpurchasedraft.getItem() != null;
+        
         Object[] values = new Object[]{
             String.valueOf(rowIndex + 1), 
             itemreturnpurchasedraft.getDescription(),
@@ -70,7 +72,7 @@ public class ItemReturnPurchaseDraftTableModel extends AbstractTableModel{
             itemreturnpurchasedraft.getFormattedDiscount(),
             itemreturnpurchasedraft.getFormattedTotal(),
             itemreturnpurchasedraft.getBox(),
-            ""
+            status
         };
         return values[columnIndex];
     }

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.WarehouseDetail;
 import com.purnama.pjm_client.gui.inner.form.WarehouseAdd;
 import com.purnama.pjm_client.gui.inner.form.WarehouseEdit;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Warehouse;
 import com.purnama.pjm_client.model.pagination.WarehousePagination;
 import com.purnama.pjm_client.rest.RestClient;
@@ -18,8 +17,6 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.TableRowSorter;
 
@@ -116,32 +113,23 @@ public class WarehouseHome extends HomePanel{
 
     @Override
     protected void add() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
-        tabbedPane.insertTab(this.getIndex()+1, new WarehouseAdd());
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new WarehouseAdd());
     }
 
     @Override
     protected void detail() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         Warehouse warehouse = warehousetablemodel.getWarehouse(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new WarehouseDetail(warehouse.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new WarehouseDetail(warehouse.getId()));
     }
 
     @Override
     protected void edit() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(JTabbedPane.class, this);
-        
         Warehouse warehouse = warehousetablemodel.getWarehouse(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        tabbedPane.insertTab(this.getIndex()+1, new WarehouseEdit(warehouse.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new WarehouseEdit(warehouse.getId()));
     }
     
 }

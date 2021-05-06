@@ -80,4 +80,11 @@ public class ItemItemGroupTableModel extends AbstractTableModel{
         itemitemgrouplist.add(itemitemgroup);
         fireTableDataChanged();
     }
+    
+    public void deleteRow(int rownum){
+          
+        itemitemgrouplist.remove(rownum);
+        fireTableRowsDeleted(rownum, rownum);
+        
+    }
 }

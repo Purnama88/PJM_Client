@@ -11,7 +11,6 @@ import com.purnama.pjm_client.gui.inner.form.util.LabelTextFieldErrorPanel;
 import com.purnama.pjm_client.gui.inner.form.util.StatusPanel;
 import com.purnama.pjm_client.gui.inner.detail.CurrencyDetail;
 import com.purnama.pjm_client.gui.inner.home.CurrencyHome;
-import com.purnama.pjm_client.gui.main.MainTabbedPane;
 import com.purnama.pjm_client.model.nontransactional.Currency;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -19,7 +18,6 @@ import com.purnama.pjm_client.util.GlobalFunctions;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -160,18 +158,12 @@ public class CurrencyAdd extends FormPanel{
 
     @Override
     protected void home() {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new CurrencyHome());
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new CurrencyHome());
     }
 
     @Override
     protected void detail(int id) {
-        MainTabbedPane tabbedPane = (MainTabbedPane)SwingUtilities.
-                getAncestorOfClass(MainTabbedPane.class, this);
-        
-        tabbedPane.changeTabPanel(getIndex(), new CurrencyDetail(id));
+        GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new CurrencyDetail(id));
     }
 
     @Override

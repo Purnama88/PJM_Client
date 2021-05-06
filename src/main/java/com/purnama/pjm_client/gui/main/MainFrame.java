@@ -6,6 +6,7 @@
 package com.purnama.pjm_client.gui.main;
 
 import com.purnama.pjm_client.gui.library.MyFrame;
+import com.purnama.pjm_client.util.GlobalFields;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
@@ -46,6 +47,9 @@ public class MainFrame extends MyFrame{
     }
     
     private void init(){
+        GlobalFields.MAINFRAME = this;
+        GlobalFields.MAINTABBEDPANE = maintabbedpane;
+        
         setJMenuBar(menubar);
         
         setMinimumSize(new Dimension(1240,550));
