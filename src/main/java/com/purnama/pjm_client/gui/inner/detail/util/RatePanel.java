@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.purnama.pjm_client.model.pagination;
+package com.purnama.pjm_client.gui.inner.detail.util;
 
-import java.util.List;
-import lombok.Data;
+import com.purnama.pjm_client.gui.library.MyPanel;
 
 /**
  *
  * @author p_cor
  */
-@Data
-public class Pagination<V> {
+public class RatePanel extends MyPanel{
     
-    private int totalpages;
-    private List<V> list;
-    
+    public RatePanel(){
+        
+    }
 }

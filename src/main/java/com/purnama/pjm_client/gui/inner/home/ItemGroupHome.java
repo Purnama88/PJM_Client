@@ -5,12 +5,13 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ItemGroupDetail;
 import com.purnama.pjm_client.gui.inner.form.ItemGroupAdd;
 import com.purnama.pjm_client.gui.inner.form.ItemGroupEdit;
 import com.purnama.pjm_client.model.nontransactional.ItemGroup;
-import com.purnama.pjm_client.model.pagination.ItemGroupPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.ItemGroupTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -93,17 +94,15 @@ public class ItemGroupHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    ItemGroupPagination itemgroup_pagination;
-                    
                     try{
-                        itemgroup_pagination = mapper.readValue(output, ItemGroupPagination.class);
+                        Pagination<ItemGroup> itemgrouppagination = mapper.readValue(output, new TypeReference<Pagination<ItemGroup>>() {});
                         
-                        totalpages = itemgroup_pagination.getTotalpages();
+                        totalpages = itemgrouppagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        itemgrouptablemodel.setItemGroupList(itemgroup_pagination.getItemgroups());
+                        itemgrouptablemodel.setItemGroupList(itemgrouppagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

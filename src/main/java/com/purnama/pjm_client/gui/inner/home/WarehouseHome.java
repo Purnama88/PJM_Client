@@ -5,12 +5,13 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.WarehouseDetail;
 import com.purnama.pjm_client.gui.inner.form.WarehouseAdd;
 import com.purnama.pjm_client.gui.inner.form.WarehouseEdit;
 import com.purnama.pjm_client.model.nontransactional.Warehouse;
-import com.purnama.pjm_client.model.pagination.WarehousePagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.WarehouseTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -90,17 +91,15 @@ public class WarehouseHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    WarehousePagination warehouse_pagination;
-                    
                     try{
-                        warehouse_pagination = mapper.readValue(output, WarehousePagination.class);
+                        Pagination<Warehouse> warehousepagination = mapper.readValue(output, new TypeReference<Pagination<Warehouse>>() {});
                         
-                        totalpages = warehouse_pagination.getTotalpages();
+                        totalpages = warehousepagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        warehousetablemodel.setWarehouseList(warehouse_pagination.getWarehouses());
+                        warehousetablemodel.setWarehouseList(warehousepagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

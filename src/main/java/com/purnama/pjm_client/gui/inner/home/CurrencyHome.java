@@ -5,12 +5,13 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.CurrencyDetail;
 import com.purnama.pjm_client.gui.inner.form.CurrencyAdd;
 import com.purnama.pjm_client.gui.inner.form.CurrencyEdit;
 import com.purnama.pjm_client.model.nontransactional.Currency;
-import com.purnama.pjm_client.model.pagination.CurrencyPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.CurrencyTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -91,17 +92,15 @@ public class CurrencyHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    CurrencyPagination currency_pagination;
-                    
                     try{
-                        currency_pagination = mapper.readValue(output, CurrencyPagination.class);
+                        Pagination<Currency> currencypagination = mapper.readValue(output, new TypeReference<Pagination<Currency>>() {});
                         
-                        totalpages = currency_pagination.getTotalpages();
+                        totalpages = currencypagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        currencytablemodel.setCurrencyList(currency_pagination.getCurrencies());
+                        currencytablemodel.setCurrencyList(currencypagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

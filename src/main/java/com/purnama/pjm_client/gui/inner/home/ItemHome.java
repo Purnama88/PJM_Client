@@ -5,12 +5,13 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ItemDetail;
 import com.purnama.pjm_client.gui.inner.form.ItemAdd;
 import com.purnama.pjm_client.gui.inner.form.ItemEdit;
 import com.purnama.pjm_client.model.nontransactional.Item;
-import com.purnama.pjm_client.model.pagination.ItemPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.ItemTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -90,17 +91,15 @@ public class ItemHome extends HomePanel{
                     String output = response.getEntity(String.class);
                     ObjectMapper mapper = new ObjectMapper();
 
-                    ItemPagination item_pagination;
-                    
                     try{
-                        item_pagination = mapper.readValue(output, ItemPagination.class);
+                        Pagination<Item> itempagination = mapper.readValue(output, new TypeReference<Pagination<Item>>() {});
                         
-                        totalpages = item_pagination.getTotalpages();
+                        totalpages = itempagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        itemtablemodel.setItemList(item_pagination.getItems());
+                        itemtablemodel.setItemList(itempagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

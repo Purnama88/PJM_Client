@@ -5,10 +5,11 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ReturnSalesDraftDetail;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.model.transactional.draft.ReturnSalesDraft;
-import com.purnama.pjm_client.model.pagination.ReturnSalesDraftPagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.ReturnSalesDraftTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -87,17 +88,15 @@ public class ReturnSalesDraftHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    ReturnSalesDraftPagination returnsalesdraft_pagination;
-                    
                     try{
-                        returnsalesdraft_pagination = mapper.readValue(output, ReturnSalesDraftPagination.class);
+                        Pagination<ReturnSalesDraft> returnsalesdraftpagination = mapper.readValue(output, new TypeReference<Pagination<ReturnSalesDraft>>() {});
                         
-                        totalpages = returnsalesdraft_pagination.getTotalpages();
+                        totalpages = returnsalesdraftpagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        returnsalesdrafttablemodel.setReturnSalesDraftList(returnsalesdraft_pagination.getReturnsalesdrafts());
+                        returnsalesdrafttablemodel.setReturnSalesDraftList(returnsalesdraftpagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

@@ -5,10 +5,11 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ReturnPurchaseDetail;
 import com.purnama.pjm_client.gui.inner.detail.ReturnPurchaseDraftDetail;
-import com.purnama.pjm_client.model.pagination.ReturnPurchasePagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.model.transactional.ReturnPurchase;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.ReturnPurchaseTableModel;
@@ -88,17 +89,15 @@ public class ReturnPurchaseHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    ReturnPurchasePagination returnpurchase_pagination;
-                    
                     try{
-                        returnpurchase_pagination = mapper.readValue(output, ReturnPurchasePagination.class);
+                        Pagination<ReturnPurchase> returnpurchasepagination = mapper.readValue(output, new TypeReference<Pagination<ReturnPurchase>>() {});
                         
-                        totalpages = returnpurchase_pagination.getTotalpages();
+                        totalpages = returnpurchasepagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        returnpurchasetablemodel.setReturnPurchaseList(returnpurchase_pagination.getReturnpurchases());
+                        returnpurchasetablemodel.setReturnPurchaseList(returnpurchasepagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

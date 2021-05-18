@@ -5,10 +5,11 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.InvoicePurchaseDraftDetail;
 import com.purnama.pjm_client.model.transactional.draft.InvoicePurchaseDraft;
-import com.purnama.pjm_client.model.pagination.InvoicePurchaseDraftPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.InvoicePurchaseDraftTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -87,17 +88,15 @@ public class InvoicePurchaseDraftHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    InvoicePurchaseDraftPagination invoicepurchasedraft_pagination;
-                    
                     try{
-                        invoicepurchasedraft_pagination = mapper.readValue(output, InvoicePurchaseDraftPagination.class);
+                        Pagination<InvoicePurchaseDraft> invoicepurchasedraftpagination = mapper.readValue(output, new TypeReference<Pagination<InvoicePurchaseDraft>>() {});
                         
-                        totalpages = invoicepurchasedraft_pagination.getTotalpages();
+                        totalpages = invoicepurchasedraftpagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        invoicepurchasedrafttablemodel.setInvoicePurchaseDraftList(invoicepurchasedraft_pagination.getInvoicepurchasedrafts());
+                        invoicepurchasedrafttablemodel.setInvoicePurchaseDraftList(invoicepurchasedraftpagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

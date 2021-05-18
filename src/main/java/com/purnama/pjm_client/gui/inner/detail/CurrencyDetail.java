@@ -6,6 +6,7 @@
 package com.purnama.pjm_client.gui.inner.detail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.purnama.pjm_client.gui.inner.detail.util.RatePanel;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.form.CurrencyEdit;
 import com.purnama.pjm_client.gui.inner.home.CurrencyHome;
@@ -29,6 +30,8 @@ public class CurrencyDetail extends DetailPanel{
     
     private final int id;
     
+    private final RatePanel ratepanel;
+    
     public CurrencyDetail(int id) {
         super(GlobalFields.PROPERTIES.getProperty("PANEL_CURRENCY_DETAIL"));
         
@@ -43,6 +46,8 @@ public class CurrencyDetail extends DetailPanel{
         defaultpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_DEFAULT"),
                 "");
         
+        ratepanel = new RatePanel();
+        
         init();
     }
     
@@ -56,6 +61,8 @@ public class CurrencyDetail extends DetailPanel{
         detailpanel.add(notepanel);
         detailpanel.add(datecreatedpanel);
         detailpanel.add(lastmodifiedpanel);
+        
+        tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("PANEL_RATE"), ratepanel);
         
         load();
     }

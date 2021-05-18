@@ -5,10 +5,20 @@
  */
 package com.purnama.pjm_client.model.transactional;
 
+import com.purnama.pjm_client.model.InternalInvoice;
+import lombok.Data;
+
 /**
  *
  * @author p_cor
  */
-public class Delivery {
+@Data
+public class Delivery extends InternalInvoice{
+    
+    private String destination;
+    
+    private String vehicletype;
+    
+    private String vehiclecode;
     
 }

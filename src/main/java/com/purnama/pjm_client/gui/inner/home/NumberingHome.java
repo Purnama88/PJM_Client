@@ -5,11 +5,12 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.NumberingDetail;
 import com.purnama.pjm_client.gui.inner.form.NumberingAdd;
 import com.purnama.pjm_client.model.nontransactional.Menu;
-import com.purnama.pjm_client.model.pagination.MenuPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.MenuTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -89,17 +90,15 @@ public class NumberingHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    MenuPagination menupagination;
-                    
                     try{
-                        menupagination = mapper.readValue(output, MenuPagination.class);
+                        Pagination<Menu> menupagination = mapper.readValue(output, new TypeReference<Pagination<Menu>>() {});
                         
                         totalpages = menupagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        menutablemodel.setMenuList(menupagination.getMenus());
+                        menutablemodel.setMenuList(menupagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

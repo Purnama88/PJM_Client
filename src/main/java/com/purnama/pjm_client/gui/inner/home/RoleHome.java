@@ -5,11 +5,12 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.RoleDetail;
 import com.purnama.pjm_client.gui.inner.form.RoleAdd;
 import com.purnama.pjm_client.model.nontransactional.Role;
-import com.purnama.pjm_client.model.pagination.RolePagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.RoleTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -89,17 +90,15 @@ public class RoleHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    RolePagination role_pagination;
-                    
                     try{
-                        role_pagination = mapper.readValue(output, RolePagination.class);
+                        Pagination<Role> rolepagination = mapper.readValue(output, new TypeReference<Pagination<Role>>() {});
                         
-                        totalpages = role_pagination.getTotalpages();
+                        totalpages = rolepagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        roletablemodel.setRoleList(role_pagination.getRoles());
+                        roletablemodel.setRoleList(rolepagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

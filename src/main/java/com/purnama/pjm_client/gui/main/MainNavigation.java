@@ -8,7 +8,9 @@ package com.purnama.pjm_client.gui.main;
 import com.purnama.pjm_client.gui.inner.home.BrandHome;
 import com.purnama.pjm_client.gui.inner.home.CurrencyHome;
 import com.purnama.pjm_client.gui.inner.home.DeliveryDraftHome;
+import com.purnama.pjm_client.gui.inner.home.DeliveryHome;
 import com.purnama.pjm_client.gui.inner.home.ExpensesDraftHome;
+import com.purnama.pjm_client.gui.inner.home.ExpensesHome;
 import com.purnama.pjm_client.gui.inner.home.InvoicePurchaseDraftHome;
 import com.purnama.pjm_client.gui.inner.home.InvoicePurchaseHome;
 import com.purnama.pjm_client.gui.inner.home.InvoiceSalesDraftHome;
@@ -119,12 +121,15 @@ public class MainNavigation extends MyPanel{
                 PROPERTIES.getProperty("MENU_RETURNSALES"));
         DefaultMutableTreeNode returnpurchase = new DefaultMutableTreeNode(GlobalFields.
                 PROPERTIES.getProperty("MENU_RETURNPURCHASE"));
+        DefaultMutableTreeNode delivery = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_DELIVERY"));
+        DefaultMutableTreeNode expenses = new DefaultMutableTreeNode(GlobalFields.
+                PROPERTIES.getProperty("MENU_EXPENSES"));
         DefaultMutableTreeNode itemmanagement = new DefaultMutableTreeNode("Item Management");
         DefaultMutableTreeNode payment = new DefaultMutableTreeNode("Payment");
         
         DefaultMutableTreeNode currency = new DefaultMutableTreeNode(GlobalFields.
                 PROPERTIES.getProperty("MENU_CURRENCY"));
-        DefaultMutableTreeNode rate = new DefaultMutableTreeNode("Rate");
         DefaultMutableTreeNode numbering = new DefaultMutableTreeNode(GlobalFields.
                 PROPERTIES.getProperty("MENU_NUMBERING"));
         
@@ -158,12 +163,13 @@ public class MainNavigation extends MyPanel{
         menu.add(invoicepurchase);
         menu.add(returnsales);
         menu.add(returnpurchase);
+        menu.add(delivery);
+        menu.add(expenses);
         menu.add(itemmanagement);
         menu.add(payment);
         
         setting.add(numbering);
         setting.add(currency);
-        setting.add(rate);
         
         add(scrollpane);
         scrollpane.getViewport().add(navigationtree);
@@ -247,6 +253,12 @@ public class MainNavigation extends MyPanel{
                         }
                         else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_RETURNPURCHASE"))){
                             maintabbedpane.addTab(new ReturnPurchaseHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_DELIVERY"))){
+                            maintabbedpane.addTab(new DeliveryHome());
+                        }
+                        else if(selectedNode.toString().equals(GlobalFields.PROPERTIES.getProperty("MENU_EXPENSES"))){
+                            maintabbedpane.addTab(new ExpensesHome());
                         }
                     }
                 }

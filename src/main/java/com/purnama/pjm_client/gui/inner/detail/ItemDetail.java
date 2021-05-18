@@ -7,7 +7,7 @@ package com.purnama.pjm_client.gui.inner.detail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.util.ItemGroupPanel;
-import com.purnama.pjm_client.gui.inner.detail.util.ModelPanel;
+import com.purnama.pjm_client.gui.inner.detail.util.ModelSearchPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.PricePanel;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.form.ItemEdit;
@@ -32,7 +32,7 @@ public class ItemDetail extends DetailPanel{
     
     private final ItemGroupPanel itemgrouppanel;
     
-    private final ModelPanel modelpanel;
+    private final ModelSearchPanel modelpanel;
     
     private final PricePanel pricepanel;
     
@@ -54,7 +54,7 @@ public class ItemDetail extends DetailPanel{
                 "");
         
         itemgrouppanel = new ItemGroupPanel(id);
-        modelpanel = new ModelPanel();
+        modelpanel = new ModelSearchPanel(id, getIndex());
         pricepanel = new PricePanel();
         
         init();

@@ -7,11 +7,12 @@ package com.purnama.pjm_client.gui.inner.home;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.purnama.pjm_client.gui.inner.detail.ReturnPurchaseDraftDetail;
+import com.purnama.pjm_client.gui.inner.detail.ExpensesDetail;
+import com.purnama.pjm_client.gui.inner.detail.ExpensesDraftDetail;
 import com.purnama.pjm_client.model.pagination.Pagination;
-import com.purnama.pjm_client.model.transactional.draft.ReturnPurchaseDraft;
+import com.purnama.pjm_client.model.transactional.Expenses;
 import com.purnama.pjm_client.rest.RestClient;
-import com.purnama.pjm_client.tablemodel.ReturnPurchaseDraftTableModel;
+import com.purnama.pjm_client.tablemodel.ExpensesTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
@@ -24,14 +25,14 @@ import javax.swing.table.TableRowSorter;
  *
  * @author p_cor
  */
-public class ReturnPurchaseDraftHome extends HomePanel{
+public class ExpensesHome extends HomePanel{
     
-    private final ReturnPurchaseDraftTableModel returnpurchasedrafttablemodel;
+    private final ExpensesTableModel expensestablemodel;
     
-    public ReturnPurchaseDraftHome() {
-        super(GlobalFields.PROPERTIES.getProperty("PANEL_RETURNPURCHASEDRAFT_HOME"));
+    public ExpensesHome() {
+        super(GlobalFields.PROPERTIES.getProperty("PANEL_EXPENSES_HOME"));
          
-        returnpurchasedrafttablemodel = new ReturnPurchaseDraftTableModel();
+        expensestablemodel = new ExpensesTableModel();
         
         sorter = new TableRowSorter<>(table.getModel());
         
@@ -39,7 +40,7 @@ public class ReturnPurchaseDraftHome extends HomePanel{
     }
     
     private void init(){
-        table.setModel(returnpurchasedrafttablemodel);
+        table.setModel(expensestablemodel);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class ReturnPurchaseDraftHome extends HomePanel{
                 
                 publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
                 
-                response = RestClient.get("returnpurchasedrafts?itemperpage=" + itemperpage + "&page=" + page +
+                response = RestClient.get("expenses?itemperpage=" + itemperpage + "&page=" + page +
                         "&keyword=" + keyword);
                 
                 return true;
@@ -89,14 +90,14 @@ public class ReturnPurchaseDraftHome extends HomePanel{
                     ObjectMapper mapper = new ObjectMapper();
 
                     try{
-                        Pagination<ReturnPurchaseDraft> returnpurchasedraftpagination = mapper.readValue(output, new TypeReference<Pagination<ReturnPurchaseDraft>>() {});
+                        Pagination<Expenses> expensespagination = mapper.readValue(output, new TypeReference<Pagination<Expenses>>() {});
                         
-                        totalpages = returnpurchasedraftpagination.getTotalpages();
+                        totalpages = expensespagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        returnpurchasedrafttablemodel.setReturnPurchaseDraftList(returnpurchasedraftpagination.getList());
+                        expensestablemodel.setExpensesList(expensespagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);
@@ -120,7 +121,7 @@ public class ReturnPurchaseDraftHome extends HomePanel{
                 
                 publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
                 
-                response = RestClient.post("returnpurchasedrafts", "");
+                response = RestClient.post("expensesdrafts", "");
                 
                 return true;
             }
@@ -170,23 +171,23 @@ public class ReturnPurchaseDraftHome extends HomePanel{
     }
 
     protected void detail(int id){
-        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ReturnPurchaseDraftDetail(id));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ExpensesDraftDetail(id));
     }
     
     @Override
     protected void detail() {
-        ReturnPurchaseDraft returnpurchasedraft = returnpurchasedrafttablemodel.getReturnPurchaseDraft(table.
+        Expenses expenses = expensestablemodel.getExpenses(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ReturnPurchaseDraftDetail(returnpurchasedraft.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ExpensesDetail(expenses.getId()));
     }
 
     @Override
     protected void edit() {
-        ReturnPurchaseDraft returnpurchasedraft = returnpurchasedrafttablemodel.getReturnPurchaseDraft(table.
+        Expenses expenses = expensestablemodel.getExpenses(table.
                     convertRowIndexToModel(table.getSelectedRow()));
         
-        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ReturnPurchaseDraftDetail(returnpurchasedraft.getId()));
+        GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ExpensesDetail(expenses.getId()));
     }
     
 }

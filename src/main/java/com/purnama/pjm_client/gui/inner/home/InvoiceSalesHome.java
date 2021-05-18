@@ -5,10 +5,11 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.InvoiceSalesDetail;
 import com.purnama.pjm_client.gui.inner.detail.InvoiceSalesDraftDetail;
-import com.purnama.pjm_client.model.pagination.InvoiceSalesPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.model.transactional.InvoiceSales;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.InvoiceSalesTableModel;
@@ -88,17 +89,15 @@ public class InvoiceSalesHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    InvoiceSalesPagination invoicesales_pagination;
-                    
                     try{
-                        invoicesales_pagination = mapper.readValue(output, InvoiceSalesPagination.class);
+                        Pagination<InvoiceSales> invoicesalespagination = mapper.readValue(output, new TypeReference<Pagination<InvoiceSales>>() {});
                         
-                        totalpages = invoicesales_pagination.getTotalpages();
+                        totalpages = invoicesalespagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        invoicesalestablemodel.setInvoiceSalesList(invoicesales_pagination.getInvoicesales());
+                        invoicesalestablemodel.setInvoiceSalesList(invoicesalespagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

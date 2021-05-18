@@ -5,10 +5,11 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ReturnSalesDetail;
 import com.purnama.pjm_client.gui.inner.detail.ReturnSalesDraftDetail;
-import com.purnama.pjm_client.model.pagination.ReturnSalesPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.model.transactional.ReturnSales;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.ReturnSalesTableModel;
@@ -88,17 +89,15 @@ public class ReturnSalesHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    ReturnSalesPagination returnsales_pagination;
-                    
                     try{
-                        returnsales_pagination = mapper.readValue(output, ReturnSalesPagination.class);
+                        Pagination<ReturnSales> returnsalespagination = mapper.readValue(output, new TypeReference<Pagination<ReturnSales>>() {});
                         
-                        totalpages = returnsales_pagination.getTotalpages();
+                        totalpages = returnsalespagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        returnsalestablemodel.setReturnSalesList(returnsales_pagination.getReturnsales());
+                        returnsalestablemodel.setReturnSalesList(returnsalespagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

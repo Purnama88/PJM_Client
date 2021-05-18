@@ -5,12 +5,14 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.purnama.pjm_client.model.nontransactional.Brand;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.BrandDetail;
 import com.purnama.pjm_client.gui.inner.form.BrandAdd;
 import com.purnama.pjm_client.gui.inner.form.BrandEdit;
 import com.purnama.pjm_client.model.nontransactional.Brand;
-import com.purnama.pjm_client.model.pagination.BrandPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.BrandTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -90,17 +92,15 @@ public class BrandHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    BrandPagination brand_pagination;
-                    
                     try{
-                        brand_pagination = mapper.readValue(output, BrandPagination.class);
+                        Pagination<Brand> brandpagination = mapper.readValue(output, new TypeReference<Pagination<Brand>>() {});
                         
-                        totalpages = brand_pagination.getTotalpages();
+                        totalpages = brandpagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        brandtablemodel.setBrandList(brand_pagination.getBrands());
+                        brandtablemodel.setBrandList(brandpagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

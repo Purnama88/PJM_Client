@@ -5,12 +5,13 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.PartnerDetail;
 import com.purnama.pjm_client.gui.inner.form.PartnerAdd;
 import com.purnama.pjm_client.gui.inner.form.PartnerEdit;
 import com.purnama.pjm_client.model.nontransactional.Partner;
-import com.purnama.pjm_client.model.pagination.PartnerPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.PartnerTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -90,17 +91,15 @@ public class PartnerHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    PartnerPagination partner_pagination;
-                    
                     try{
-                        partner_pagination = mapper.readValue(output, PartnerPagination.class);
+                        Pagination<Partner> partnerpagination = mapper.readValue(output, new TypeReference<Pagination<Partner>>() {});
                         
-                        totalpages = partner_pagination.getTotalpages();
+                        totalpages = partnerpagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        partnertablemodel.setPartnerList(partner_pagination.getPartners());
+                        partnertablemodel.setPartnerList(partnerpagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

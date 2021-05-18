@@ -5,10 +5,11 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.DeliveryDraftDetail;
 import com.purnama.pjm_client.model.transactional.draft.DeliveryDraft;
-import com.purnama.pjm_client.model.pagination.DeliveryDraftPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.DeliveryDraftTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -87,17 +88,15 @@ public class DeliveryDraftHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    DeliveryDraftPagination deliverydraft_pagination;
-                    
                     try{
-                        deliverydraft_pagination = mapper.readValue(output, DeliveryDraftPagination.class);
+                        Pagination<DeliveryDraft> deliverydraftpagination = mapper.readValue(output, new TypeReference<Pagination<DeliveryDraft>>() {});
                         
-                        totalpages = deliverydraft_pagination.getTotalpages();
+                        totalpages = deliverydraftpagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        deliverydrafttablemodel.setDeliveryDraftList(deliverydraft_pagination.getDeliverydrafts());
+                        deliverydrafttablemodel.setDeliveryDraftList(deliverydraftpagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

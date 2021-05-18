@@ -296,8 +296,6 @@ public class PartnerSearchPanel extends MyPanel implements ActionListener{
                 }
             };
             worker.execute();
-            
-            
         }
     }
     

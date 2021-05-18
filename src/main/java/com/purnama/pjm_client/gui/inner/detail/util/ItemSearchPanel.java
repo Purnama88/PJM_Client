@@ -106,12 +106,6 @@ public class ItemSearchPanel extends MyPanel implements ActionListener{
         init();
     }
     
-    public String getSearchKeyword(){
-        String text = itempanel.getTextFieldValue();
-        String newtext = text.replaceAll(" ", "%20");
-        return newtext;
-    }
-    
     private void init(){
         table.setModel(itemitemgrouptablemodel);
         

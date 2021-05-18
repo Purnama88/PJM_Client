@@ -5,10 +5,11 @@
  */
 package com.purnama.pjm_client.gui.inner.home;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.ExpensesDraftDetail;
 import com.purnama.pjm_client.model.transactional.draft.ExpensesDraft;
-import com.purnama.pjm_client.model.pagination.ExpensesDraftPagination;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.ExpensesDraftTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -87,17 +88,15 @@ public class ExpensesDraftHome extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    ExpensesDraftPagination expensesdraft_pagination;
-                    
                     try{
-                        expensesdraft_pagination = mapper.readValue(output, ExpensesDraftPagination.class);
+                        Pagination<ExpensesDraft> expensesdraftpagination = mapper.readValue(output, new TypeReference<Pagination<ExpensesDraft>>() {});
                         
-                        totalpages = expensesdraft_pagination.getTotalpages();
+                        totalpages = expensesdraftpagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        expensesdrafttablemodel.setExpensesDraftList(expensesdraft_pagination.getExpensesdrafts());
+                        expensesdrafttablemodel.setExpensesDraftList(expensesdraftpagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);

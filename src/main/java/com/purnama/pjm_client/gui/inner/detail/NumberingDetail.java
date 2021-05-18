@@ -5,12 +5,14 @@
  */
 package com.purnama.pjm_client.gui.inner.detail;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.purnama.pjm_client.gui.inner.detail.util.SelectableLabelContentPanel;
 import com.purnama.pjm_client.gui.inner.home.HomePanel;
 import com.purnama.pjm_client.gui.inner.home.NumberingHome;
 import com.purnama.pjm_client.model.nontransactional.Menu;
-import com.purnama.pjm_client.model.pagination.NumberingPagination;
+import com.purnama.pjm_client.model.nontransactional.Numbering;
+import com.purnama.pjm_client.model.pagination.Pagination;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.tablemodel.NumberingTableModel;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -202,17 +204,15 @@ class NumberingTablePanel extends HomePanel{
                     
                     ObjectMapper mapper = new ObjectMapper();
 
-                    NumberingPagination numberingpagination;
-                    
                     try{
-                        numberingpagination = mapper.readValue(output, NumberingPagination.class);
+                        Pagination<Numbering> numberingpagination = mapper.readValue(output, new TypeReference<Pagination<Numbering>>() {});
                         
                         totalpages = numberingpagination.getTotalpages();
                         
                         upperpanel.setCurrentPageLabel(page + "");
                         upperpanel.setTotalPageLabel(totalpages + "");
                         
-                        numberingtablemodel.setNumberingList(numberingpagination.getNumberings());
+                        numberingtablemodel.setNumberingList(numberingpagination.getList());
                     }
                     catch(IOException e){
                         System.out.println(e);
