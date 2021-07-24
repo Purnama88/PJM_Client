@@ -105,6 +105,38 @@ public class PartnerAdd extends FormPanel{
     }
     
     private void init(){
+        codepanel.setDocumentListener(this);
+        namepanel.setDocumentListener(this);
+        contactnamepanel.setDocumentListener(this);
+        addresspanel.setDocumentListener(this);
+        phonenumberpanel.setDocumentListener(this);
+        phonenumber2panel.setDocumentListener(this);
+        mobilenumberpanel.setDocumentListener(this);
+        mobilenumber2panel.setDocumentListener(this);
+        faxnumberpanel.setDocumentListener(this);
+        faxnumber2panel.setDocumentListener(this);
+        emailpanel.setDocumentListener(this);
+        email2panel.setDocumentListener(this);
+        maximumdiscountpanel.setDocumentListener(this);
+        maximumbalancepanel.setDocumentListener(this);
+        paymentduepanel.setDocumentListener(this);
+        notepanel.setDocumentListener(this);
+        
+        codepanel.setTextFieldActionListener(this);
+        namepanel.setTextFieldActionListener(this);
+        contactnamepanel.setTextFieldActionListener(this);
+        phonenumberpanel.setTextFieldActionListener(this);
+        phonenumber2panel.setTextFieldActionListener(this);
+        mobilenumberpanel.setTextFieldActionListener(this);
+        mobilenumber2panel.setTextFieldActionListener(this);
+        faxnumberpanel.setTextFieldActionListener(this);
+        faxnumber2panel.setTextFieldActionListener(this);
+        emailpanel.setTextFieldActionListener(this);
+        email2panel.setTextFieldActionListener(this);
+        maximumdiscountpanel.setTextFieldActionListener(this);
+        maximumbalancepanel.setTextFieldActionListener(this);
+        paymentduepanel.setTextFieldActionListener(this);
+        
         detailpanel.add(codepanel);
         detailpanel.add(namepanel);
         

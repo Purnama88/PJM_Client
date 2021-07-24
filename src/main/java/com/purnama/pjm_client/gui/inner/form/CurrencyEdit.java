@@ -87,7 +87,7 @@ public class CurrencyEdit extends CurrencyAdd{
                         defaultpanel.setSelectedValue(currency.isDefaultcurrency());
                         notepanel.setTextAreaValue(currency.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

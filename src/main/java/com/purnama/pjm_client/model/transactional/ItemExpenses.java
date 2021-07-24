@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.purnama.pjm_client.model;
+package com.purnama.pjm_client.model.transactional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.purnama.pjm_client.model.nontransactional.Item;
+import com.purnama.pjm_client.model.InternalItemInvoice;
 import com.purnama.pjm_client.util.GlobalFields;
 import lombok.Data;
 
@@ -15,23 +15,16 @@ import lombok.Data;
  * @author p_cor
  */
 @Data
-public class ExternalItemInvoiceDraft {
+public class ItemExpenses extends InternalItemInvoice{
+    private double quantity;
+   
+    private double price;
     
-    protected int id;
-    
-    protected Item item;
-    
-//    protected String code;
-    
-    protected String description;
-    
-    protected double quantity;
-    
-    protected double price;
-    
-    protected double discount;
+    private double discount;
     
     protected String box;
+    
+    private Expenses expenses;
     
     @JsonIgnore
     public double getSubtotal() {

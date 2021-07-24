@@ -86,7 +86,7 @@ public class ItemGroupEdit extends ItemGroupAdd{
                         statuspanel.setSelectedValue(itemgroup.isStatus());
                         notepanel.setTextAreaValue(itemgroup.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

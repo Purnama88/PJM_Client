@@ -6,6 +6,7 @@
 package com.purnama.pjm_client.tablemodel;
 
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
+import com.purnama.pjm_client.model.nontransactional.Item;
 import com.purnama.pjm_client.model.transactional.draft.ExpensesDraft;
 import com.purnama.pjm_client.model.transactional.draft.ItemExpensesDraft;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -128,8 +129,7 @@ public class ItemExpensesDraftTableModel extends AbstractTableModel{
         }
         
         if(row+1 == getRowCount()){
-            itemexpensesdraftlist.add(
-                    createEmptyItemExpensesDraft(invoiceid));
+            createEmptyItemExpensesDraft();
         }
     }
     
@@ -154,8 +154,7 @@ public class ItemExpensesDraftTableModel extends AbstractTableModel{
     
     public void setItemExpensesDraftList(List<ItemExpensesDraft> itemexpensesdraftlist){
         this.itemexpensesdraftlist = itemexpensesdraftlist;
-        addRow(createEmptyItemExpensesDraft(invoiceid));
-        fireTableDataChanged();
+        createEmptyItemExpensesDraft();
     }
     
     public ItemExpensesDraft getItemExpensesDraft(int index){
@@ -179,11 +178,11 @@ public class ItemExpensesDraftTableModel extends AbstractTableModel{
         discountsubtotalpanel.setDiscount(discountsubtotalpanel.getDiscount() - iisd.getDiscount());
         
         if(getRowCount() == 0){
-            addRow(createEmptyItemExpensesDraft(invoiceid));
+            createEmptyItemExpensesDraft();
         }
     }
     
-    public ItemExpensesDraft createEmptyItemExpensesDraft(int invoiceid){
+    public void createEmptyItemExpensesDraft(){
         ExpensesDraft expensesdraft = new ExpensesDraft();
         expensesdraft.setId(invoiceid);
         
@@ -195,6 +194,26 @@ public class ItemExpensesDraftTableModel extends AbstractTableModel{
         newiis.setExpensesdraft(expensesdraft);
         newiis.setBox("");
         
-        return newiis;
+        itemexpensesdraftlist.add(newiis);
+        fireTableDataChanged();
+    }
+    
+    public void createItemExpensesDraft(Item item, int quantity, String box){
+        ExpensesDraft expensesdraft = new ExpensesDraft();
+        expensesdraft.setId(invoiceid);
+        
+        ItemExpensesDraft newiis = new ItemExpensesDraft();
+        newiis.setDescription(item.getCode() + " " + item.getName() + " " + item.getLabel().getCode());
+        newiis.setQuantity(quantity);
+        newiis.setPrice(item.getSellprice());
+        newiis.setDiscount(0);
+        newiis.setExpensesdraft(expensesdraft);
+        newiis.setBox(box);
+        
+        itemexpensesdraftlist.add(itemexpensesdraftlist.size()-1, newiis);
+        
+        discountsubtotalpanel.setSubtotal(discountsubtotalpanel.getSubtotal() + newiis.getSubtotal());
+        
+        fireTableDataChanged();
     }
 }

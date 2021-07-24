@@ -12,6 +12,7 @@ import com.purnama.pjm_client.gui.inner.detail.util.LabelTextFieldPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.NotePanel;
 import com.purnama.pjm_client.gui.inner.detail.util.TotalPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.UpperPanel;
+import com.purnama.pjm_client.gui.inner.dialog.ItemInvoiceDialog;
 import com.purnama.pjm_client.gui.library.MyButton;
 import com.purnama.pjm_client.gui.library.MyImageIcon;
 import com.purnama.pjm_client.gui.library.MyLabel;
@@ -24,8 +25,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.util.Date;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -33,13 +35,13 @@ import javax.swing.event.DocumentListener;
  *
  * @author p_cor
  */
-public abstract class InvoiceDraftDetailPanel extends MainPanel implements DocumentListener{
+public abstract class InvoiceDraftDetailPanel extends MainPanel{
     
     protected final UpperPanel upperpanel;
     
     protected final MyPanel detailpanel, leftdetailpanel, middledetailpanel, rightdetailpanel,
             summarypanel, leftsummarypanel, rightsummarypanel,
-            buttonpanel, leftbuttonpanel, rightbuttonpanel;
+            buttonpanel;
     
     protected final LabelTextFieldPanel warehousepanel, idpanel;
     
@@ -55,8 +57,9 @@ public abstract class InvoiceDraftDetailPanel extends MainPanel implements Docum
     
     protected final TotalPanel totalpanel;
     
-    protected final MyButton closebutton, savebutton, deletebutton, discardbutton;
+    protected final MyButton closebutton, savebutton, deletebutton, additembutton, exportbutton, importbutton;
     
+    protected final ItemInvoiceDialog iteminvoicedialog;
     
     public InvoiceDraftDetailPanel(String name) {
         super(name);
@@ -89,24 +92,34 @@ public abstract class InvoiceDraftDetailPanel extends MainPanel implements Docum
         
         notepanel = new NotePanel();
         
-        buttonpanel = new MyPanel(new GridLayout(1, 2, 5, 5));
-        
-        leftbuttonpanel = new MyPanel(new FlowLayout(FlowLayout.LEFT));
-        rightbuttonpanel = new MyPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonpanel = new MyPanel(new FlowLayout(FlowLayout.LEFT));
         
         deletebutton  = new MyButton(new MyImageIcon().getImage("image/Delete_16.png"), 
-                GlobalFields.PROPERTIES.getProperty("LABEL_DELETE"), 100, 24);
+                 GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
         savebutton  = new MyButton(new MyImageIcon().getImage("image/Save_16.png"), 
-                GlobalFields.PROPERTIES.getProperty("LABEL_SAVE"), 100, 24);
+                 GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
         closebutton = new MyButton(new MyImageIcon().getImage("image/Close_16.png"),
-                GlobalFields.PROPERTIES.getProperty("LABEL_CLOSE"), 100, 24);
-        discardbutton = new MyButton(new MyImageIcon().getImage("image/Discard_16.png"),
-                GlobalFields.PROPERTIES.getProperty("LABEL_DISCARD"), 100, 24);
+                 GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
+        additembutton = new MyButton(new MyImageIcon().getImage("image/Add_16.png"),
+                 GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
+        exportbutton = new MyButton(new MyImageIcon().getImage("image/Export_16.png"),
+                 GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
+        importbutton = new MyButton(new MyImageIcon().getImage("image/Import_16.png"),
+                GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
+        
+        iteminvoicedialog = new ItemInvoiceDialog();
         
         init();
     }
     
     private void init(){
+        deletebutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_DELETEINVOICE"));
+        savebutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_SAVEINVOICE"));
+        closebutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_CLOSEINVOICE"));
+        additembutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_ADDITEM"));
+        exportbutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_EXPORTINVOICE"));
+        importbutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_IMPORTINVOICE"));
+        
         idpanel.setTextFieldEnabled(false);
         warehousepanel.setTextFieldEnabled(false);
         
@@ -142,23 +155,37 @@ public abstract class InvoiceDraftDetailPanel extends MainPanel implements Docum
         buttonpanel.setMinimumSize(new Dimension(Integer.MAX_VALUE, 40));
         buttonpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         
-        leftbuttonpanel.add(savebutton);
-        leftbuttonpanel.add(discardbutton);
-        
-        rightbuttonpanel.add(deletebutton);
-        rightbuttonpanel.add(closebutton);
-        
-        buttonpanel.add(leftbuttonpanel);
-        buttonpanel.add(rightbuttonpanel);
+        buttonpanel.add(additembutton);
+        buttonpanel.add(new JSeparator(SwingConstants.VERTICAL));
+        buttonpanel.add(importbutton);
+        buttonpanel.add(exportbutton);
+        buttonpanel.add(new JSeparator(SwingConstants.VERTICAL));
+        buttonpanel.add(savebutton);
+        buttonpanel.add(new JSeparator(SwingConstants.VERTICAL));
+        buttonpanel.add(deletebutton);
+        buttonpanel.add(new JSeparator(SwingConstants.VERTICAL));
+        buttonpanel.add(closebutton);
         
         add(upperpanel);
         add(detailpanel);
+        add(buttonpanel);
         add(tabbedpane);
         add(summarypanel);
-        add(buttonpanel);
         
-        upperpanel.getHomeButton().addActionListener((ActionEvent e) -> {
+        upperpanel.getHomeButton().addActionListener(e -> {
             home();
+        });
+        
+        additembutton.addActionListener(e -> {
+            additem();
+        });
+        
+        importbutton.addActionListener(e -> {
+            _import();
+        });
+        
+        exportbutton.addActionListener(e -> {
+            export();
         });
         
         DocumentListener documentListener = new DocumentListener() {
@@ -195,34 +222,14 @@ public abstract class InvoiceDraftDetailPanel extends MainPanel implements Docum
         expensespanel.setDocumentListener(documentListener);
     }
     
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-//        JTabbedPane tabbedPane = (JTabbedPane)SwingUtilities.
-//                getAncestorOfClass(JTabbedPane.class, this);
-//        tabbedPane.setTitleAt(getIndex(), getPendingName());
-//        setState(MyPanel.PENDING);
-    }
-    
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-//        JTabbedPane tabbedPane = (JTabbedPane)SwingUtilities.
-//                getAncestorOfClass(JTabbedPane.class, this);
-//        tabbedPane.setTitleAt(getIndex(), getPendingName());
-//        setState(MyPanel.PENDING);
-    }
-    
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-//        JTabbedPane tabbedPane = (JTabbedPane)SwingUtilities.
-//                getAncestorOfClass(JTabbedPane.class, this);
-//        tabbedPane.setTitleAt(getIndex(), getPendingName());
-//        setState(MyPanel.PENDING);
-    }
-    
     protected abstract void load();
     protected abstract void home();
     protected abstract void save();
     protected abstract void close();
+    protected abstract void delete();
+    protected abstract void additem();
+    protected abstract void _import();
+    protected abstract void export();
     
     @Override
     public abstract void refresh();

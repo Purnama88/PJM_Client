@@ -79,6 +79,21 @@ public class UserAdd extends FormPanel{
     }
     
     private void init(){
+        codepanel.setDocumentListener(this);
+        namepanel.setDocumentListener(this);
+        usernamepanel.setDocumentListener(this);
+        passwordpanel.setDocumentListener(this);
+        confirmpanel.setDocumentListener(this);
+        discountpanel.setDocumentListener(this);
+        notepanel.setDocumentListener(this);
+        
+        codepanel.setTextFieldActionListener(this);
+        namepanel.setTextFieldActionListener(this);
+        usernamepanel.setTextFieldActionListener(this);
+        passwordpanel.setPasswordFieldActionListener(this);
+        confirmpanel.setPasswordFieldActionListener(this);
+        discountpanel.setTextFieldActionListener(this);
+        
         detailpanel.add(codepanel);
         detailpanel.add(namepanel);
         

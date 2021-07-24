@@ -12,7 +12,6 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 /**
@@ -86,7 +85,7 @@ public class WarehouseEdit extends WarehouseAdd{
                         statuspanel.setSelectedValue(warehouse.isStatus());
                         notepanel.setTextAreaValue(warehouse.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

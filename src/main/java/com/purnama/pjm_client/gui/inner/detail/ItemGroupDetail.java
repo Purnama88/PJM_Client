@@ -44,7 +44,7 @@ public class ItemGroupDetail extends DetailPanel{
         descriptionpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_DESCRIPTION"),
                 "");
         
-        itemsearchpanel = new ItemSearchPanel(id, getIndex());
+        itemsearchpanel = new ItemSearchPanel(id);
         
         init();
     }
@@ -58,6 +58,7 @@ public class ItemGroupDetail extends DetailPanel{
         detailpanel.add(notepanel);
         detailpanel.add(lastmodifiedpanel);
         
+        itemsearchpanel.setIndex(getIndex());
         tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("PANEL_ITEM"), itemsearchpanel);
         
         load();
@@ -136,6 +137,7 @@ public class ItemGroupDetail extends DetailPanel{
     @Override
     protected void edit() {
         GlobalFields.MAINTABBEDPANE.insertTab(getIndex()+1, new ItemGroupEdit(itemgroup.getId()));
+        System.out.println(getIndex());
     }
     
 }

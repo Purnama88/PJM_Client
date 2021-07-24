@@ -102,7 +102,7 @@ public class PartnerEdit extends PartnerAdd{
                         statuspanel.setSelectedValue(partner.isStatus());
                         notepanel.setTextAreaValue(partner.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

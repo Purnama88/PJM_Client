@@ -19,22 +19,31 @@ import java.awt.FlowLayout;
  */
 public class SubmitPanel extends MyPanel{
     
-    private final MyButton submitbutton, cancelbutton;
+    private final MyButton submitbutton, cancelbutton, submitandaddmorebutton;
     
     public SubmitPanel(){
         super(new FlowLayout(FlowLayout.CENTER));
         
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        setAlignmentX(Component.LEFT_ALIGNMENT);
-        
         submitbutton = new MyButton(GlobalFields.PROPERTIES.getProperty("LABEL_SUBMIT"));
         cancelbutton = new MyButton(GlobalFields.PROPERTIES.getProperty("LABEL_CANCEL"));
+        submitandaddmorebutton = new MyButton(GlobalFields.PROPERTIES.getProperty("LABEL_SUBMITANDADDMORE"));
+        
+        init();
+    }
+    
+    private void init(){
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        setAlignmentX(Component.LEFT_ALIGNMENT);
         
         add(submitbutton);
     }
     
     public void addCancelButton(){
         add(cancelbutton);
+    }
+    
+    public void addSubmitAndAddMorebutton(){
+        add(submitandaddmorebutton, 1);
     }
     
     public void loading(){
@@ -58,16 +67,22 @@ public class SubmitPanel extends MyPanel{
     public MyButton getSubmitButton(){
         return submitbutton;
     }
+
+    public MyButton getSubmitandaddmorebutton() {
+        return submitandaddmorebutton;
+    }
     
     @Override
     public void disable(){
         submitbutton.setEnabled(false);
         cancelbutton.setEnabled(false);
+        submitandaddmorebutton.setEnabled(false);
     }
     
     @Override
     public void enable(){
         submitbutton.setEnabled(true);
         cancelbutton.setEnabled(true);
+        submitandaddmorebutton.setEnabled(true);
     }
 }

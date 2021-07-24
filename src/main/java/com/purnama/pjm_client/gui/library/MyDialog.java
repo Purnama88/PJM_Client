@@ -9,8 +9,6 @@ import com.purnama.pjm_client.gui.inner.form.util.SubmitPanel;
 import com.purnama.pjm_client.util.GlobalFields;
 import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JDialog;
@@ -26,10 +24,6 @@ public class MyDialog extends JDialog{
     
     protected final SubmitPanel submitpanel;
     
-    protected final MyPanel okpanel;
-    
-    protected final MyButton okbutton;
-    
     private final int width, height;
     
     public MyDialog(String title, int width, int height){
@@ -42,10 +36,6 @@ public class MyDialog extends JDialog{
         
         submitpanel = new SubmitPanel();
         
-        okpanel = new MyPanel(new FlowLayout(FlowLayout.CENTER));
-        
-        okbutton = new MyButton(GlobalFields.PROPERTIES.getProperty("LABEL_OK"));
-        
         init();
     }
     
@@ -57,19 +47,17 @@ public class MyDialog extends JDialog{
         
         submitpanel.addCancelButton();
         
-        okpanel.add(okbutton);
-        
         add(box);
         
         pack();
         
         setLocationRelativeTo(GlobalFields.MAINFRAME);
         
-        submitpanel.getCancelButton().addActionListener((ActionEvent e) -> {
+        submitpanel.getCancelButton().addActionListener( e -> {
            dispose();
         });
         
-        okbutton.addActionListener((ActionEvent e) -> {
+        submitpanel.getSubmitButton().addActionListener( e -> {
            dispose();
         });
         

@@ -84,7 +84,7 @@ public class RoleEdit extends RoleAdd{
                         statuspanel.setSelectedValue(role.isStatus());
                         notepanel.setTextAreaValue(role.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

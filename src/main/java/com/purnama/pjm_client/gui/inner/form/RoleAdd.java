@@ -41,6 +41,11 @@ public class RoleAdd extends FormPanel{
     }
     
     private void init(){
+        namepanel.setDocumentListener(this);
+        notepanel.setDocumentListener(this);
+        
+        namepanel.setTextFieldActionListener(this);
+        
         detailpanel.add(namepanel);
         
         detailpanel.add(statuspanel);

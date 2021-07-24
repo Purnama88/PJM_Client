@@ -24,13 +24,13 @@ public class ItemDeliveryDraftTablePanel extends TablePanel{
     
     private final ItemDeliveryDraftTableModel itemdeliverydrafttablemodel;
     
-    private final int deliveryid;
+    private final int deliverydraftid;
     
-    public ItemDeliveryDraftTablePanel(int deliveryid){
+    public ItemDeliveryDraftTablePanel(int deliverydraftid){
         
-        this.deliveryid = deliveryid;
+        this.deliverydraftid = deliverydraftid;
         
-        itemdeliverydrafttablemodel = new ItemDeliveryDraftTableModel(deliveryid);
+        itemdeliverydrafttablemodel = new ItemDeliveryDraftTableModel(deliverydraftid);
         
         table.setModel(itemdeliverydrafttablemodel);
         
@@ -43,6 +43,10 @@ public class ItemDeliveryDraftTablePanel extends TablePanel{
         menuitemdelete.addActionListener((ActionEvent e) -> {
             itemdeliverydrafttablemodel.deleteRow(table.getSelectedRow());
         });
+        
+        menuitemedit.addActionListener((ActionEvent e) -> {
+            
+        });
     }
     
     @Override
@@ -54,7 +58,7 @@ public class ItemDeliveryDraftTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground(){
                 
-                response = RestClient.get("itemdeliverydrafts?deliveryid="+deliveryid);
+                response = RestClient.get("itemdeliverydrafts?deliverydraftid="+deliverydraftid);
                 
                 return true;
             }
@@ -158,6 +162,10 @@ public class ItemDeliveryDraftTablePanel extends TablePanel{
         };
         
         worker.execute();
+    }
+
+    public ItemDeliveryDraftTableModel getItemdeliverydrafttablemodel() {
+        return itemdeliverydrafttablemodel;
     }
     
 }

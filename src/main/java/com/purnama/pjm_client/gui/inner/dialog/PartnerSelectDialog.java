@@ -105,5 +105,4 @@ public class PartnerSelectDialog extends SelectDialog{
         
         return null;
     }
-
 }

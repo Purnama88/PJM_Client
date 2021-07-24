@@ -88,7 +88,7 @@ public class ItemEdit extends ItemAdd{
                         statuspanel.setSelectedValue(item.isStatus());
                         notepanel.setTextAreaValue(item.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

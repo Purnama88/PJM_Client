@@ -5,7 +5,6 @@
  */
 package com.purnama.pjm_client.main;
 
-import com.purnama.pjm_client.gui.main.MainFrame;
 import com.purnama.pjm_client.login.LoginFrame;
 import com.purnama.pjm_client.util.GlobalFields;
 import java.io.IOException;

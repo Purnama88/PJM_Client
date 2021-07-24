@@ -56,6 +56,10 @@ public class ItemInvoiceSalesDraftTablePanel extends TablePanel{
         menuitemdelete.addActionListener((ActionEvent e) -> {
             iteminvoicesalesdrafttablemodel.deleteRow(table.getSelectedRow());
         });
+        
+//        menuitemedit.addActionListener((ActionEvent e) -> {
+//            iteminvoicedialog.showDialog();
+//        });
     }
     
     @Override
@@ -171,6 +175,10 @@ public class ItemInvoiceSalesDraftTablePanel extends TablePanel{
         };
         
         worker.execute();
+    }
+
+    public ItemInvoiceSalesDraftTableModel getIteminvoicesalesdrafttablemodel() {
+        return iteminvoicesalesdrafttablemodel;
     }
     
 }

@@ -19,14 +19,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author p_cor
  */
-public abstract class FormPanel extends MainPanel implements DocumentListener, ActionListener{
+public abstract class FormPanel extends MainPanel implements ActionListener{
 
     protected final UpperPanel upperpanel;
     
@@ -91,23 +89,7 @@ public abstract class FormPanel extends MainPanel implements DocumentListener, A
     public abstract void refresh();
     
     @Override
-    public void insertUpdate(DocumentEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void actionPerformed(ActionEvent e) {
         submit();
     }
-    
 }

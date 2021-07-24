@@ -172,5 +172,8 @@ public class ItemReturnPurchaseDraftTablePanel extends TablePanel{
         
         worker.execute();
     }
-    
+
+    public ItemReturnPurchaseDraftTableModel getItemreturnpurchasedrafttablemodel() {
+        return itemreturnpurchasedrafttablemodel;
+    }
 }

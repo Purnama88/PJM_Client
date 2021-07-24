@@ -86,7 +86,7 @@ public class PartnerGroupEdit extends PartnerGroupAdd{
                         statuspanel.setSelectedValue(partnergroup.isStatus());
                         notepanel.setTextAreaValue(partnergroup.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

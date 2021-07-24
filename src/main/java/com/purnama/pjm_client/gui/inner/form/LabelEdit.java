@@ -86,7 +86,7 @@ public class LabelEdit extends LabelAdd{
                         statuspanel.setSelectedValue(label.isStatus());
                         notepanel.setTextAreaValue(label.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

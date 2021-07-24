@@ -63,6 +63,8 @@ public class ReturnPurchaseDraftDetail extends InvoiceDraftDetailPanel{
     }
     
     private void init(){
+        iteminvoicedialog.setTablemodel(itemreturnpurchasedrafttablepanel.getItemreturnpurchasedrafttablemodel());
+        
         leftdetailpanel.add(numberingpanel);
         
         middledetailpanel.add(duedatepanel);
@@ -81,6 +83,15 @@ public class ReturnPurchaseDraftDetail extends InvoiceDraftDetailPanel{
             JOptionPane.showMessageDialog(GlobalFields.MAINFRAME, 
                     GlobalFields.PROPERTIES.getProperty("NOTIFICATION_SAVED"),
                 "", JOptionPane.INFORMATION_MESSAGE);
+        });
+        
+        deletebutton.addActionListener((ActionEvent e) -> {
+            int result = JOptionPane.showConfirmDialog(null, GlobalFields.
+                PROPERTIES.getProperty("QUESTION_DELETEINVOICE"),
+                "", JOptionPane.YES_NO_OPTION);
+                if(result == JOptionPane.YES_OPTION){
+                    delete();
+                }
         });
         
         load();
@@ -231,5 +242,64 @@ public class ReturnPurchaseDraftDetail extends InvoiceDraftDetailPanel{
         currencypanel.refresh();
         
         load();
+    }
+
+    @Override
+    protected void delete() {
+        SwingWorker<Boolean, String> saveworker = new SwingWorker<Boolean, String>(){
+            ClientResponse response;
+
+            @Override
+            protected Boolean doInBackground(){
+
+                upperpanel.showProgressBar();
+                
+                publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
+
+                response = RestClient.delete("returnpurchasedrafts/" + returnpurchasedraft.getId(), "");
+
+                return true;
+            }
+
+            @Override
+            protected void process(List<String> chunks) {
+                chunks.stream().forEach((number) -> {
+                    upperpanel.setNotifLabel(number);
+                });
+            }
+            
+            @Override
+            protected void done() {
+                upperpanel.hideProgressBar();
+                
+                if(response == null){
+                    upperpanel.setNotifLabel(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_TIMEDOUT"));
+                }
+                else if(response.getStatus() != 200) {
+                    upperpanel.setNotifLabel(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_HTTPERROR")
+                                    + response.getStatus());
+                }
+                else{
+                    upperpanel.setNotifLabel("");
+                    home();
+                }
+            }
+        };
+        saveworker.execute();
+    }
+
+    @Override
+    protected void additem() {
+        iteminvoicedialog.showDialog();
+    }
+
+    @Override
+    protected void _import() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void export() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

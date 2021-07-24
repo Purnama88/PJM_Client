@@ -11,7 +11,6 @@ import com.purnama.pjm_client.gui.library.MyScrollPane;
 import com.purnama.pjm_client.gui.library.MyTable;
 import com.purnama.pjm_client.util.GlobalFields;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.event.DocumentEvent;
@@ -34,7 +33,7 @@ public abstract class SelectDialog extends MyDialog{
     protected final MyTable table;
     
     public SelectDialog(String title) {
-        super(title, 1240, 550);
+        super(title, GlobalFields.DIALOG_WIDTH, GlobalFields.DIALOG_HEIGHT);
         
         dbsearchpanel = new LabelTextFieldErrorPanel(GlobalFields.PROPERTIES.getProperty("LABEL_SEARCHDATABASE"), "");
         tablesearchpanel = new LabelTextFieldErrorPanel(GlobalFields.PROPERTIES.getProperty("LABEL_SEARCHTABLE"), "");
@@ -73,12 +72,12 @@ public abstract class SelectDialog extends MyDialog{
         box.add(scrollpane);
         box.add(submitpanel);
         
-        submitpanel.getCancelButton().addActionListener((ActionEvent e) -> {
+        submitpanel.getCancelButton().addActionListener(e -> {
             table.clearSelection();
             dispose();
         });
         
-        submitpanel.getSubmitButton().addActionListener((ActionEvent e) -> {
+        submitpanel.getSubmitButton().addActionListener(e -> {
             dispose();
         });
         

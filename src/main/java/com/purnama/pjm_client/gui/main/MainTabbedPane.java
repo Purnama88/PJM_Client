@@ -25,6 +25,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
@@ -76,22 +77,26 @@ public class MainTabbedPane extends MyTabbedPane{
         });
         
         menuclosetab.addActionListener((ActionEvent e) -> {
+            
+           
             int i = getSelectedIndex();
             
-            if(i == -1){
+            MainPanel selectedpanel = (MainPanel)getComponentAt(i);
                 
-            }
-            //last tab closed
-            else if(i == (getTabCount()-1)){
-                remove(i);
+            if(!selectedpanel.isState()){
+                int choice = JOptionPane.showConfirmDialog(GlobalFields.MAINFRAME, 
+                    GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CLOSETAB"),
+                "", JOptionPane.YES_NO_OPTION);
+                
+                if(choice == 0){
+                    closeTab(i);
+                }
+                else{
+                    
+                }
             }
             else{
-                remove(i);
-                
-                for(int j = i; j < getTabCount(); j++){
-                    MainPanel panel = (MainPanel)getComponentAt(j);
-                    panel.setIndex(j);
-                }
+                closeTab(i);
             }
         });
         
@@ -118,6 +123,24 @@ public class MainTabbedPane extends MyTabbedPane{
                 panel.setIndex(0);
             }
         });
+    }
+    
+    public final void closeTab(int index){
+        if(index == -1){
+
+        }
+        //last tab closed
+        else if(index == (getTabCount()-1)){
+            remove(index);
+        }
+        else{
+            remove(index);
+
+            for(int j = index; j < getTabCount(); j++){
+                MainPanel panel = (MainPanel)getComponentAt(j);
+                panel.setIndex(j);
+            }
+        }
     }
     
     public final void insertTab(int index, MainPanel panel){
@@ -234,18 +257,23 @@ class ButtonTabComponent extends JPanel {
         //add more space between the label and the button
         label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
         //tab button
-        JButton button = new TabButton();
+        JButton button = new CloseButton();
         JButton refresh = new RefreshButton();
         add(refresh);
         add(button);
         //add more space to the top of the component
         setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
     }
-
+    
     private class RefreshButton extends JButton implements ActionListener {
         public RefreshButton() {
             super(new MyImageIcon().getImage("image/Refresh_13.png"));
             int size = 17;
+            
+            init(size);
+        }
+        
+        private void init(int size){
             setPreferredSize(new Dimension(size, size));
             
             setToolTipText(GlobalFields.PROPERTIES.getProperty("LABEL_REFRESH"));
@@ -279,9 +307,14 @@ class ButtonTabComponent extends JPanel {
         }
     }
     
-    private class TabButton extends JButton implements ActionListener {
-        public TabButton() {
+    private class CloseButton extends JButton implements ActionListener {
+        public CloseButton() {
             int size = 17;
+            
+            init(size);
+        }
+        
+        private void init(int size){
             setPreferredSize(new Dimension(size, size));
             setToolTipText(GlobalFields.PROPERTIES.getProperty("LABEL_CLOSE"));
             //Make the button looks the same for all Laf's
@@ -303,8 +336,6 @@ class ButtonTabComponent extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             int i = pane.indexOfTabComponent(ButtonTabComponent.this);
-            
-            
             
             if(i == -1){
                 

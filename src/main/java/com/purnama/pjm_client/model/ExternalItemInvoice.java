@@ -15,13 +15,10 @@ import lombok.Data;
  * @author p_cor
  */
 @Data
-public class ExternalItemInvoiceDraft {
-    
+public class ExternalItemInvoice {
     protected int id;
     
     protected Item item;
-    
-//    protected String code;
     
     protected String description;
     

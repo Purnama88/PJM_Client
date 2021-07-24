@@ -6,6 +6,7 @@
 package com.purnama.pjm_client.tablemodel;
 
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
+import com.purnama.pjm_client.model.nontransactional.Item;
 import com.purnama.pjm_client.model.transactional.draft.ReturnSalesDraft;
 import com.purnama.pjm_client.model.transactional.draft.ItemReturnSalesDraft;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -132,8 +133,7 @@ public class ItemReturnSalesDraftTableModel extends AbstractTableModel{
         }
         
         if(row+1 == getRowCount()){
-            itemreturnsalesdraftlist.add(
-                    createEmptyItemReturnSalesDraft(invoiceid));
+            createEmptyItemReturnSalesDraft();
         }
     }
     
@@ -158,8 +158,7 @@ public class ItemReturnSalesDraftTableModel extends AbstractTableModel{
     
     public void setItemReturnSalesDraftList(List<ItemReturnSalesDraft> itemreturnsalesdraftlist){
         this.itemreturnsalesdraftlist = itemreturnsalesdraftlist;
-        addRow(createEmptyItemReturnSalesDraft(invoiceid));
-        fireTableDataChanged();
+        createEmptyItemReturnSalesDraft();
     }
     
     public ItemReturnSalesDraft getItemReturnSalesDraft(int index){
@@ -183,11 +182,11 @@ public class ItemReturnSalesDraftTableModel extends AbstractTableModel{
         discountsubtotalpanel.setDiscount(discountsubtotalpanel.getDiscount() - iisd.getDiscount());
         
         if(getRowCount() == 0){
-            addRow(createEmptyItemReturnSalesDraft(invoiceid));
+            createEmptyItemReturnSalesDraft();
         }
     }
     
-    public ItemReturnSalesDraft createEmptyItemReturnSalesDraft(int invoiceid){
+    public void createEmptyItemReturnSalesDraft(){
         ReturnSalesDraft returnsalesdraft = new ReturnSalesDraft();
         returnsalesdraft.setId(invoiceid);
         
@@ -199,6 +198,27 @@ public class ItemReturnSalesDraftTableModel extends AbstractTableModel{
         newiis.setReturnsalesdraft(returnsalesdraft);
         newiis.setBox("");
         
-        return newiis;
+        itemreturnsalesdraftlist.add(newiis);
+        fireTableDataChanged();
+    }
+    
+    public void createItemReturnSalesDraft(Item item, int quantity, String box){
+        ReturnSalesDraft returnsalesdraft = new ReturnSalesDraft();
+        returnsalesdraft.setId(invoiceid);
+        
+        ItemReturnSalesDraft newiis = new ItemReturnSalesDraft();
+        newiis.setDescription(item.getCode() + " " + item.getName() + " " + item.getLabel().getCode());
+        newiis.setQuantity(quantity);
+        newiis.setPrice(item.getSellprice());
+        newiis.setDiscount(0);
+        newiis.setReturnsalesdraft(returnsalesdraft);
+        newiis.setBox(box);
+        newiis.setItem(item);
+        
+        itemreturnsalesdraftlist.add(itemreturnsalesdraftlist.size()-1, newiis);
+        
+        discountsubtotalpanel.setSubtotal(discountsubtotalpanel.getSubtotal() + newiis.getSubtotal());
+        
+        fireTableDataChanged();
     }
 }

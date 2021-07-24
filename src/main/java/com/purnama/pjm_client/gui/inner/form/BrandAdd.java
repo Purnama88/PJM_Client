@@ -51,6 +51,11 @@ public class BrandAdd extends FormPanel{
     }
     
     private void init(){
+        codepanel.setDocumentListener(this);
+        namepanel.setDocumentListener(this);
+        descriptionpanel.setDocumentListener(this);
+        notepanel.setDocumentListener(this);
+        
         codepanel.setTextFieldActionListener(this);
         namepanel.setTextFieldActionListener(this);
         

@@ -58,6 +58,14 @@ public class NumberingAdd extends FormPanel{
     
     private void init(){
         
+        namepanel.setDocumentListener(this);
+        prefixpanel.setDocumentListener(this);
+        endpanel.setDocumentListener(this);
+        notepanel.setDocumentListener(this);
+        
+        endpanel.setTextFieldActionListener(this);
+        namepanel.setTextFieldActionListener(this);
+        
         startpanel.setTextFieldEditable(false);
         
         detailpanel.add(menupanel);

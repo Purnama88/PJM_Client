@@ -87,7 +87,7 @@ public class ModelEdit extends ModelAdd{
                         statuspanel.setSelectedValue(model.isStatus());
                         notepanel.setTextAreaValue(model.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

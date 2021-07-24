@@ -52,7 +52,7 @@ public class MainFrame extends MyFrame{
         
         setJMenuBar(menubar);
         
-        setMinimumSize(new Dimension(1240,550));
+        setMinimumSize(new Dimension(GlobalFields.FRAME_MINIMUM_WIDTH, GlobalFields.FRAME_MINIMUM_HEIGHT));
         
         add(maintoolbar, BorderLayout.NORTH);
         add(splitpane, BorderLayout.CENTER);

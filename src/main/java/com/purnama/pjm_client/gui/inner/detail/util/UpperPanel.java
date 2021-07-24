@@ -37,9 +37,9 @@ public class UpperPanel extends MyPanel{
         middlepanel = new MyPanel(new FlowLayout(FlowLayout.CENTER));
         rightpanel = new MyPanel(new FlowLayout(FlowLayout.RIGHT));
         
-        homebutton = new MyButton(new MyImageIcon().getImage("image/Home_16.png"), 24, 24);
+        homebutton = new MyButton(new MyImageIcon().getImage("image/Home_16.png"), GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
         homebutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_HOME"));
-        editbutton = new MyButton(new MyImageIcon().getImage("image/Edit_16.png"), 24, 24);
+        editbutton = new MyButton(new MyImageIcon().getImage("image/Edit_16.png"), GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
         editbutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_EDIT"));
         
         statuslabel = new MyLabel("");

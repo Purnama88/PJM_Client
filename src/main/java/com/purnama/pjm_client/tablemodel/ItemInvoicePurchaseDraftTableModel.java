@@ -6,6 +6,7 @@
 package com.purnama.pjm_client.tablemodel;
 
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
+import com.purnama.pjm_client.model.nontransactional.Item;
 import com.purnama.pjm_client.model.transactional.draft.InvoicePurchaseDraft;
 import com.purnama.pjm_client.model.transactional.draft.ItemInvoicePurchaseDraft;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -132,8 +133,7 @@ public class ItemInvoicePurchaseDraftTableModel extends AbstractTableModel{
         }
         
         if(row+1 == getRowCount()){
-            iteminvoicepurchasedraftlist.add(
-                    createEmptyItemInvoicePurchaseDraft(invoiceid));
+            createEmptyItemInvoicePurchaseDraft();
         }
     }
     
@@ -158,16 +158,11 @@ public class ItemInvoicePurchaseDraftTableModel extends AbstractTableModel{
     
     public void setItemInvoicePurchaseDraftList(List<ItemInvoicePurchaseDraft> iteminvoicepurchasedraftlist){
         this.iteminvoicepurchasedraftlist = iteminvoicepurchasedraftlist;
-        addRow(createEmptyItemInvoicePurchaseDraft(invoiceid));
-        fireTableDataChanged();
+        createEmptyItemInvoicePurchaseDraft();
     }
     
     public ItemInvoicePurchaseDraft getItemInvoicePurchaseDraft(int index){
         return iteminvoicepurchasedraftlist.get(index);
-    }
-    
-    public void addRow(ItemInvoicePurchaseDraft iteminvoicepurchasedraft) {
-        iteminvoicepurchasedraftlist.add(iteminvoicepurchasedraft);
     }
     
     public void deleteRow(int rownum){
@@ -183,11 +178,11 @@ public class ItemInvoicePurchaseDraftTableModel extends AbstractTableModel{
         discountsubtotalpanel.setDiscount(discountsubtotalpanel.getDiscount() - iisd.getDiscount());
         
         if(getRowCount() == 0){
-            addRow(createEmptyItemInvoicePurchaseDraft(invoiceid));
+            createEmptyItemInvoicePurchaseDraft();
         }
     }
     
-    public ItemInvoicePurchaseDraft createEmptyItemInvoicePurchaseDraft(int invoiceid){
+    public void createEmptyItemInvoicePurchaseDraft(){
         InvoicePurchaseDraft invoicepurchasedraft = new InvoicePurchaseDraft();
         invoicepurchasedraft.setId(invoiceid);
         
@@ -199,6 +194,27 @@ public class ItemInvoicePurchaseDraftTableModel extends AbstractTableModel{
         newiis.setInvoicepurchasedraft(invoicepurchasedraft);
         newiis.setBox("");
         
-        return newiis;
+        iteminvoicepurchasedraftlist.add(newiis);
+        fireTableDataChanged();
+    }
+    
+    public void createItemInvoicePurchaseDraft(Item item, int quantity, String box){
+        InvoicePurchaseDraft invoicepurchasedraft = new InvoicePurchaseDraft();
+        invoicepurchasedraft.setId(invoiceid);
+        
+        ItemInvoicePurchaseDraft newiis = new ItemInvoicePurchaseDraft();
+        newiis.setDescription(item.getCode() + " " + item.getName() + " " + item.getLabel().getCode());
+        newiis.setQuantity(quantity);
+        newiis.setPrice(item.getSellprice());
+        newiis.setDiscount(0);
+        newiis.setInvoicepurchasedraft(invoicepurchasedraft);
+        newiis.setBox(box);
+        newiis.setItem(item);
+        
+        iteminvoicepurchasedraftlist.add(iteminvoicepurchasedraftlist.size()-1, newiis);
+        
+        discountsubtotalpanel.setSubtotal(discountsubtotalpanel.getSubtotal() + newiis.getSubtotal());
+        
+        fireTableDataChanged();
     }
 }

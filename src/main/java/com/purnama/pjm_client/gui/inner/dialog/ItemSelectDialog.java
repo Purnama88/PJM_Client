@@ -46,7 +46,7 @@ public class ItemSelectDialog extends SelectDialog{
     
     private void init(){
         
-        ActionListener actionlistener = (ActionEvent e) -> {
+        ActionListener actionlistener = e -> {
             load();
         };
         
@@ -123,5 +123,4 @@ public class ItemSelectDialog extends SelectDialog{
         
         return null;
     }
-
 }

@@ -50,4 +50,13 @@ public class GlobalFields {
     public  DateFormat DATEFORMAT = new SimpleDateFormat ("dd MMM YYYY");
     
     public static int DECIMALPLACES = 2;
+    
+    public static int DIALOG_WIDTH = 1240;
+    public static int DIALOG_HEIGHT = 750;
+    
+    public static int FRAME_MINIMUM_WIDTH = 1240;
+    public static int FRAME_MINIMUM_HEIGHT = 750;
+    
+    public static int BUTTON_WIDTH = 24;
+    public static int BUTTON_HEIGHT = 24;
 }

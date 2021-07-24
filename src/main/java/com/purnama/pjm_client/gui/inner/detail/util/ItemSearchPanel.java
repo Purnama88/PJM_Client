@@ -71,9 +71,9 @@ public class ItemSearchPanel extends MyPanel implements ActionListener{
     
     private final int itemgroupid;
     
-    private final int index;
+    private int index;
     
-    public ItemSearchPanel(int itemgroupid, int index){
+    public ItemSearchPanel(int itemgroupid){
         super(new BorderLayout());
         
         itempanel = new LabelTextFieldErrorPanel(GlobalFields.PROPERTIES.getProperty("LABEL_ITEM"), "");
@@ -101,9 +101,12 @@ public class ItemSearchPanel extends MyPanel implements ActionListener{
         list = new ArrayList<>();
         
         this.itemgroupid = itemgroupid;
-        this.index = index;
         
         init();
+    }
+    
+    public void setIndex(int index){
+        this.index = index;
     }
     
     private void init(){
@@ -162,7 +165,7 @@ public class ItemSearchPanel extends MyPanel implements ActionListener{
         
         ItemItemGroup itemitemgroup = itemitemgrouptablemodel.getItemItemGroup(table.
                     convertRowIndexToModel(table.getSelectedRow()));
-        
+        System.out.println(index);
         GlobalFields.MAINTABBEDPANE.insertTab(index+1, new ItemDetail(itemitemgroup.getItem().getId()));
     }
     

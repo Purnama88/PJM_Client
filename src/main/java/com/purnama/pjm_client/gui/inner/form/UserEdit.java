@@ -93,7 +93,7 @@ public class UserEdit extends UserAdd{
                         statuspanel.setSelectedValue(user.isStatus());
                         notepanel.setTextAreaValue(user.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

@@ -38,14 +38,14 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
     
     private DeliveryDraft deliverydraft;
     
-    private final int deliveryid;
+    private final int deliverydraftid;
     
-    public DeliveryDraftDetail(int deliveryid){
+    public DeliveryDraftDetail(int deliverydraftid){
         super(GlobalFields.PROPERTIES.getProperty("PANEL_DELIVERYDRAFT_DETAIL"));
         
-        this.deliveryid = deliveryid;
+        this.deliverydraftid = deliverydraftid;
         
-        itemdeliverydrafttablepanel = new ItemDeliveryDraftTablePanel(deliveryid);
+        itemdeliverydrafttablepanel = new ItemDeliveryDraftTablePanel(deliverydraftid);
         
         destinationpanel = new DestinationPanel("");
         
@@ -57,6 +57,7 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
     }
     
     private void init(){
+        iteminvoicedialog.setTablemodel(itemdeliverydrafttablepanel.getItemdeliverydrafttablemodel());
         
         leftdetailpanel.add(numberingpanel);
         
@@ -80,6 +81,27 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
                 "", JOptionPane.INFORMATION_MESSAGE);
         });
         
+        deletebutton.addActionListener((ActionEvent e) -> {
+            int result = JOptionPane.showConfirmDialog(null, GlobalFields.
+                PROPERTIES.getProperty("QUESTION_DELETEINVOICE"),
+                "", JOptionPane.YES_NO_OPTION);
+                if(result == JOptionPane.YES_OPTION){
+                    delete();
+                }
+        });
+        
+        closebutton.addActionListener((ActionEvent e) -> {
+            save();
+            itemdeliverydrafttablepanel.submitItemDeliveryDraftList();
+            itemdeliverydrafttablepanel.submitDeletedItemDeliveryDraftList();
+            int result = JOptionPane.showConfirmDialog(null, GlobalFields.
+                PROPERTIES.getProperty("QUESTION_CLOSEINVOICE"),
+                "", JOptionPane.YES_NO_OPTION);
+                if(result == JOptionPane.YES_OPTION){
+                    close();
+                }
+        });
+        
         load();
     }
 
@@ -96,7 +118,7 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
                 
                 publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
                 
-                response = RestClient.get("deliverydrafts/" + deliveryid);
+                response = RestClient.get("deliverydrafts/" + deliverydraftid);
                 
                 return true;
             }
@@ -203,12 +225,118 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
 
     @Override
     protected void close() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SwingWorker<Boolean, String> saveworker = new SwingWorker<Boolean, String>(){
+            ClientResponse response;
+
+            @Override
+            protected Boolean doInBackground(){
+
+                upperpanel.showProgressBar();
+                
+                publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
+
+                response = RestClient.post("deliveries/" + deliverydraft.getId(), "");
+
+                return true;
+            }
+
+            @Override
+            protected void process(List<String> chunks) {
+                chunks.stream().forEach((number) -> {
+                    upperpanel.setNotifLabel(number);
+                });
+            }
+            
+            @Override
+            protected void done() {
+                upperpanel.hideProgressBar();
+                
+                if(response == null){
+                    upperpanel.setNotifLabel(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_TIMEDOUT"));
+                }
+                else if(response.getStatus() != 200) {
+                    upperpanel.setNotifLabel("");
+                    String output = response.getEntity(String.class);
+                        
+                    JOptionPane.showMessageDialog(GlobalFields.MAINFRAME, 
+                    output, GlobalFields.PROPERTIES.getProperty("NOTIFICATION_HTTPERROR")
+                                    + response.getStatus(), 
+                    JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    upperpanel.setNotifLabel("");
+                    
+                    String output = response.getEntity(String.class);
+                    
+//                    changepanel(output);
+                }
+            }
+        };
+        saveworker.execute();
     }
 
     @Override
     public void refresh() {
         numberingpanel.refresh();
         load();
+    }
+
+    @Override
+    protected void delete() {
+        SwingWorker<Boolean, String> saveworker = new SwingWorker<Boolean, String>(){
+            ClientResponse response;
+
+            @Override
+            protected Boolean doInBackground(){
+
+                upperpanel.showProgressBar();
+                
+                publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
+
+                response = RestClient.delete("deliverydrafts/" + deliverydraft.getId(), "");
+
+                return true;
+            }
+
+            @Override
+            protected void process(List<String> chunks) {
+                chunks.stream().forEach((number) -> {
+                    upperpanel.setNotifLabel(number);
+                });
+            }
+            
+            @Override
+            protected void done() {
+                upperpanel.hideProgressBar();
+                
+                if(response == null){
+                    upperpanel.setNotifLabel(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_TIMEDOUT"));
+                }
+                else if(response.getStatus() != 200) {
+                    upperpanel.setNotifLabel(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_HTTPERROR")
+                                    + response.getStatus());
+                }
+                else{
+                    upperpanel.setNotifLabel("");
+                    home();
+                }
+            }
+        };
+        saveworker.execute();
+    }
+
+    @Override
+    protected void additem() {
+        iteminvoicedialog.showDialog();
+    }
+
+    @Override
+    protected void _import() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void export() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

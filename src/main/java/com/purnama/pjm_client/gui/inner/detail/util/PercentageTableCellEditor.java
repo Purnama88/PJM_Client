@@ -5,7 +5,6 @@
  */
 package com.purnama.pjm_client.gui.inner.detail.util;
 
-import com.purnama.pjm_client.gui.library.MyTextField;
 import java.awt.Component;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;

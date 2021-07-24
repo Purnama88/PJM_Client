@@ -86,7 +86,7 @@ public class BrandEdit extends BrandAdd{
                         statuspanel.setSelectedValue(brand.isStatus());
                         notepanel.setTextAreaValue(brand.getNote());
                         
-//                        setState(MyPanel.SAVED);
+                        setState(SAVED);
                     }
                     catch(IOException e){
 

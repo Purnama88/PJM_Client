@@ -7,6 +7,7 @@ package com.purnama.pjm_client.gui.inner.detail.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.purnama.pjm_client.gui.library.MyComboBox;
 import com.purnama.pjm_client.gui.library.MyImageIcon;
 import com.purnama.pjm_client.gui.library.MyLabel;
 import com.purnama.pjm_client.gui.library.MyPanel;
@@ -19,7 +20,6 @@ import java.awt.FlowLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.SwingWorker;
 
 /**
@@ -31,7 +31,7 @@ public class NumberingComboBoxPanel extends MyPanel{
     private ArrayList<Numbering> list;
     
     private final MyLabel label, loadinglabel;
-    private final JComboBox combobox;
+    private final MyComboBox combobox;
     
     private final int menuid;
     
@@ -41,7 +41,7 @@ public class NumberingComboBoxPanel extends MyPanel{
         this.menuid = menuid;
         
         list = new ArrayList<>();
-        combobox = new JComboBox();
+        combobox = new MyComboBox();
         
         label = new MyLabel(GlobalFields.PROPERTIES.getProperty("LABEL_NUMBERING"), 100);
         
@@ -60,7 +60,7 @@ public class NumberingComboBoxPanel extends MyPanel{
         load();
     }
     
-    public JComboBox getComboBox(){
+    public MyComboBox getComboBox(){
         return combobox;
     }
     

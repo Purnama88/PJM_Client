@@ -172,5 +172,9 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
         
         worker.execute();
     }
+
+    public ItemReturnSalesDraftTableModel getItemreturnsalesdrafttablemodel() {
+        return itemreturnsalesdrafttablemodel;
+    }
     
 }

@@ -5,6 +5,7 @@
  */
 package com.purnama.pjm_client.tablemodel;
 
+import com.purnama.pjm_client.model.nontransactional.Item;
 import com.purnama.pjm_client.model.transactional.draft.DeliveryDraft;
 import com.purnama.pjm_client.model.transactional.draft.ItemDeliveryDraft;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -17,7 +18,7 @@ import javax.swing.table.AbstractTableModel;
  * @author p_cor
  */
 public class ItemDeliveryDraftTableModel extends AbstractTableModel{
-    private final int deliveryid;
+    private final int deliverydraftid;
     
     private List<ItemDeliveryDraft> itemdeliverydraftlist = new ArrayList<>();
     private final ArrayList<ItemDeliveryDraft> deleteditemdeliverydraftlist;
@@ -29,10 +30,10 @@ public class ItemDeliveryDraftTableModel extends AbstractTableModel{
         GlobalFields.PROPERTIES.getProperty("TABLE_REMARK"),
     };
     
-    public ItemDeliveryDraftTableModel(int deliveryid){
+    public ItemDeliveryDraftTableModel(int deliverydraftid){
         super();
         
-        this.deliveryid = deliveryid;
+        this.deliverydraftid = deliverydraftid;
         
         deleteditemdeliverydraftlist = new ArrayList<>();
     }
@@ -93,8 +94,7 @@ public class ItemDeliveryDraftTableModel extends AbstractTableModel{
         }
         
         if(row+1 == getRowCount()){
-            itemdeliverydraftlist.add(
-                    createEmptyItemDeliveryDraft(deliveryid));
+            createEmptyItemDeliveryDraft();
         }
     }
     
@@ -119,16 +119,11 @@ public class ItemDeliveryDraftTableModel extends AbstractTableModel{
     
     public void setItemDeliveryDraftList(List<ItemDeliveryDraft> itemdeliverydraftlist){
         this.itemdeliverydraftlist = itemdeliverydraftlist;
-        addRow(createEmptyItemDeliveryDraft(deliveryid));
-        fireTableDataChanged();
+        createEmptyItemDeliveryDraft();
     }
     
     public ItemDeliveryDraft getItemDeliveryDraft(int index){
         return itemdeliverydraftlist.get(index);
-    }
-    
-    public void addRow(ItemDeliveryDraft itemdeliverydraft) {
-        itemdeliverydraftlist.add(itemdeliverydraft);
     }
     
     public void deleteRow(int rownum){
@@ -141,13 +136,13 @@ public class ItemDeliveryDraftTableModel extends AbstractTableModel{
         fireTableRowsDeleted(rownum, rownum);
         
         if(getRowCount() == 0){
-            addRow(createEmptyItemDeliveryDraft(deliveryid));
+            createEmptyItemDeliveryDraft();
         }
     }
     
-    public ItemDeliveryDraft createEmptyItemDeliveryDraft(int deliveryid){
+    public void createEmptyItemDeliveryDraft(){
         DeliveryDraft deliverydraft = new DeliveryDraft();
-        deliverydraft.setId(deliveryid);
+        deliverydraft.setId(deliverydraftid);
         
         ItemDeliveryDraft newiis = new ItemDeliveryDraft();
         newiis.setDescription("");
@@ -155,6 +150,22 @@ public class ItemDeliveryDraftTableModel extends AbstractTableModel{
         newiis.setRemark("");
         newiis.setDeliverydraft(deliverydraft);
         
-        return newiis;
+        itemdeliverydraftlist.add(newiis);
+        fireTableDataChanged();
+    }
+    
+    public void createItemDeliveryDraft(Item item, int quantity, String box){
+        DeliveryDraft deliverydraft = new DeliveryDraft();
+        deliverydraft.setId(deliverydraftid);
+        
+        ItemDeliveryDraft newiis = new ItemDeliveryDraft();
+        newiis.setDescription(item.getCode() + " " + item.getName() + " " + item.getLabel().getCode());
+        newiis.setQuantity(quantity+"");
+        newiis.setDeliverydraft(deliverydraft);
+        newiis.setRemark(box);
+        
+        itemdeliverydraftlist.add(itemdeliverydraftlist.size()-1, newiis);
+        
+        fireTableDataChanged();
     }
 }

@@ -6,15 +6,18 @@
 package com.purnama.pjm_client.gui.main;
 
 import com.purnama.pjm_client.gui.library.MyPanel;
+import com.purnama.pjm_client.util.GlobalFields;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author p_cor
  */
-public class MainPanel extends MyPanel{
+public class MainPanel extends MyPanel implements DocumentListener{
     
     public static final boolean SAVED      = true;
     public static final boolean PENDING    = false;
@@ -57,5 +60,30 @@ public class MainPanel extends MyPanel{
 
     public void setState(boolean state) {
         this.state = state;
+        if(state){
+            GlobalFields.MAINTABBEDPANE.setTitleAt(getIndex(), getName());
+        }
+        else{
+            GlobalFields.MAINTABBEDPANE.setTitleAt(getIndex(), getPendingName());
+        }
+    }
+    
+    public String getPendingName(){
+        return getName() + "*";
+    }
+    
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        setState(MainPanel.PENDING);
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        setState(MainPanel.PENDING);
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        setState(MainPanel.PENDING);
     }
 }

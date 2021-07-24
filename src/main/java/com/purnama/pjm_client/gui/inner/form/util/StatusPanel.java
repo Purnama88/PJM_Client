@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+import javax.swing.event.DocumentListener;
 
 /**
  *

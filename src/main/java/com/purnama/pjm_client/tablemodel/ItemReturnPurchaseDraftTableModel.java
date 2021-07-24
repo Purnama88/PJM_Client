@@ -6,6 +6,7 @@
 package com.purnama.pjm_client.tablemodel;
 
 import com.purnama.pjm_client.gui.inner.detail.util.DiscountSubtotalPanel;
+import com.purnama.pjm_client.model.nontransactional.Item;
 import com.purnama.pjm_client.model.transactional.draft.ReturnPurchaseDraft;
 import com.purnama.pjm_client.model.transactional.draft.ItemReturnPurchaseDraft;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -132,8 +133,7 @@ public class ItemReturnPurchaseDraftTableModel extends AbstractTableModel{
         }
         
         if(row+1 == getRowCount()){
-            itemreturnpurchasedraftlist.add(
-                    createEmptyItemReturnPurchaseDraft(invoiceid));
+            createEmptyItemReturnPurchaseDraft();
         }
     }
     
@@ -158,16 +158,11 @@ public class ItemReturnPurchaseDraftTableModel extends AbstractTableModel{
     
     public void setItemReturnPurchaseDraftList(List<ItemReturnPurchaseDraft> itemreturnpurchasedraftlist){
         this.itemreturnpurchasedraftlist = itemreturnpurchasedraftlist;
-        addRow(createEmptyItemReturnPurchaseDraft(invoiceid));
-        fireTableDataChanged();
+        createEmptyItemReturnPurchaseDraft();
     }
     
     public ItemReturnPurchaseDraft getItemReturnPurchaseDraft(int index){
         return itemreturnpurchasedraftlist.get(index);
-    }
-    
-    public void addRow(ItemReturnPurchaseDraft itemreturnpurchasedraft) {
-        itemreturnpurchasedraftlist.add(itemreturnpurchasedraft);
     }
     
     public void deleteRow(int rownum){
@@ -183,11 +178,11 @@ public class ItemReturnPurchaseDraftTableModel extends AbstractTableModel{
         discountsubtotalpanel.setDiscount(discountsubtotalpanel.getDiscount() - iisd.getDiscount());
         
         if(getRowCount() == 0){
-            addRow(createEmptyItemReturnPurchaseDraft(invoiceid));
+            createEmptyItemReturnPurchaseDraft();
         }
     }
     
-    public ItemReturnPurchaseDraft createEmptyItemReturnPurchaseDraft(int invoiceid){
+    public void createEmptyItemReturnPurchaseDraft(){
         ReturnPurchaseDraft returnpurchasedraft = new ReturnPurchaseDraft();
         returnpurchasedraft.setId(invoiceid);
         
@@ -199,6 +194,27 @@ public class ItemReturnPurchaseDraftTableModel extends AbstractTableModel{
         newiis.setReturnpurchasedraft(returnpurchasedraft);
         newiis.setBox("");
         
-        return newiis;
+        itemreturnpurchasedraftlist.add(newiis);
+        fireTableDataChanged();
+    }
+    
+    public void createItemReturnPurchaseDraft(Item item, int quantity, String box){
+        ReturnPurchaseDraft returnpurchasedraft = new ReturnPurchaseDraft();
+        returnpurchasedraft.setId(invoiceid);
+        
+        ItemReturnPurchaseDraft newiis = new ItemReturnPurchaseDraft();
+        newiis.setDescription(item.getCode() + " " + item.getName() + " " + item.getLabel().getCode());
+        newiis.setQuantity(quantity);
+        newiis.setPrice(item.getSellprice());
+        newiis.setDiscount(0);
+        newiis.setReturnpurchasedraft(returnpurchasedraft);
+        newiis.setBox(box);
+        newiis.setItem(item);
+        
+        itemreturnpurchasedraftlist.add(itemreturnpurchasedraftlist.size()-1, newiis);
+        
+        discountsubtotalpanel.setSubtotal(discountsubtotalpanel.getSubtotal() + newiis.getSubtotal());
+        
+        fireTableDataChanged();
     }
 }

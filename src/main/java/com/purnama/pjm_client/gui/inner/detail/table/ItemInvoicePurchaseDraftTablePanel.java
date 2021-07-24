@@ -172,5 +172,8 @@ public class ItemInvoicePurchaseDraftTablePanel extends TablePanel{
         
         worker.execute();
     }
-    
+
+    public ItemInvoicePurchaseDraftTableModel getIteminvoicepurchasedrafttablemodel() {
+        return iteminvoicepurchasedrafttablemodel;
+    }
 }

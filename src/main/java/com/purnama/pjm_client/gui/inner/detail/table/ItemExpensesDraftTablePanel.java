@@ -172,5 +172,9 @@ public class ItemExpensesDraftTablePanel extends TablePanel{
         
         worker.execute();
     }
+
+    public ItemExpensesDraftTableModel getItemexpensesdrafttablemodel() {
+        return itemexpensesdrafttablemodel;
+    }
     
 }
