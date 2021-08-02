@@ -93,6 +93,10 @@ public class MyTable extends JTable{
     public void addMenuItemSeparator(){
         popupmenu.addSeparator();
     }
+    
+    public void removeMenuItem(JMenuItem menuitem){
+        popupmenu.remove(menuitem);
+    }
 }
 
 class BorderTableCellRenderer extends JLabel implements TableCellRenderer {

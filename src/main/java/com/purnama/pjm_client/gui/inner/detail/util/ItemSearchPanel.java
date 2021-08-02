@@ -16,6 +16,7 @@ import com.purnama.pjm_client.gui.library.MyImageIcon;
 import com.purnama.pjm_client.gui.library.MyPanel;
 import com.purnama.pjm_client.gui.library.MyScrollPane;
 import com.purnama.pjm_client.gui.library.MyTable;
+import com.purnama.pjm_client.gui.main.MainPanel;
 import com.purnama.pjm_client.model.combine.ItemItemGroup;
 import com.purnama.pjm_client.model.nontransactional.Item;
 import com.purnama.pjm_client.model.nontransactional.ItemGroup;
@@ -71,8 +72,6 @@ public class ItemSearchPanel extends MyPanel implements ActionListener{
     
     private final int itemgroupid;
     
-    private int index;
-    
     public ItemSearchPanel(int itemgroupid){
         super(new BorderLayout());
         
@@ -103,10 +102,6 @@ public class ItemSearchPanel extends MyPanel implements ActionListener{
         this.itemgroupid = itemgroupid;
         
         init();
-    }
-    
-    public void setIndex(int index){
-        this.index = index;
     }
     
     private void init(){
@@ -165,7 +160,9 @@ public class ItemSearchPanel extends MyPanel implements ActionListener{
         
         ItemItemGroup itemitemgroup = itemitemgrouptablemodel.getItemItemGroup(table.
                     convertRowIndexToModel(table.getSelectedRow()));
-        System.out.println(index);
+        
+        int index = ((MainPanel)getParent().getParent()).getIndex();
+        
         GlobalFields.MAINTABBEDPANE.insertTab(index+1, new ItemDetail(itemitemgroup.getItem().getId()));
     }
     

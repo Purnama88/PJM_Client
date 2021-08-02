@@ -44,7 +44,7 @@ public class PartnerGroupDetail extends DetailPanel{
         descriptionpanel = new SelectableLabelContentPanel(GlobalFields.PROPERTIES.getProperty("LABEL_DESCRIPTION"),
                 "");
         
-        partnersearchpanel = new PartnerSearchPanel(id, getIndex());
+        partnersearchpanel = new PartnerSearchPanel(id);
         
         init();
     }

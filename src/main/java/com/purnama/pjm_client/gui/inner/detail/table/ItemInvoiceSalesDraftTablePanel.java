@@ -71,7 +71,7 @@ public class ItemInvoiceSalesDraftTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground(){
                 
-                response = RestClient.get("iteminvoicesalesdrafts?invoiceid="+invoiceid);
+                response = RestClient.get("iteminvoicesalesdrafts?invoicedraftid="+invoiceid);
                 
                 return true;
             }

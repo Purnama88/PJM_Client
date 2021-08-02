@@ -25,7 +25,7 @@ import javax.swing.SwingWorker;
  */
 public class DeliveryDetail extends InvoiceDetailPanel{
 
-    private final LabelTextFieldPanel cartypepanel, carnumberpanel, numberingpanel;
+    private final LabelTextFieldPanel cartypepanel, carnumberpanel;
     
     private final DestinationPanel destinationpanel;
     
@@ -44,7 +44,6 @@ public class DeliveryDetail extends InvoiceDetailPanel{
         
         destinationpanel = new DestinationPanel("");
         
-        numberingpanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_NUMBERING") ,"");
         cartypepanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_CARTYPE") ,"");
         carnumberpanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_CARNUMBER"), "");
         
@@ -52,13 +51,11 @@ public class DeliveryDetail extends InvoiceDetailPanel{
     }
     
     private void init(){
-        datepanel.setEnabled(false);
-        numberingpanel.setTextFieldEnabled(false);
+        
         cartypepanel.setTextFieldEnabled(false);
         carnumberpanel.setTextFieldEnabled(false);
         destinationpanel.setTextAreaEnabled(false);
         
-        leftdetailpanel.add(numberingpanel);
         middledetailpanel.add(cartypepanel);
         middledetailpanel.add(carnumberpanel);
         
@@ -122,7 +119,6 @@ public class DeliveryDetail extends InvoiceDetailPanel{
                         warehousepanel.setTextFieldValue(delivery.getWarehouse().getCode());
                         idpanel.setTextFieldValue(delivery.getDraftid());
                         destinationpanel.setDestination(delivery.getDestination());
-                        notepanel.setNote(delivery.getNote());
                         cartypepanel.setTextFieldValue(delivery.getVehicletype());
                         carnumberpanel.setTextFieldValue(delivery.getVehiclecode());
                         numberingpanel.setTextFieldValue(delivery.getNumber());
@@ -165,7 +161,6 @@ public class DeliveryDetail extends InvoiceDetailPanel{
     @Override
     public void refresh() {
         load();
+        itemdeliverytablepanel.refresh();
     }
-
-    
 }

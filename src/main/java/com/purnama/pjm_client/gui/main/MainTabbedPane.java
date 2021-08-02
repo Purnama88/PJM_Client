@@ -182,11 +182,13 @@ public class MainTabbedPane extends MyTabbedPane{
     }
     
     public final void changeTabPanel(int index, MainPanel panel){
+        System.out.println(index);
         setComponentAt(index, panel);
-        
+        System.out.println(index);
         setTabComponentAt(index,
                  new ButtonTabComponent(this));
         setTitleAt(index, panel.getName());
+        System.out.println(index);
         panel.setState(MainPanel.SAVED);
         panel.setIndex(index);
     }

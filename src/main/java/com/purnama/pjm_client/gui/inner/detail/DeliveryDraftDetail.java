@@ -11,6 +11,7 @@ import com.purnama.pjm_client.gui.inner.detail.util.DestinationPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.LabelTextFieldPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.NumberingComboBoxPanel;
 import com.purnama.pjm_client.gui.inner.home.DeliveryDraftHome;
+import com.purnama.pjm_client.model.nontransactional.Menu;
 import com.purnama.pjm_client.model.transactional.draft.DeliveryDraft;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -49,7 +50,7 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
         
         destinationpanel = new DestinationPanel("");
         
-        numberingpanel = new NumberingComboBoxPanel(6);
+        numberingpanel = new NumberingComboBoxPanel(Menu.MENU_DELIVERY);
         cartypepanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_CARTYPE") ,"");
         carnumberpanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_CARNUMBER"), "");
         
@@ -235,7 +236,7 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
                 
                 publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
 
-                response = RestClient.post("deliveries/" + deliverydraft.getId(), "");
+//                response = RestClient.post("deliveries/" + deliverydraft.getId(), "");
 
                 return true;
             }
@@ -253,6 +254,9 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
                 
                 if(response == null){
                     upperpanel.setNotifLabel(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_TIMEDOUT"));
+                    
+                    System.out.println(getIndex());
+                    GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new DeliveryDetail(1));
                 }
                 else if(response.getStatus() != 200) {
                     upperpanel.setNotifLabel("");
@@ -268,7 +272,7 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
                     
                     String output = response.getEntity(String.class);
                     
-//                    changepanel(output);
+                    GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new DeliveryDetail(Integer.parseInt(output)));
                 }
             }
         };
@@ -278,6 +282,7 @@ public class DeliveryDraftDetail extends InvoiceDraftDetailPanel{
     @Override
     public void refresh() {
         numberingpanel.refresh();
+        itemdeliverydrafttablepanel.refresh();
         load();
     }
 

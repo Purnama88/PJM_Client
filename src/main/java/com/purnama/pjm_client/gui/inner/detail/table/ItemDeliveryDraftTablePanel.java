@@ -44,7 +44,7 @@ public class ItemDeliveryDraftTablePanel extends TablePanel{
             itemdeliverydrafttablemodel.deleteRow(table.getSelectedRow());
         });
         
-        menuitemedit.addActionListener((ActionEvent e) -> {
+        menuitemdetail.addActionListener((ActionEvent e) -> {
             
         });
     }
@@ -167,5 +167,4 @@ public class ItemDeliveryDraftTablePanel extends TablePanel{
     public ItemDeliveryDraftTableModel getItemdeliverydrafttablemodel() {
         return itemdeliverydrafttablemodel;
     }
-    
 }

@@ -13,6 +13,7 @@ import com.purnama.pjm_client.gui.inner.detail.util.LabelDecimalTextFieldPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.NumberingComboBoxPanel;
 import com.purnama.pjm_client.gui.inner.detail.util.PartnerComboBoxPanel;
 import com.purnama.pjm_client.gui.inner.home.ReturnSalesDraftHome;
+import com.purnama.pjm_client.model.nontransactional.Menu;
 import com.purnama.pjm_client.model.transactional.draft.ReturnSalesDraft;
 import com.purnama.pjm_client.rest.RestClient;
 import com.purnama.pjm_client.util.GlobalFields;
@@ -52,7 +53,7 @@ public class ReturnSalesDraftDetail extends InvoiceDraftDetailPanel{
         this.invoiceid = invoiceid;
         
         partnerpanel = new PartnerComboBoxPanel(PartnerComboBoxPanel.CUSTOMER);
-        numberingpanel = new NumberingComboBoxPanel(2);
+        numberingpanel = new NumberingComboBoxPanel(Menu.MENU_RETURNSALES);
         currencypanel = new CurrencyComboBoxPanel();
         ratepanel = new LabelDecimalTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_RATE"), 1);
         duedatepanel = new DatePanel(new Date(), GlobalFields.PROPERTIES.getProperty("LABEL_DUEDATE"));
@@ -91,6 +92,18 @@ public class ReturnSalesDraftDetail extends InvoiceDraftDetailPanel{
                 "", JOptionPane.YES_NO_OPTION);
                 if(result == JOptionPane.YES_OPTION){
                     delete();
+                }
+        });
+        
+        closebutton.addActionListener((ActionEvent e) -> {
+            save();
+            itemreturnsalesdrafttablepanel.submitItemReturnSalesDraftList();
+            itemreturnsalesdrafttablepanel.submitDeletedItemReturnSalesDraftList();
+            int result = JOptionPane.showConfirmDialog(null, GlobalFields.
+                PROPERTIES.getProperty("QUESTION_CLOSEINVOICE"),
+                "", JOptionPane.YES_NO_OPTION);
+                if(result == JOptionPane.YES_OPTION){
+                    close();
                 }
         });
         
@@ -232,7 +245,54 @@ public class ReturnSalesDraftDetail extends InvoiceDraftDetailPanel{
     
     @Override
     protected void close() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SwingWorker<Boolean, String> saveworker = new SwingWorker<Boolean, String>(){
+            ClientResponse response;
+
+            @Override
+            protected Boolean doInBackground(){
+
+                upperpanel.showProgressBar();
+                
+                publish(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_CONNECTING"));
+
+                response = RestClient.post("returnsales/" + returnsalesdraft.getId(), "");
+
+                return true;
+            }
+
+            @Override
+            protected void process(List<String> chunks) {
+                chunks.stream().forEach((number) -> {
+                    upperpanel.setNotifLabel(number);
+                });
+            }
+            
+            @Override
+            protected void done() {
+                upperpanel.hideProgressBar();
+                
+                if(response == null){
+                    upperpanel.setNotifLabel(GlobalFields.PROPERTIES.getProperty("NOTIFICATION_TIMEDOUT"));
+                }
+                else if(response.getStatus() != 200) {
+                    upperpanel.setNotifLabel("");
+                    String output = response.getEntity(String.class);
+                        
+                    JOptionPane.showMessageDialog(GlobalFields.MAINFRAME, 
+                    output, GlobalFields.PROPERTIES.getProperty("NOTIFICATION_HTTPERROR")
+                                    + response.getStatus(), 
+                    JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    upperpanel.setNotifLabel("");
+                    
+                    String output = response.getEntity(String.class);
+                    
+                    GlobalFields.MAINTABBEDPANE.changeTabPanel(getIndex(), new ReturnSalesDetail(Integer.parseInt(output)));
+                }
+            }
+        };
+        saveworker.execute();
     }
     
     @Override
@@ -240,7 +300,8 @@ public class ReturnSalesDraftDetail extends InvoiceDraftDetailPanel{
         
         partnerpanel.refresh();
         currencypanel.refresh();
-        
+        numberingpanel.refresh();
+        itemreturnsalesdrafttablepanel.refresh();
         load();
     }
 

@@ -5,7 +5,6 @@
  */
 package com.purnama.pjm_client.gui.inner.detail.table;
 
-import com.purnama.pjm_client.gui.inner.dialog.ItemInvoiceDialog;
 import com.purnama.pjm_client.gui.library.MyImageIcon;
 import com.purnama.pjm_client.gui.library.MyScrollPane;
 import com.purnama.pjm_client.gui.library.MyTable;
@@ -21,15 +20,15 @@ public abstract class TablePanel extends MyScrollPane{
     
     protected final MyTable table;
 
-    protected final JMenuItem menuitemdelete, menuitemedit;
+    protected final JMenuItem menuitemdelete, menuitemdetail;
     
     public TablePanel(){
         super();
         
         table = new MyTable();
         
-        menuitemedit = new JMenuItem(GlobalFields.PROPERTIES.getProperty("LABEL_EDIT"),
-                new MyImageIcon().getImage("image/Edit_16.png"));
+        menuitemdetail = new JMenuItem(GlobalFields.PROPERTIES.getProperty("LABEL_DETAIL"),
+                new MyImageIcon().getImage("image/Detail_16.png"));
         menuitemdelete = new JMenuItem(GlobalFields.PROPERTIES.getProperty("LABEL_DELETE"),
                 new MyImageIcon().getImage("image/Delete_16.png"));
         
@@ -43,8 +42,7 @@ public abstract class TablePanel extends MyScrollPane{
         getViewport().add(table);
         
         table.addMenuItemSeparator();
-        table.addMenuItem(menuitemedit);
-        table.addMenuItemSeparator();
+        table.addMenuItem(menuitemdetail);
         table.addMenuItem(menuitemdelete);
         
     }
@@ -54,4 +52,8 @@ public abstract class TablePanel extends MyScrollPane{
     }
     
     public abstract void load();
+    
+    public void refresh(){
+        load();
+    }
 }

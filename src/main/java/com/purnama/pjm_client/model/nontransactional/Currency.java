@@ -25,6 +25,6 @@ public class Currency extends Nontransactional{
     
     @Override
     public String toString(){
-        return code + " ("+ name+")";
+        return getName() + " ("+ getCode()+")";
     }
 }

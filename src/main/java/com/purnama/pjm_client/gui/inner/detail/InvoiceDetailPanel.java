@@ -42,7 +42,7 @@ public abstract class InvoiceDetailPanel extends MainPanel{
             summarypanel, leftsummarypanel, rightsummarypanel,
             buttonpanel;
     
-    protected final LabelTextFieldPanel warehousepanel, idpanel;
+    protected final LabelTextFieldPanel warehousepanel, idpanel, numberingpanel;
     
     protected final NotePanel notepanel;
     
@@ -70,7 +70,7 @@ public abstract class InvoiceDetailPanel extends MainPanel{
         rightdetailpanel = new MyPanel(new GridLayout(3, 1));
         
         warehousepanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_WAREHOUSE"), "");
-        
+        numberingpanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_NUMBERING") ,"");
         idpanel = new LabelTextFieldPanel(GlobalFields.PROPERTIES.getProperty("LABEL_ID"), "");
         
         datepanel = new DatePanel(new Date(), GlobalFields.PROPERTIES.getProperty("LABEL_DATE"));
@@ -93,7 +93,7 @@ public abstract class InvoiceDetailPanel extends MainPanel{
         
         savebutton  = new MyButton(new MyImageIcon().getImage("image/Save_16.png"), 
                  GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
-        cancelbutton = new MyButton(new MyImageIcon().getImage("image/Close_16.png"),
+        cancelbutton = new MyButton(new MyImageIcon().getImage("image/Delete_16.png"),
                  GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
         exportbutton = new MyButton(new MyImageIcon().getImage("image/Export_16.png"),
                  GlobalFields.BUTTON_WIDTH, GlobalFields.BUTTON_HEIGHT);
@@ -110,6 +110,8 @@ public abstract class InvoiceDetailPanel extends MainPanel{
         exportbutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_EXPORTINVOICE"));
         importbutton.setToolTipText(GlobalFields.PROPERTIES.getProperty("TOOLTIP_IMPORTINVOICE"));
         
+        datepanel.setEnabled(false);
+        numberingpanel.setTextFieldEnabled(false);
         idpanel.setTextFieldEnabled(false);
         warehousepanel.setTextFieldEnabled(false);
         
@@ -118,6 +120,7 @@ public abstract class InvoiceDetailPanel extends MainPanel{
         
         leftdetailpanel.add(idpanel);
         leftdetailpanel.add(warehousepanel);
+        leftdetailpanel.add(numberingpanel);
         
         middledetailpanel.add(datepanel);
         

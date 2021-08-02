@@ -15,6 +15,7 @@ import com.purnama.pjm_client.gui.library.MyImageIcon;
 import com.purnama.pjm_client.gui.library.MyPanel;
 import com.purnama.pjm_client.gui.library.MyScrollPane;
 import com.purnama.pjm_client.gui.library.MyTable;
+import com.purnama.pjm_client.gui.main.MainPanel;
 import com.purnama.pjm_client.model.combine.PartnerPartnerGroup;
 import com.purnama.pjm_client.model.nontransactional.Partner;
 import com.purnama.pjm_client.model.nontransactional.PartnerGroup;
@@ -67,9 +68,8 @@ public class PartnerSearchPanel extends MyPanel implements ActionListener{
     private final PartnerPartnerGroupTableModel partnerpartnergrouptablemodel;
     
     private final int partnergroupid;
-    private final int index;
     
-    public PartnerSearchPanel(int partnergroupid, int index){
+    public PartnerSearchPanel(int partnergroupid){
         super(new BorderLayout());
         
         upperpanel = new MyPanel(new GridLayout(1, 2, 0, 5));
@@ -95,7 +95,6 @@ public class PartnerSearchPanel extends MyPanel implements ActionListener{
         list = new ArrayList<>();
         
         this.partnergroupid = partnergroupid;
-        this.index = index;
         
         init();
     }
@@ -153,6 +152,8 @@ public class PartnerSearchPanel extends MyPanel implements ActionListener{
         
         PartnerPartnerGroup partnerpartnergroup = partnerpartnergrouptablemodel.getPartnerPartnerGroup(table.
                     convertRowIndexToModel(table.getSelectedRow()));
+        
+        int index = ((MainPanel)getParent().getParent()).getIndex();
         
         GlobalFields.MAINTABBEDPANE.insertTab(index+1, new PartnerDetail(partnerpartnergroup.getPartner().getId()));
     }

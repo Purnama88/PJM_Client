@@ -58,7 +58,6 @@ public class ItemGroupDetail extends DetailPanel{
         detailpanel.add(notepanel);
         detailpanel.add(lastmodifiedpanel);
         
-        itemsearchpanel.setIndex(getIndex());
         tabbedpane.addTab(GlobalFields.PROPERTIES.getProperty("PANEL_ITEM"), itemsearchpanel);
         
         load();

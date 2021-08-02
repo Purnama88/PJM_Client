@@ -5,6 +5,7 @@
  */
 package com.purnama.pjm_client.model.transactional;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.purnama.pjm_client.model.InternalInvoice;
 import com.purnama.pjm_client.model.nontransactional.Currency;
@@ -13,7 +14,7 @@ import com.purnama.pjm_client.util.GlobalFields;
 import com.purnama.pjm_client.util.GlobalFunctions;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.TimeZone;
 import lombok.Data;
 
@@ -23,8 +24,8 @@ import lombok.Data;
  */
 @Data
 public class Expenses extends InternalInvoice{
-    
-    protected LocalDateTime duedate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    protected Date duedate;
     
     private Currency currency;
     
@@ -64,7 +65,6 @@ public class Expenses extends InternalInvoice{
     
     @JsonIgnore
     public String getFormattedDuedate(){
-        
         DateFormat dateformat = new SimpleDateFormat ("dd MMM YYYY HH:mm:ss");
         dateformat.setTimeZone(TimeZone.getTimeZone("UCT+7"));
         return dateformat.format(getDuedate());

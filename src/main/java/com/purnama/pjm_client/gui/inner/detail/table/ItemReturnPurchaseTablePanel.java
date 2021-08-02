@@ -7,9 +7,9 @@ package com.purnama.pjm_client.gui.inner.detail.table;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.purnama.pjm_client.model.transactional.ItemDelivery;
+import com.purnama.pjm_client.model.transactional.ItemReturnPurchase;
 import com.purnama.pjm_client.rest.RestClient;
-import com.purnama.pjm_client.tablemodel.ItemDeliveryTableModel;
+import com.purnama.pjm_client.tablemodel.ItemReturnPurchaseTableModel;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,19 +19,19 @@ import javax.swing.SwingWorker;
  *
  * @author p_cor
  */
-public class ItemDeliveryTablePanel extends TablePanel{
+public class ItemReturnPurchaseTablePanel extends TablePanel{
 
-    private final ItemDeliveryTableModel itemdeliverytablemodel;
+    private final ItemReturnPurchaseTableModel itemreturnpurchasetablemodel;
     
-    private final int deliveryid;
+    private final int returnpurchaseid;
     
-    public ItemDeliveryTablePanel(int deliveryid){
+    public ItemReturnPurchaseTablePanel(int returnpurchaseid){
         
-        this.deliveryid = deliveryid;
+        this.returnpurchaseid = returnpurchaseid;
         
-        itemdeliverytablemodel = new ItemDeliveryTableModel();
+        itemreturnpurchasetablemodel = new ItemReturnPurchaseTableModel();
         
-        table.setModel(itemdeliverytablemodel);
+        table.setModel(itemreturnpurchasetablemodel);
         
         init();
     }
@@ -51,7 +51,7 @@ public class ItemDeliveryTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground(){
                 
-                response = RestClient.get("itemdeliveries?deliveryid="+deliveryid);
+                response = RestClient.get("itemreturnpurchases?returnid="+returnpurchaseid);
                 
                 return true;
             }
@@ -70,9 +70,9 @@ public class ItemDeliveryTablePanel extends TablePanel{
                     try{
                         ArrayList list = mapper.readValue(output,
                                 TypeFactory.defaultInstance().constructCollectionType(ArrayList.class,
-                                        ItemDelivery.class));
+                                        ItemReturnPurchase.class));
                         
-                        itemdeliverytablemodel.setItemDeliveryList(list);
+                        itemreturnpurchasetablemodel.setItemReturnPurchaseList(list);
                         
                     }
                     catch(IOException e){
@@ -84,4 +84,5 @@ public class ItemDeliveryTablePanel extends TablePanel{
         
         worker.execute();
     }
+    
 }

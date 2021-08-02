@@ -67,7 +67,7 @@ public class ItemReturnSalesDraftTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground(){
                 
-                response = RestClient.get("itemreturnsalesdrafts?returnid="+invoiceid);
+                response = RestClient.get("itemreturnsalesdrafts?returndraftid="+invoiceid);
                 
                 return true;
             }

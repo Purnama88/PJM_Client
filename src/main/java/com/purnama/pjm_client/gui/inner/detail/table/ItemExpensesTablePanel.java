@@ -7,9 +7,9 @@ package com.purnama.pjm_client.gui.inner.detail.table;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.purnama.pjm_client.model.transactional.ItemDelivery;
+import com.purnama.pjm_client.model.transactional.ItemExpenses;
 import com.purnama.pjm_client.rest.RestClient;
-import com.purnama.pjm_client.tablemodel.ItemDeliveryTableModel;
+import com.purnama.pjm_client.tablemodel.ItemExpensesTableModel;
 import com.sun.jersey.api.client.ClientResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,19 +19,19 @@ import javax.swing.SwingWorker;
  *
  * @author p_cor
  */
-public class ItemDeliveryTablePanel extends TablePanel{
+public class ItemExpensesTablePanel extends TablePanel{
 
-    private final ItemDeliveryTableModel itemdeliverytablemodel;
+    private final ItemExpensesTableModel itemexpensestablemodel;
     
-    private final int deliveryid;
+    private final int expensesid;
     
-    public ItemDeliveryTablePanel(int deliveryid){
+    public ItemExpensesTablePanel(int expensesid){
         
-        this.deliveryid = deliveryid;
+        this.expensesid = expensesid;
         
-        itemdeliverytablemodel = new ItemDeliveryTableModel();
+        itemexpensestablemodel = new ItemExpensesTableModel();
         
-        table.setModel(itemdeliverytablemodel);
+        table.setModel(itemexpensestablemodel);
         
         init();
     }
@@ -51,7 +51,7 @@ public class ItemDeliveryTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground(){
                 
-                response = RestClient.get("itemdeliveries?deliveryid="+deliveryid);
+                response = RestClient.get("itemexpenses?expensesid="+expensesid);
                 
                 return true;
             }
@@ -70,9 +70,9 @@ public class ItemDeliveryTablePanel extends TablePanel{
                     try{
                         ArrayList list = mapper.readValue(output,
                                 TypeFactory.defaultInstance().constructCollectionType(ArrayList.class,
-                                        ItemDelivery.class));
+                                        ItemExpenses.class));
                         
-                        itemdeliverytablemodel.setItemDeliveryList(list);
+                        itemexpensestablemodel.setItemExpensesList(list);
                         
                     }
                     catch(IOException e){
@@ -84,4 +84,5 @@ public class ItemDeliveryTablePanel extends TablePanel{
         
         worker.execute();
     }
+    
 }

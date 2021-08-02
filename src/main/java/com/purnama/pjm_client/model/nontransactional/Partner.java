@@ -55,7 +55,7 @@ public class Partner extends Nontransactional{
     
     @Override
     public String toString(){
-        return getName();
+        return getName() + " (" + getCode() +")";
     }
     
 //    public String getFormattedMaximumdiscount(){

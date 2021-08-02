@@ -67,7 +67,7 @@ public class ItemExpensesDraftTablePanel extends TablePanel{
             @Override
             protected Boolean doInBackground(){
                 
-                response = RestClient.get("itemexpensesdrafts?expensesid="+invoiceid);
+                response = RestClient.get("itemexpensesdrafts?expensesdraftid="+invoiceid);
                 
                 return true;
             }
@@ -176,5 +176,4 @@ public class ItemExpensesDraftTablePanel extends TablePanel{
     public ItemExpensesDraftTableModel getItemexpensesdrafttablemodel() {
         return itemexpensesdrafttablemodel;
     }
-    
 }
